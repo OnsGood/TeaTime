@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Утилитный класс для шаблонных действий с сообщениями
+ */
 public final class MessageTools {
   private static final Logger log = Logger.getLogger(MessageTools.class);
 

@@ -1,5 +1,8 @@
 package com.example.teatime.bot.statemachine.transition;
 
+/**
+ * Переходы для внутренних ссылок бота
+ */
 public enum LinkTransitions implements Transition {
   GET_TEA_TYPE("/teaType_", "Вид чая"),
   EDIT_TEA_TYPE("/editTeaType_", "Редактировать вид чая"),

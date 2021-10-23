@@ -38,6 +38,9 @@ public class TeaTimeStateMachine implements StateMachine {
     log.info("started new TeaTimeStateMachine");
   }
 
+  /**
+   * Установка дополнительных кастомных идентифаеров.
+   */
   private void setIdentifiers() {
     messageIdentifier
         .addIdentifier(

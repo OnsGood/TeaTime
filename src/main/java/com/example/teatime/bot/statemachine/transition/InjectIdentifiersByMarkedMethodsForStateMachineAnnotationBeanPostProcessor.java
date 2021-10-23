@@ -15,6 +15,9 @@ import java.util.function.Function;
 
 import static java.util.Objects.nonNull;
 
+/**
+ * Бин пост процессор для создания <code>MessageIdentifier</code> в машине состояний
+ */
 @Component
 public class InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostProcessor implements BeanPostProcessor {
   private static final Logger log = Logger.getLogger(InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostProcessor.class);

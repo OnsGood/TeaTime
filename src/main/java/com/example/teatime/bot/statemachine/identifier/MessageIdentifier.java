@@ -8,6 +8,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * Класс для соотношения сообщений и способов реагировать на них.
+ * Реализован как цепочка обязанностей, элемент которой в случае неудачи передает эстафету следующему элементу.
+ */
 public final class MessageIdentifier {
   private final List<Identifier> identifiers;
 

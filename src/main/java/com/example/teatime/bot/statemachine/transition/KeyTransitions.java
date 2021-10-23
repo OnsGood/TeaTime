@@ -1,5 +1,8 @@
 package com.example.teatime.bot.statemachine.transition;
 
+/**
+ * Переходы для клавиш на клавиатуре
+ */
 public enum KeyTransitions implements Transition {
   MAIN_PAGE("Главное меню"),
   BACK("Назад"),
