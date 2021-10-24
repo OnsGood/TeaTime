@@ -1,11 +1,12 @@
 package com.example.teatime.bot.statemachine;
 
+import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
 import com.example.teatime.bot.statemachine.state.api.State;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
- * Машина состояний, которая принимает новое сообщение и делегериует его обработку одному из своих состояний.
+ * Машина состояний, которая принимает новое сообщение и делегирует его обработку одному из своих состояний.
  *
  */
 public interface StateMachine {
@@ -35,4 +36,9 @@ public interface StateMachine {
    * @param message сообщение для обработки
    */
   void resolveMessage(Message message);
+
+  /**
+   * Возвращает менеджер данных машины
+   */
+  DataManager getDataManager();
 }

@@ -15,28 +15,67 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public interface State {
 
   /**
-   * Получить страницу со списком всех типов чаев
+   * Пришла команда на список всех типов чаев
    */
   @KeyTransitionMark(keyTransition = KeyTransitions.TEA_TYPE_LIST)
   void listTeaTypes(Message message, StateMachine stateMachine);
 
   /**
-   * Получить главную страницу
+   * Пришла команда на главную страницу
    */
   @KeyTransitionMark(keyTransition = KeyTransitions.MAIN_PAGE)
   void mainPage(Message message, StateMachine stateMachine);
 
   /**
-   * Получить страницу на которой были раньше
+   * Пришла команда назад
    */
   @KeyTransitionMark(keyTransition = KeyTransitions.BACK)
   void back(Message message, StateMachine stateMachine);
 
   /**
-   * Получить страницу со списком чаев, по типу чая
+   * Пришел id типа чая
    */
   @LinkTransitionMark(linkTransition = LinkTransitions.GET_TEA_TYPE)
-  void listTeaFromTeaType(Message message, StateMachine stateMachine);
+  void catchTeaTypeId(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на поиск чая по имени
+   */
+  @KeyTransitionMark(keyTransition = KeyTransitions.TEA_NAME_SEARCH)
+  void listTeaFromName(Message message, StateMachine stateMachine);
+
+
+
+  /**
+   * Пришла команда на создание чая
+   */
+  @KeyTransitionMark(keyTransition = KeyTransitions.CREATE_TEA)
+  void createTea(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на ввод имени
+   */
+  @KeyTransitionMark(keyTransition = KeyTransitions.SET_TITLE)
+  void setTitle(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на ввод описания
+   */
+  @KeyTransitionMark(keyTransition = KeyTransitions.SET_DESCR)
+  void setDescr(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на ввод типа чая
+   */
+  @KeyTransitionMark(keyTransition = KeyTransitions.SET_TYPE)
+  void setType(Message message, StateMachine stateMachine);
+
+
+  /**
+   * Пришла команда на создание типа чая
+   */
+  @KeyTransitionMark(keyTransition = KeyTransitions.CREATE_TEA_TYPE)
+  void createTeaType(Message message, StateMachine stateMachine);
 
   /**
    * Обработать неизвестную команду

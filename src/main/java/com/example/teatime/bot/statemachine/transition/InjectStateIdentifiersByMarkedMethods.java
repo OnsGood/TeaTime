@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Аннотация вешается на сеттер MessageIdentifier
- * Только для StateMachine
- * Позволяет динамически установить все идентифаеры для всех методов State
+ * Аннотация вешается на сеттер MessageIdentifier <br>
+ * Только для StateMachine <br>
+ * Позволяет динамически установить все идентифаеры для всех аннотированных методов State <br>
  *
  * @author sergey
  * @see com.example.teatime.bot.statemachine.StateMachine

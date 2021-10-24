@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine;
 
+import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
+import com.example.teatime.bot.statemachine.datamanager.impl.DataManagerImpl;
 import com.example.teatime.bot.statemachine.identifier.MessageIdentifier;
 import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
@@ -23,6 +25,7 @@ public class TeaTimeStateMachine implements StateMachine {
   private StateManager stateManager;
   private State state;
   private MessageIdentifier messageIdentifier;
+  private final DataManager dataManager;
 
   @InjectStateIdentifiersByMarkedMethods
   public void setMessageIdentifier(MessageIdentifier messageIdentifier) {
@@ -36,6 +39,7 @@ public class TeaTimeStateMachine implements StateMachine {
 
   public TeaTimeStateMachine() {
     log.info("started new TeaTimeStateMachine");
+    dataManager = new DataManagerImpl();
   }
 
   /**
@@ -78,7 +82,16 @@ public class TeaTimeStateMachine implements StateMachine {
   @Override
   public void resolveMessage(Message message) {
     log.info("message resolved by state " + state.getClass().getSimpleName());
-    messageIdentifier.identifyMessage(message);
+    try {
+      messageIdentifier.identifyMessage(message);
+    } catch (Exception e) {
+      log.error("Ошибка обработки сообщения", e);
+    }
+  }
+
+  @Override
+  public DataManager getDataManager() {
+    return dataManager;
   }
 
 }

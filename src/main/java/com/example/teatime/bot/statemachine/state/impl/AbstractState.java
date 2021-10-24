@@ -2,6 +2,7 @@ package com.example.teatime.bot.statemachine.state.impl;
 
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.WrongStatePage;
 import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
 import com.example.teatime.bot.statemachine.state.api.State;
@@ -57,18 +58,49 @@ public abstract class AbstractState implements State {
   }
 
   @Override
-  public void listTeaFromTeaType(Message message, StateMachine stateMachine) {
+  public void catchTeaTypeId(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void listTeaFromName(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void createTea(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void setTitle(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void setDescr(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void setType(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void createTeaType(Message message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   private void sendNotAllowedCommandInStateErrorMessage(Message message, StateMachine stateMachine) {
     log.error("Message can not resolved from abstract state. Message - " + message.getText());
     stateMachine.setState(stateManager.getDefaultState());
-    MessageTools.sendMessage(getPageManager().getPage(WrongStatePage.class).getPageMessage(message), stateMachine.getPollingBot());
+    MessageTools.sendMessage(getPageManager().getPage(WrongStatePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   protected final void logState(Message message, Class<? extends State> stateClass) {
-    log.info("main page showed from " + stateClass.getSimpleName() + ". Message - " + message.getText());
+    log.info("page showed from " + stateClass.getSimpleName() + ". Message - " + message.getText());
   }
 
 

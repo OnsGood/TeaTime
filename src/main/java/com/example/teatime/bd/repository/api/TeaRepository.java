@@ -1,13 +1,14 @@
 package com.example.teatime.bd.repository.api;
 
 import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bd.entity.TeaType;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface TeaRepository {
-    List<Tea> listTea();
+public interface TeaRepository extends CrudRepository<Tea, Long> {
 
-    Tea getTeaById(Long id);
+  List<Tea> findByTitleLikeIgnoreCase(String title);
+  Iterable<Tea> findByTeaType(TeaType teaType);
 
-    Tea getTeaByTitle(String title);
 }
