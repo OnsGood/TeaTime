@@ -11,6 +11,7 @@ public enum KeyTransitions implements Transition {
 
   CREATE_TEA("Создать новый чай"),
   CREATE_TEA_TYPE("Создать новый вид чая"),
+  CREATE_BOILING("Создать способ заваривания"),
 
   SET_TITLE("Ввести название"),
   SET_DESCR("Ввести описание"),

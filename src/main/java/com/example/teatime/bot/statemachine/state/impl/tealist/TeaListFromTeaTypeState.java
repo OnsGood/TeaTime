@@ -1,25 +1,19 @@
-package com.example.teatime.bot.statemachine.state.impl;
+package com.example.teatime.bot.statemachine.state.impl.tealist;
+
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.createtea.CreateTeaPage;
-import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.TeaTypeListPage;
+import com.example.teatime.bot.statemachine.page.impl.teatypelist.TeaTypeListPage;
 import com.example.teatime.bot.statemachine.state.impl.createtea.CreateTeaState;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import com.example.teatime.bot.statemachine.state.impl.teatypelist.TeaTypeListState;
 
 @Component
-public class TeaListFromTeaTypeState extends AbstractState {
-  @Override
-  public void mainPage(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
-    stateMachine.setState(getStateManager().getState(MainPageState.class));
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
-  }
-
+public class TeaListFromTeaTypeState extends AbstractTeaListState {
   @Override
   public void back(Message message, StateMachine stateMachine) {
     logState(message, this.getClass());
@@ -34,6 +28,11 @@ public class TeaListFromTeaTypeState extends AbstractState {
     stateMachine.getDataManager().setObject(DataKeys.CREATED_TEA, tea);
     stateMachine.setState(getStateManager().getState(CreateTeaState.class));
     MessageTools.sendMessage(getPageManager().getPage(CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+  }
+
+  @Override
+  protected Tea getTea() {
+    return new Tea();
   }
 
   @Override

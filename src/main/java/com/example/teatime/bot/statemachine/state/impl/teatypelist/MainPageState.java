@@ -1,10 +1,13 @@
-package com.example.teatime.bot.statemachine.state.impl;
+package com.example.teatime.bot.statemachine.state.impl.teatypelist;
 
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.impl.InputTeaNamePage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.TeaTypeListPage;
+import com.example.teatime.bot.statemachine.page.impl.teatypelist.TeaTypeListPage;
+import com.example.teatime.bot.statemachine.state.impl.AbstractState;
+import com.example.teatime.bot.statemachine.state.impl.tealist.TeaListFromNameState;
+
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 

@@ -1,4 +1,9 @@
-package com.example.teatime.bot.statemachine.page.impl;
+package com.example.teatime.bot.statemachine.page.impl.boilinglist;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.MessageTools;
@@ -8,20 +13,14 @@ import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.TeaService;
 import com.example.teatime.service.api.TeaTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
-import static com.example.teatime.bot.statemachine.MessageTools.getSendMessage;
-import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
+import static com.example.teatime.bot.statemachine.MessageTools.*;
 
 @Component
-public class TeaListFromTeaTypePage implements Page {
+public class BoilingListFromTeaPage implements Page {
   private static final String[][] keyboard = new String[][]{
-      {KeyTransitions.BACK.getTitle()},
-      {KeyTransitions.MAIN_PAGE.getTitle()},
-      {KeyTransitions.CREATE_TEA.getTitle()}
+    {KeyTransitions.CREATE_TEA.getTitle()},
+    {KeyTransitions.MAIN_PAGE.getTitle()},
   };
 
   private TeaService teaService;
@@ -68,6 +67,6 @@ public class TeaListFromTeaTypePage implements Page {
     return tea.getTitle() + "\n" +
         "Вид - " + tea.getTeaType().getTitle() + "\n" +
         "Описание - " + tea.getDescription() + "\n" +
-        "Перейти к заваркам: " + LinkTransitions.GET_TEA.getPrefix() + tea.getId() + "\n";
+        "Перейти к заваркам: " + LinkTransitions.TEA.getPrefix() + tea.getId() + "\n";
   }
 }

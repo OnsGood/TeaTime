@@ -8,7 +8,7 @@ import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.createtea.CreateTeaPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
-import com.example.teatime.bot.statemachine.state.impl.MainPageState;
+import com.example.teatime.bot.statemachine.state.impl.teatypelist.MainPageState;
 import com.example.teatime.service.api.TeaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,6 +32,8 @@ public class InputTeaTypeState extends AbstractState {
 
   @Override
   public void createTea(Message message, StateMachine stateMachine) {
+    stateMachine.setState(getStateManager().getState(CreateTeaState.class));
+    MessageTools.sendMessage(getPageManager().getPage(CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override

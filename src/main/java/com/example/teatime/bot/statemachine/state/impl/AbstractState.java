@@ -63,6 +63,21 @@ public abstract class AbstractState implements State {
   }
 
   @Override
+  public void catchTeaId(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void catchIdDelete(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
+  public void catchIdEdit(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+  }
+
+  @Override
   public void listTeaFromName(Message message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
