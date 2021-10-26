@@ -1,16 +1,17 @@
 package com.example.teatime.bot.statemachine;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Утилитный класс для шаблонных действий с сообщениями
@@ -48,6 +49,13 @@ public final class MessageTools {
     keyboardMarkup.setKeyboard(keyboard);
     sendMessage.setReplyMarkup(keyboardMarkup);
   }
+
+  public static void removeSpecialKeyboard(SendMessage sendMessage) {
+    ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+    replyKeyboardRemove.setRemoveKeyboard(true);
+    sendMessage.setReplyMarkup(replyKeyboardRemove);
+  }
+
 
   public static void sendMessage(SendMessage sendMessage, TelegramLongPollingBot botToSend) {
     try {

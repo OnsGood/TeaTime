@@ -17,10 +17,10 @@ import static java.util.Optional.ofNullable;
 @Component
 public class CreateTeaTypePage implements Page {
   private static final String[][] keyboard = new String[][]{
-      {KeyTransitions.MAIN_PAGE.getTitle()},
-      {KeyTransitions.CREATE_TEA_TYPE.getTitle()},
-      {KeyTransitions.SET_TITLE.getTitle()},
-      {KeyTransitions.SET_DESCR.getTitle()},
+    {KeyTransitions.CREATE_TEA_TYPE.getTitle()},
+    {KeyTransitions.SET_TITLE.getTitle()},
+    {KeyTransitions.SET_DESCR.getTitle()},
+    {KeyTransitions.MAIN_PAGE.getTitle()},
   };
 
   @Override

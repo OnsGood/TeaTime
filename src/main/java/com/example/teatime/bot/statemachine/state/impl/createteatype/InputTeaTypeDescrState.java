@@ -7,7 +7,7 @@ import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.createteatype.CreateTeaTypePage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
-import com.example.teatime.bot.statemachine.state.impl.MainPageState;
+import com.example.teatime.bot.statemachine.state.impl.teatypelist.MainPageState;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 

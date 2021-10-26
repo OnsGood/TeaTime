@@ -5,6 +5,7 @@ import com.example.teatime.bot.statemachine.transition.LinkTransitionMark;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
+
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
@@ -32,18 +33,36 @@ public interface State {
   @KeyTransitionMark(keyTransition = KeyTransitions.BACK)
   void back(Message message, StateMachine stateMachine);
 
+
   /**
    * Пришел id типа чая
    */
-  @LinkTransitionMark(linkTransition = LinkTransitions.GET_TEA_TYPE)
+  @LinkTransitionMark(linkTransition = LinkTransitions.TEA_TYPE)
   void catchTeaTypeId(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришел id чая
+   */
+  @LinkTransitionMark(linkTransition = LinkTransitions.TEA)
+  void catchTeaId(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришел id, с намеком на редактирование
+   */
+  @LinkTransitionMark(linkTransition = LinkTransitions.EDIT)
+  void catchIdEdit(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришел id, с намеком на удаление
+   */
+  @LinkTransitionMark(linkTransition = LinkTransitions.DELETE)
+  void catchIdDelete(Message message, StateMachine stateMachine);
 
   /**
    * Пришла команда на поиск чая по имени
    */
   @KeyTransitionMark(keyTransition = KeyTransitions.TEA_NAME_SEARCH)
   void listTeaFromName(Message message, StateMachine stateMachine);
-
 
 
   /**
@@ -53,7 +72,7 @@ public interface State {
   void createTea(Message message, StateMachine stateMachine);
 
   /**
-   * Пришла команда на ввод имени
+   * Пришла команда на ввод названия
    */
   @KeyTransitionMark(keyTransition = KeyTransitions.SET_TITLE)
   void setTitle(Message message, StateMachine stateMachine);

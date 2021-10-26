@@ -18,11 +18,11 @@ import static java.util.Optional.ofNullable;
 @Component
 public class CreateTeaPage implements Page {
   private static final String[][] keyboard = new String[][]{
-      {KeyTransitions.MAIN_PAGE.getTitle()},
-      {KeyTransitions.CREATE_TEA.getTitle()},
-      {KeyTransitions.SET_TITLE.getTitle()},
-      {KeyTransitions.SET_DESCR.getTitle()},
-      {KeyTransitions.SET_TYPE.getTitle()},
+    {KeyTransitions.CREATE_TEA.getTitle()},
+    {KeyTransitions.SET_TITLE.getTitle()},
+    {KeyTransitions.SET_DESCR.getTitle()},
+    {KeyTransitions.SET_TYPE.getTitle()},
+    {KeyTransitions.MAIN_PAGE.getTitle()},
   };
 
   @Override

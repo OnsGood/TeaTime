@@ -1,16 +1,19 @@
-package com.example.teatime.bot.statemachine.state.impl;
+package com.example.teatime.bot.statemachine.state.impl.teatypelist;
+
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.TeaListFromTeaTypePage;
-import com.example.teatime.bot.statemachine.page.impl.TeaTypeListPage;
 import com.example.teatime.bot.statemachine.page.impl.createteatype.CreateTeaTypePage;
+import com.example.teatime.bot.statemachine.page.impl.seeteatype.SeeTeaTypePage;
+import com.example.teatime.bot.statemachine.page.impl.teatypelist.TeaTypeListPage;
+import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.createteatype.CreateTeaTypeState;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import com.example.teatime.bot.statemachine.state.impl.seeteatype.SeeTeaTypeState;
 
 @Component
 public class TeaTypeListState extends AbstractState {
@@ -18,8 +21,8 @@ public class TeaTypeListState extends AbstractState {
   @Override
   public void catchTeaTypeId(Message message, StateMachine stateMachine) {
     logState(message, this.getClass());
-    stateMachine.setState(getStateManager().getState(TeaListFromTeaTypeState.class));
-    MessageTools.sendMessage(getPageManager().getPage(TeaListFromTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    stateMachine.setState(getStateManager().getState(SeeTeaTypeState.class));
+    MessageTools.sendMessage(getPageManager().getPage(SeeTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override

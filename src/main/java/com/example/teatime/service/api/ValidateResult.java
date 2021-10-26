@@ -1,12 +1,9 @@
-package com.example.teatime.bot.statemachine.state.api;
+package com.example.teatime.service.api;
 
 /**
  * POJO для отображения результатов валидации с сообщением
  */
-public final class ValidateResult {
-  private final String message;
-  private final boolean allGood;
-
+public record ValidateResult(String message, boolean allGood) {
   private static final ValidateResult GOOD = new ValidateResult("", true);
 
   public static ValidateResult getGood() {
@@ -15,11 +12,6 @@ public final class ValidateResult {
 
   public static ValidateResult getBad(String message) {
     return new ValidateResult(message, false);
-  }
-
-  private ValidateResult(String message, boolean allGood) {
-    this.message = message;
-    this.allGood = allGood;
   }
 
   public String getMessage() {
