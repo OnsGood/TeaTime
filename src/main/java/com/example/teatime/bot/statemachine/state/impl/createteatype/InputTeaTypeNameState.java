@@ -5,7 +5,7 @@ import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.createteatype.CreateTeaTypePage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.createteatype.CreateTeaTypePage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.teatypelist.MainPageState;
 import org.springframework.stereotype.Component;

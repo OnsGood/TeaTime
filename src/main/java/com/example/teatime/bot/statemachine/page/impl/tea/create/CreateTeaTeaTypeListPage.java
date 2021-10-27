@@ -1,26 +1,21 @@
-package com.example.teatime.bot.statemachine.page.impl.teatypelist;
+package com.example.teatime.bot.statemachine.page.impl.tea.create;
 
-import com.example.teatime.bd.entity.TeaType;
-import com.example.teatime.bot.statemachine.StateMachine;
-import com.example.teatime.bot.statemachine.page.api.Page;
-import com.example.teatime.bot.statemachine.transition.KeyTransitions;
-import com.example.teatime.bot.statemachine.transition.LinkTransitions;
-import com.example.teatime.service.api.TeaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import static com.example.teatime.bot.statemachine.MessageTools.getSendMessage;
-import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
+import com.example.teatime.bd.entity.TeaType;
+import com.example.teatime.bot.statemachine.MessageTools;
+import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.page.api.Page;
+import com.example.teatime.bot.statemachine.transition.LinkTransitions;
+import com.example.teatime.service.api.TeaTypeService;
+
+import static com.example.teatime.bot.statemachine.MessageTools.*;
 
 @Component
-public class TeaTypeListPage implements Page {
-  private static final String[][] keyboard = new String[][]{
-    {KeyTransitions.CREATE_TEA_TYPE.getTitle()},
-    {KeyTransitions.MAIN_PAGE.getTitle()},
-  };
-
+public class CreateTeaTeaTypeListPage implements Page {
   private TeaTypeService teaTypeService;
 
   @Autowired
@@ -31,20 +26,20 @@ public class TeaTypeListPage implements Page {
   @Override
   public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = getSendMessage(receivedMessage);
-    setKeyboard(keyboard, sendMessage);
+    MessageTools.removeSpecialKeyboard(sendMessage);
 
     StringBuilder builder = new StringBuilder();
 
     Iterable<TeaType> teas = teaTypeService.listTeaType();
 
     if (teas.iterator().hasNext()) {
-      builder.append("Виды чаев: ")
-          .append("\n")
-          .append("\n");
+      builder
+        .append("Выберите вид чая из нижеперечисленных:").append("\n")
+        .append("\n");
 
       teas.forEach(teaType -> builder
-          .append(formStringFromTeaType(teaType))
-          .append("\n")
+        .append(formStringFromTeaType(teaType))
+        .append("\n")
       );
     } else {
       builder.append("Виды чаев не найдены");
@@ -57,6 +52,7 @@ public class TeaTypeListPage implements Page {
 
   private String formStringFromTeaType(TeaType teaType) {
     return teaType.getTitle() + "\n" +
-        "Перейти - " + LinkTransitions.TEA_TYPE.getPrefix() + teaType.getId() + "\n";
+      "Описание - " + teaType.getDescription() + "\n" +
+      "Выбрать: " + LinkTransitions.TEA_TYPE.getPrefix() + teaType.getId() + "\n";
   }
 }

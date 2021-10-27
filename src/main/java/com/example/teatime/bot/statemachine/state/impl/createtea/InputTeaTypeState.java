@@ -6,7 +6,7 @@ import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.createtea.CreateTeaPage;
+import com.example.teatime.bot.statemachine.page.impl.tea.create.CreateTeaPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.teatypelist.MainPageState;
 import com.example.teatime.service.api.TeaTypeService;

@@ -1,4 +1,4 @@
-package com.example.teatime.bot.statemachine.page.impl.createtea;
+package com.example.teatime.bot.statemachine.page.impl.tea.create;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

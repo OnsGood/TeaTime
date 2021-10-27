@@ -10,12 +10,18 @@ public enum KeyTransitions implements Transition {
   TEA_NAME_SEARCH("Поиск чая по названию"),
 
   CREATE_TEA("Создать новый чай"),
+  SAVE("Сохранить"),
   CREATE_TEA_TYPE("Создать новый вид чая"),
   CREATE_BOILING("Создать способ заваривания"),
 
   SET_TITLE("Ввести название"),
   SET_DESCR("Ввести описание"),
   SET_TYPE("Выбрать вид"),
+
+  CHANGE_TITLE("Сменить название"),
+  CHANGE_DESCR("Сменить описание"),
+  CHANGE_TYPE("Сменить вид"),
+
 
   TEA_TYPE_LIST("Виды чая");
 

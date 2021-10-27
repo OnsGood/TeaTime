@@ -24,6 +24,12 @@ public final class MessageIdentifier {
     return this;
   }
 
+  public MessageIdentifier addIdentifier(Identifier identifier) {
+    identifiers.add(identifier);
+    return this;
+  }
+
+
   public void identifyMessage(Message message) {
     for (Identifier identifier : identifiers) {
       boolean identify = identifier.identify(message);
@@ -33,7 +39,7 @@ public final class MessageIdentifier {
     }
   }
 
-  private record Identifier(Function<Message, Boolean> identifierFunction, Consumer<Message> action) {
+  public record Identifier(Function<Message, Boolean> identifierFunction, Consumer<Message> action) {
     public boolean identify(Message message) {
       boolean identify = Optional.ofNullable(identifierFunction.apply(message))
           .orElseThrow(() -> new RuntimeException("Identify expression result must be not null"));

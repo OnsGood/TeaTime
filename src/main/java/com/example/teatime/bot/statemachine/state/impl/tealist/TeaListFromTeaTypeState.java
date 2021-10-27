@@ -7,8 +7,8 @@ import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
-import com.example.teatime.bot.statemachine.page.impl.createtea.CreateTeaPage;
-import com.example.teatime.bot.statemachine.page.impl.teatypelist.TeaTypeListPage;
+import com.example.teatime.bot.statemachine.page.impl.tea.create.CreateTeaPage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.teatypelist.TeaTypeListPage;
 import com.example.teatime.bot.statemachine.state.impl.createtea.CreateTeaState;
 import com.example.teatime.bot.statemachine.state.impl.teatypelist.TeaTypeListState;
 

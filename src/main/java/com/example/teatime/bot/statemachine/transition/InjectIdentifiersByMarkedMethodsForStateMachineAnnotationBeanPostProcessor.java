@@ -6,11 +6,15 @@ import com.example.teatime.bot.statemachine.state.api.State;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 import static java.util.Objects.nonNull;
@@ -23,7 +27,7 @@ public class InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostPr
   private static final Logger log = Logger.getLogger(InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostProcessor.class);
 
   @Override
-  public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+  public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName) throws BeansException {
     if (!(bean instanceof StateMachine stateMachine)) {
       return bean;
     }
@@ -33,13 +37,8 @@ public class InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostPr
       if (annotation != null) {
         MessageIdentifier messageIdentifier = new MessageIdentifier();
         for (Method markedStateMethod : State.class.getDeclaredMethods()) {
-          Function<Message, Boolean> identifyFunction = getIdentifyFunction(markedStateMethod);
-          if (identifyFunction != null) {
-            messageIdentifier.addIdentifier(
-                identifyFunction,
-                message -> ReflectionUtils.invokeMethod(markedStateMethod, stateMachine.getState(), message, stateMachine)
-            );
-          }
+          getIdentifiersFromMethodTransitions(listTransitions(markedStateMethod), markedStateMethod, stateMachine)
+              .forEach(messageIdentifier::addIdentifier);
         }
         log.info("init Identifiers from State");
         ReflectionUtils.invokeMethod(stateMachineMethod, stateMachine, messageIdentifier);
@@ -49,16 +48,23 @@ public class InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostPr
     return bean;
   }
 
+  private List<MessageIdentifier.Identifier> getIdentifiersFromMethodTransitions(List<Transition> transitions, Method method, StateMachine stateMachine) {
+    return transitions.stream()
+        .map(transition -> new MessageIdentifier.Identifier(
+            message -> transition.match(message.getText()),
+            message -> ReflectionUtils.invokeMethod(method, stateMachine.getState(), message, stateMachine)
+        ))
+        .toList();
+  }
 
-  private Function<Message, Boolean> getIdentifyFunction(Method method) {
+  private List<Transition> listTransitions(Method method) {
+    List<Transition> transitions = new ArrayList<>();
     if (nonNull(method.getAnnotation(KeyTransitionMark.class))) {
-      Transition transition = method.getAnnotation(KeyTransitionMark.class).keyTransition();
-      return message -> transition.match(message.getText());
+      transitions.addAll(Arrays.stream(method.getAnnotation(KeyTransitionMark.class).keyTransition()).toList());
     }
     if (nonNull(method.getAnnotation(LinkTransitionMark.class))) {
-      Transition transition = method.getAnnotation(LinkTransitionMark.class).linkTransition();
-      return message -> transition.match(message.getText());
+      transitions.addAll(Arrays.stream(method.getAnnotation(LinkTransitionMark.class).linkTransition()).toList());
     }
-    return null;
+    return transitions;
   }
 }

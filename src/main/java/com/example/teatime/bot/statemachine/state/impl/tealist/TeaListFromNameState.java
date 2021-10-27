@@ -7,7 +7,7 @@ import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.impl.InputTeaNamePage;
-import com.example.teatime.bot.statemachine.page.impl.tealist.TeaListFromNamePage;
+import com.example.teatime.bot.statemachine.page.impl.tea.list.TeaListFromNamePage;
 
 @Component
 public class TeaListFromNameState extends AbstractTeaListState {

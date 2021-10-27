@@ -1,4 +1,4 @@
-package com.example.teatime.bot.statemachine.page.impl.tealist;
+package com.example.teatime.bot.statemachine.page.impl.tea.list;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;

@@ -1,5 +1,6 @@
 package com.example.teatime.bot.statemachine.state.impl.seetea;
 
+import com.example.teatime.bot.statemachine.state.impl.createtea.InputTeaNameState;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
@@ -28,12 +29,11 @@ public class SeeTeaState extends AbstractState {
     MessageTools.sendMessage(getPageManager().getPage(BoilingListFromTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
-  /*@Override
-  public void catchTeaIdEdit(Message message, StateMachine stateMachine) {
+  @Override
+  public void setTitle(Message message, StateMachine stateMachine) {
     logState(message, this.getClass());
-    stateMachine.setState(getStateManager().getState(EditTeaState.class));
-    MessageTools.sendMessage(getPageManager().getPage(EditTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
-  }*/
+    stateMachine.setState(getStateManager().getState(InputTeaNameState.class));
+  }
 
   @Override
   public String toString() {

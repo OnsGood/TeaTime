@@ -4,7 +4,7 @@ import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.impl.InputTeaNamePage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.teatypelist.TeaTypeListPage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.teatypelist.TeaTypeListPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.tealist.TeaListFromNameState;
 

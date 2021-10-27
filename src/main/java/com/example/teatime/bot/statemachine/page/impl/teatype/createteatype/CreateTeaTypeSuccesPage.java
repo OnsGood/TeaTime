@@ -1,4 +1,4 @@
-package com.example.teatime.bot.statemachine.page.impl.createteatype;
+package com.example.teatime.bot.statemachine.page.impl.teatype.createteatype;
 
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;

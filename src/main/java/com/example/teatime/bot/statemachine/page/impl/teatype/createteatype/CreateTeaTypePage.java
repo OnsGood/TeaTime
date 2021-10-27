@@ -1,4 +1,4 @@
-package com.example.teatime.bot.statemachine.page.impl.createteatype;
+package com.example.teatime.bot.statemachine.page.impl.teatype.createteatype;
 
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.MessageTools;
@@ -17,7 +17,7 @@ import static java.util.Optional.ofNullable;
 @Component
 public class CreateTeaTypePage implements Page {
   private static final String[][] keyboard = new String[][]{
-    {KeyTransitions.CREATE_TEA_TYPE.getTitle()},
+    {KeyTransitions.SAVE.getTitle()},
     {KeyTransitions.SET_TITLE.getTitle()},
     {KeyTransitions.SET_DESCR.getTitle()},
     {KeyTransitions.MAIN_PAGE.getTitle()},

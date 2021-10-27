@@ -20,7 +20,7 @@ public abstract class AbstractState implements State {
   private PageManager pageManager;
 
   @Autowired
-  public void setPageManager(PageManager pageManager) {
+  public final void setPageManager(PageManager pageManager) {
     this.pageManager = pageManager;
   }
 
@@ -29,7 +29,7 @@ public abstract class AbstractState implements State {
   }
 
   @Autowired
-  public void setStateManager(StateManager stateManager) {
+  public final void setStateManager(StateManager stateManager) {
     this.stateManager = stateManager;
   }
 
