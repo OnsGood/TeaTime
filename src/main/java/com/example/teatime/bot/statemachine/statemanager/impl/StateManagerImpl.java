@@ -1,7 +1,7 @@
 package com.example.teatime.bot.statemachine.statemanager.impl;
 
 import com.example.teatime.bot.statemachine.state.api.State;
-import com.example.teatime.bot.statemachine.state.impl.teatypelist.MainPageState;
+import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

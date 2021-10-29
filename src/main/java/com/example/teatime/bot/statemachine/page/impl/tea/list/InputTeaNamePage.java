@@ -1,4 +1,4 @@
-package com.example.teatime.bot.statemachine.page.impl;
+package com.example.teatime.bot.statemachine.page.impl.tea.list;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -11,13 +11,13 @@ import com.example.teatime.bot.statemachine.page.api.Page;
 import static com.example.teatime.bot.statemachine.MessageTools.*;
 
 @Component
-public class InputParamPage implements Page {
+public class InputTeaNamePage implements Page {
 
   @Override
   public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     MessageTools.removeSpecialKeyboard(sendMessage);
-    sendMessage.setText("Вводите:");
+    sendMessage.setText("Введите название чая для поиска:");
     return sendMessage;
   }
 }

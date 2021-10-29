@@ -12,7 +12,7 @@ import static com.example.teatime.bot.statemachine.MessageTools.*;
 public abstract class AbstractTeaListPage implements Page {
   @Override
   public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
-    SendMessage sendMessage = getSendMessage(receivedMessage);
+    SendMessage sendMessage = makeSendMessage(receivedMessage);
     setKeyboard(getKeyboard(), sendMessage);
     StringBuilder builder = new StringBuilder();
 

@@ -10,8 +10,12 @@ import static com.example.teatime.bot.statemachine.transition.LinkTransitions.*;
 
 /**
  * Основной интерфейс состояний. <br>
- * Для добавления нового действия, необходимо написать новый метод, и транзишен для него. <br>
+ * Для добавления нового действия, необходимо написать новый метод, и транзишены для него. <br>
  * Для добавления нового состояния необходимо написать новую имплементацию, и определить нужные методы. <br>
+ *
+ * @see com.example.teatime.bot.statemachine.transition.Transition
+ * @see KeyTransitionMark
+ * @see LinkTransitionMark
  */
 public interface State {
 
@@ -66,10 +70,10 @@ public interface State {
 
 
   /**
-   * Пришла команда на создание чая
+   * Пришла команда на создание/изменение чая
    */
   @KeyTransitionMark(keyTransition = {CREATE_TEA, SAVE})
-  void createTea(Message message, StateMachine stateMachine);
+  void insupdTea(Message message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод названия

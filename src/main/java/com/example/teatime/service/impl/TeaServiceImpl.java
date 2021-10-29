@@ -1,17 +1,18 @@
 package com.example.teatime.service.impl;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bd.repository.api.TeaRepository;
 import com.example.teatime.service.api.TeaService;
 import com.example.teatime.service.api.ValidateResult;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import static java.util.Objects.*;
+import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 @Service
 public class TeaServiceImpl implements TeaService {
@@ -26,6 +27,14 @@ public class TeaServiceImpl implements TeaService {
   @Override
   public void save(Tea tea) {
     teaRepository.save(tea);
+  }
+
+  @Override
+  public boolean exist(Tea tea) {
+    return Optional.ofNullable(tea)
+        .map(Tea::getId)
+        .map(id -> teaRepository.existsById(id))
+        .orElse(false);
   }
 
   @Override
@@ -44,7 +53,7 @@ public class TeaServiceImpl implements TeaService {
   public Tea getTeaById(Long id) {
     logger.info("list teas by id - " + id);
     return teaRepository.findById(id)
-      .orElseThrow(() -> new IllegalStateException("Tea with id - '" + id + "' не найден"));
+        .orElseThrow(() -> new IllegalStateException("Tea with id - '" + id + "' не найден"));
   }
 
   @Override

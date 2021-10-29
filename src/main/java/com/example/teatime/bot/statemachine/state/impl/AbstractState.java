@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+/**
+ * Базовое состояние, обычно бросает ошибки
+ */
 @Component
 public abstract class AbstractState implements State {
   private static final Logger log = Logger.getLogger(AbstractState.class);
@@ -83,7 +86,7 @@ public abstract class AbstractState implements State {
   }
 
   @Override
-  public void createTea(Message message, StateMachine stateMachine) {
+  public void insupdTea(Message message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 

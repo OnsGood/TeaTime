@@ -12,11 +12,10 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class MainPage implements Page {
-  private static final Logger logger = LogManager.getLogger(MainPage.class);
 
   @Override
   public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
-    SendMessage sendMessage = MessageTools.getSendMessage(receivedMessage);
+    SendMessage sendMessage = MessageTools.makeSendMessage(receivedMessage);
     MessageTools.setKeyboard(new String[][]{{KeyTransitions.TEA_TYPE_LIST.getTitle()}, {KeyTransitions.TEA_NAME_SEARCH.getTitle()}}, sendMessage);
     sendMessage.setText("Вы находитесь в главном меню бота. Тыкайте на клавиши, и получайте что вам надо");
     return sendMessage;

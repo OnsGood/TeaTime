@@ -25,7 +25,7 @@ public class TeaListFromNamePage extends AbstractTeaListPage {
   @Override
   protected String[][] getKeyboard() {
     return new String[][]{
-      {KeyTransitions.CREATE_TEA.getTitle()},
+      //{KeyTransitions.CREATE_TEA.getTitle()},
       {KeyTransitions.TEA_NAME_SEARCH.getTitle()},
       {KeyTransitions.MAIN_PAGE.getTitle()},
     };

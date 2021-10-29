@@ -23,21 +23,20 @@ public final class MessageTools {
 
   }
 
-  public static Long getIdFromMessage(String messageText) {
-    String[] parts = messageText.split("_");
-    if (parts.length == 2) {
-      return Long.valueOf(parts[1]);
-    } else {
-      throw new MessageException("wrong text format, id not found");
-    }
-  }
-
-  public static SendMessage getSendMessage(Message message) {
+  /**
+   * Создает объект исходящего сообщения, и заполняет его необходимыми данными
+   * @param message пришедшее сообщение
+   * @return новое исходящее сообщение
+   */
+  public static SendMessage makeSendMessage(Message message) {
     SendMessage sendMessage = new SendMessage();
     sendMessage.setChatId(message.getChatId().toString());
     return sendMessage;
   }
 
+  /**
+   * Делает клавиатуру из массива строк, устанавливает ее в исходящее сообщение
+   */
   public static void setKeyboard(String[][] keys, SendMessage sendMessage) {
     ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
     List<KeyboardRow> keyboard = new ArrayList<>();
@@ -50,13 +49,18 @@ public final class MessageTools {
     sendMessage.setReplyMarkup(keyboardMarkup);
   }
 
+  /**
+   * Устанавливает дефолтную клавиатуру в исх сообщение
+   */
   public static void removeSpecialKeyboard(SendMessage sendMessage) {
     ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
     replyKeyboardRemove.setRemoveKeyboard(true);
     sendMessage.setReplyMarkup(replyKeyboardRemove);
   }
 
-
+  /**
+   * Отправляет сообщение
+   */
   public static void sendMessage(SendMessage sendMessage, TelegramLongPollingBot botToSend) {
     try {
       botToSend.execute(sendMessage);
