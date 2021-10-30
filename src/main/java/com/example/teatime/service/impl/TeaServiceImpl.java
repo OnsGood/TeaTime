@@ -30,6 +30,11 @@ public class TeaServiceImpl implements TeaService {
   }
 
   @Override
+  public void delete(Tea tea) {
+    teaRepository.delete(tea);
+  }
+
+  @Override
   public boolean exist(Tea tea) {
     return Optional.ofNullable(tea)
         .map(Tea::getId)

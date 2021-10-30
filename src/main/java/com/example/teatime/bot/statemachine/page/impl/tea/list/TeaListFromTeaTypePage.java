@@ -33,6 +33,7 @@ public class TeaListFromTeaTypePage extends AbstractTeaListPage {
   protected String[][] getKeyboard() {
     return new String[][]{
         {KeyTransitions.CREATE_TEA.getTitle()},
+        {KeyTransitions.BACK.getTitle()},
         {KeyTransitions.MAIN_PAGE.getTitle()},
     };
   }

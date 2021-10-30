@@ -28,6 +28,4 @@ public abstract class AbstractTeaListState extends AbstractState {
 
   }
 
-  protected abstract Tea getTea();
-
 }

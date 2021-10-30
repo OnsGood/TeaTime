@@ -47,7 +47,7 @@ public abstract class AbstractState implements State {
 
   @Override
   public void back(Message message, StateMachine stateMachine) {
-    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
+    stateMachine.resolvePrevMessage();
   }
 
   @Override

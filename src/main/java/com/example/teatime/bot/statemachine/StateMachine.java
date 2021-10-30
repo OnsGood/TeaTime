@@ -38,6 +38,11 @@ public interface StateMachine {
   void resolveMessage(Message message);
 
   /**
+   * Обработать предыдущую команду пользователя
+   */
+  void resolvePrevMessage();
+
+  /**
    * Возвращает менеджер данных машины
    */
   DataManager getDataManager();

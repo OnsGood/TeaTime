@@ -26,6 +26,7 @@ public class TeaTimeStateMachine implements StateMachine {
   private State state;
   private MessageIdentifier messageIdentifier;
   private final DataManager dataManager;
+  private final DialogHistory dialogHistory;
 
   @InjectStateIdentifiersByMarkedMethods
   public void setMessageIdentifier(MessageIdentifier messageIdentifier) {
@@ -40,6 +41,7 @@ public class TeaTimeStateMachine implements StateMachine {
   public TeaTimeStateMachine() {
     log.info("started new TeaTimeStateMachine");
     dataManager = new DataManagerImpl();
+    dialogHistory = new DialogHistory(15);
   }
 
   /**
@@ -83,10 +85,20 @@ public class TeaTimeStateMachine implements StateMachine {
   public void resolveMessage(Message message) {
     log.info("message resolved by state " + state.getClass().getSimpleName());
     try {
+      dialogHistory.newHistory(state, message);
       messageIdentifier.identifyMessage(message);
     } catch (Exception e) {
       log.error("Ошибка обработки сообщения", e);
     }
+  }
+
+  @Override
+  public void resolvePrevMessage() {
+    // откатываем 3 записи назад:
+    // 1 - запись текущего перехода назад
+    // 2 - запись прошлого перехода
+    // 3 - запись перехода, на который хотим откатиться
+    dialogHistory.goTo(this, 3);
   }
 
   @Override

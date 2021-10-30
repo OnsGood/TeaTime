@@ -13,11 +13,6 @@ import com.example.teatime.bot.statemachine.page.impl.tea.list.TeaListFromNamePa
 public class TeaListFromNameState extends AbstractTeaListState {
 
   @Override
-  public void back(Message message, StateMachine stateMachine) {
-    mainPage(message, stateMachine);
-  }
-
-  @Override
   public void unknownMessage(Message message, StateMachine stateMachine) {
     logState(message, this.getClass());
     MessageTools.sendMessage(getPageManager().getPage(TeaListFromNamePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
@@ -27,11 +22,6 @@ public class TeaListFromNameState extends AbstractTeaListState {
   public void listTeaFromName(Message message, StateMachine stateMachine) {
     logState(message, this.getClass());
     MessageTools.sendMessage(getPageManager().getPage(InputTeaNamePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
-  }
-
-  @Override
-  protected Tea getTea() {
-    return new Tea();
   }
 
   @Override

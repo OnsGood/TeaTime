@@ -19,6 +19,7 @@ public class EditTeaPage implements Page {
       {KeyTransitions.CHANGE_TITLE.getTitle()},
       {KeyTransitions.CHANGE_DESCR.getTitle()},
       {KeyTransitions.CHANGE_TYPE.getTitle()},
+      {KeyTransitions.BACK.getTitle()},
       {KeyTransitions.MAIN_PAGE.getTitle()},
   };
 

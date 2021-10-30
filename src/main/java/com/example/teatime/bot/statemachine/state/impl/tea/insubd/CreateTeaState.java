@@ -7,7 +7,7 @@ import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.InputParamPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.CreateTeaSuccesPage;
-import com.example.teatime.bot.statemachine.page.impl.tea.TeaChooseTeaTypeListPage;
+import com.example.teatime.bot.statemachine.page.impl.tea.insubd.TeaChooseTeaTypeListPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.TeaValidationBadPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.EditTeaSuccesPage;
 import com.example.teatime.service.api.ValidateResult;

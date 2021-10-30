@@ -6,6 +6,8 @@ import com.example.teatime.bd.entity.TeaType;
 public interface TeaService {
   void save(Tea tea);
 
+  void delete(Tea tea);
+
   boolean exist(Tea tea);
 
   Iterable<Tea> listTeaByName(String name);

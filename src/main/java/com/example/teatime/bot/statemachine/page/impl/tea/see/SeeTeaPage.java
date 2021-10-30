@@ -17,6 +17,7 @@ import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
 @Component
 public class SeeTeaPage implements Page {
   private static final String[][] keyboard = new String[][]{
+      {KeyTransitions.BACK.getTitle()},
       {KeyTransitions.MAIN_PAGE.getTitle()},
   };
 

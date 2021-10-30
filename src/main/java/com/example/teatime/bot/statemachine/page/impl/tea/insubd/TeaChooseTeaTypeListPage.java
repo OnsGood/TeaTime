@@ -1,4 +1,4 @@
-package com.example.teatime.bot.statemachine.page.impl.tea;
+package com.example.teatime.bot.statemachine.page.impl.tea.insubd;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
