@@ -42,7 +42,7 @@ public class AsyncMessageForManyUsersResolver implements MessageResolver {
             .orElseGet(() -> {
               log.info("new session has been started for user - " + userId);
               StateMachine stateMachine = prototypeFactory.getObject();
-              stateMachine.setPollingBot(pollingBot);
+              stateMachine.setBot(pollingBot);
               AsyncQueueRunner asyncQueueRunner = new AsyncQueueRunner(stateMachine);
               stateMachineMap.put(userId, asyncQueueRunner);
               return asyncQueueRunner;

@@ -1,34 +1,33 @@
 package com.example.teatime.bot.statemachine.state.impl;
 
-import com.example.teatime.bot.statemachine.MessageTools;
-import com.example.teatime.bot.statemachine.StateMachine;
-import com.example.teatime.bot.statemachine.page.impl.tea.list.InputTeaNamePage;
-import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.teatype.list.TeaTypeListPage;
-import com.example.teatime.bot.statemachine.state.impl.tea.list.TeaListFromNameState;
-
-import com.example.teatime.bot.statemachine.state.impl.teatype.list.TeaTypeListState;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
+
+import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.page.impl.MainPage;
+import com.example.teatime.bot.statemachine.page.impl.tea.list.InputTeaNamePage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.list.TeaTypeListPage;
+import com.example.teatime.bot.statemachine.state.impl.tea.list.TeaListFromNameState;
+import com.example.teatime.bot.statemachine.state.impl.teatype.list.TeaTypeListState;
 
 @Component
 public class MainPageState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   public void listTeaTypes(Message message, StateMachine stateMachine) {
     stateMachine.setState(TeaTypeListState.class);
-    MessageTools.sendMessage(getPageManager().getPage(TeaTypeListPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(TeaTypeListPage.class, message, stateMachine);
   }
 
   @Override
   public void listTeaFromName(Message message, StateMachine stateMachine) {
     stateMachine.setState(TeaListFromNameState.class);
-    MessageTools.sendMessage(getPageManager().getPage(InputTeaNamePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(InputTeaNamePage.class, message, stateMachine);
   }
 
   @Override

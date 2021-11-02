@@ -20,7 +20,7 @@ public final class MessageTools {
   private static final Logger log = Logger.getLogger(MessageTools.class);
 
   private MessageTools() {
-
+    throw new IllegalStateException("Not allowed create tools objects");
   }
 
   /**

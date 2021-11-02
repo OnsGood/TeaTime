@@ -12,6 +12,7 @@ import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.InputParamPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
+import com.example.teatime.bot.statemachine.page.impl.boiling.list.BoilingListFromTeaPage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.CreateTeaTypeSuccesPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
@@ -30,7 +31,7 @@ public class CreateTeaTypeState extends AbstractState {
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -39,20 +40,20 @@ public class CreateTeaTypeState extends AbstractState {
     teaType.setActive(true);
     teaTypeService.save(teaType);
     stateMachine.setState(MainPageState.class);
-    MessageTools.sendMessage(getPageManager().getPage(CreateTeaTypeSuccesPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(CreateTeaTypeSuccesPage.class, message, stateMachine);
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   public void setTitle(Message message, StateMachine stateMachine) {
     stateMachine.setState(InputTeaTypeNameState.class);
-    MessageTools.sendMessage(getPageManager().getPage(InputParamPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
   public void setDescr(Message message, StateMachine stateMachine) {
     stateMachine.setState(InputTeaTypeDescrState.class);
-    MessageTools.sendMessage(getPageManager().getPage(InputParamPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override

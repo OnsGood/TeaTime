@@ -6,6 +6,7 @@ import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.list.BoilingListFromTeaPage;
+import com.example.teatime.bot.statemachine.page.impl.tea.insubd.CreateTeaPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.EditTeaPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
@@ -30,13 +31,13 @@ public class SeeTeaState extends AbstractState {
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   public void catchTeaId(Message message, StateMachine stateMachine) {
     stateMachine.setState(BoilingListFromTeaState.class);
-    MessageTools.sendMessage(getPageManager().getPage(BoilingListFromTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(BoilingListFromTeaPage.class, message, stateMachine);
   }
 
   @Override
@@ -44,7 +45,7 @@ public class SeeTeaState extends AbstractState {
     Tea tea = teaService.getTeaById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA, tea);
     stateMachine.setState(CreateTeaState.class);
-    MessageTools.sendMessage(getPageManager().getPage(EditTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(EditTeaPage.class, message, stateMachine);
   }
 
   @Override

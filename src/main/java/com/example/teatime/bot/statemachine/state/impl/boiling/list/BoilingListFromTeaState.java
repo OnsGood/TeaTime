@@ -3,7 +3,6 @@ package com.example.teatime.bot.statemachine.state.impl.boiling.list;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
@@ -14,7 +13,7 @@ public class BoilingListFromTeaState extends AbstractState {
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
 

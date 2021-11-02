@@ -7,6 +7,7 @@ import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.list.TeaListFromTeaTypePage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.list.TeaTypeListPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.tea.list.TeaListFromTeaTypeState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
@@ -16,13 +17,13 @@ public class SeeTeaTypeState extends AbstractState {
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   public void catchTeaTypeId(Message message, StateMachine stateMachine) {
     stateMachine.setState(TeaListFromTeaTypeState.class);
-    MessageTools.sendMessage(getPageManager().getPage(TeaListFromTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(TeaListFromTeaTypePage.class, message, stateMachine);
   }
 
   @Override

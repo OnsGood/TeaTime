@@ -62,12 +62,12 @@ public class StateMachineImpl implements StateMachine {
   }
 
   @Override
-  public void setPollingBot(TelegramLongPollingBot pollingBot) {
+  public void setBot(TelegramLongPollingBot pollingBot) {
     this.pollingBot = pollingBot;
   }
 
   @Override
-  public TelegramLongPollingBot getPollingBot() {
+  public TelegramLongPollingBot getBot() {
     return pollingBot;
   }
 

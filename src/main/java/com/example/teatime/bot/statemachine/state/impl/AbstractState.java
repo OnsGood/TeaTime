@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
@@ -118,8 +117,8 @@ public abstract class AbstractState implements State {
   private void sendNotAllowedCommandInStateErrorMessage(Message message, StateMachine stateMachine) {
     log.error("Message can not resolved from abstract state. Message - " + message.getText());
     stateMachine.setState(stateManager.getDefaultStateClass());
-    MessageTools.sendMessage(getPageManager().getPage(WrongStatePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(WrongStatePage.class, message, stateMachine);
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override

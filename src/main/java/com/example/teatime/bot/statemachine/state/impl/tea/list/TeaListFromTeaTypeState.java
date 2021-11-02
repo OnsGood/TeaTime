@@ -5,6 +5,7 @@ import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.CreateTeaPage;
+import com.example.teatime.bot.statemachine.page.impl.tea.list.InputTeaNamePage;
 import com.example.teatime.bot.statemachine.state.impl.tea.insubd.CreateTeaState;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -17,7 +18,7 @@ public class TeaListFromTeaTypeState extends AbstractTeaListState {
     Tea tea = new Tea();
     stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA, tea);
     stateMachine.setState(CreateTeaState.class);
-    MessageTools.sendMessage(getPageManager().getPage(CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(CreateTeaPage.class, message, stateMachine);
   }
 
   @Override

@@ -22,13 +22,13 @@ public class TeaTypeListState extends AbstractState {
   @Override
   public void catchTeaTypeId(Message message, StateMachine stateMachine) {
     stateMachine.setState(SeeTeaTypeState.class);
-    MessageTools.sendMessage(getPageManager().getPage(SeeTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(SeeTeaTypePage.class, message, stateMachine);
   }
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -36,12 +36,12 @@ public class TeaTypeListState extends AbstractState {
     TeaType teaType = new TeaType();
     stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA_TYPE, teaType);
     stateMachine.setState(CreateTeaTypeState.class);
-    MessageTools.sendMessage(getPageManager().getPage(CreateTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(CreateTeaTypePage.class, message, stateMachine);
   }
 
   @Override
   public void listTeaTypes(Message message, StateMachine stateMachine) {
-    MessageTools.sendMessage(getPageManager().getPage(TeaTypeListPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+    getPageManager().sendPageMessage(TeaTypeListPage.class, message, stateMachine);
   }
 
   @Override

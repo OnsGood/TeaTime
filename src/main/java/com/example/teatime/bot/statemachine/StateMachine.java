@@ -23,12 +23,12 @@ public interface StateMachine {
   /**
    * Установить бот
    */
-  void setPollingBot(TelegramLongPollingBot pollingBot);
+  void setBot(TelegramLongPollingBot pollingBot);
 
   /**
    * Получить бот
    */
-  TelegramLongPollingBot getPollingBot();
+  TelegramLongPollingBot getBot();
 
   /**
    * Обработать сообщение. <br>
