@@ -13,7 +13,7 @@ public interface StateMachine {
   /**
    * Установить состояние
    */
-  void setState(State state);
+  void setState(Class<? extends State> stateClass);
 
   /**
    * Получить состояние, которое установлено в машине сейчас
@@ -31,8 +31,8 @@ public interface StateMachine {
   TelegramLongPollingBot getPollingBot();
 
   /**
-   * Обработать сообщение
-   * Основной метод машины состояний.
+   * Обработать сообщение. <br>
+   * Основной метод машины состояний. <br>
    * @param message сообщение для обработки
    */
   void resolveMessage(Message message);

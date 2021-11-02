@@ -117,7 +117,7 @@ public abstract class AbstractState implements State {
 
   private void sendNotAllowedCommandInStateErrorMessage(Message message, StateMachine stateMachine) {
     log.error("Message can not resolved from abstract state. Message - " + message.getText());
-    stateMachine.setState(stateManager.getDefaultState());
+    stateMachine.setState(stateManager.getDefaultStateClass());
     MessageTools.sendMessage(getPageManager().getPage(WrongStatePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }

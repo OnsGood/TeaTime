@@ -18,7 +18,7 @@ public class InputTeaTypeDescrState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(MainPageState.class));
+    stateMachine.setState(MainPageState.class);
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
@@ -28,7 +28,7 @@ public class InputTeaTypeDescrState extends AbstractState {
 
   @Override
   public void unknownMessage(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(CreateTeaTypeState.class));
+    stateMachine.setState(CreateTeaTypeState.class);
     TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA_TYPE, TeaType.class);
     teaType.setDescription(message.getText());
     MessageTools.sendMessage(getPageManager().getPage(CreateTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());

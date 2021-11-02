@@ -27,20 +27,20 @@ public class CreateTeaInputDescrState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(MainPageState.class));
+    stateMachine.setState(MainPageState.class);
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void insupdTea(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(CreateTeaState.class));
+    stateMachine.setState(CreateTeaState.class);
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class));
     MessageTools.sendMessage(getPageManager().getPage(teaExist ? EditTeaPage.class : CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void unknownMessage(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(CreateTeaState.class));
+    stateMachine.setState(CreateTeaState.class);
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class);
     tea.setDescription(message.getText());
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class));

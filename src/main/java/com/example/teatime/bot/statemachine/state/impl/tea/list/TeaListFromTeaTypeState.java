@@ -16,7 +16,7 @@ public class TeaListFromTeaTypeState extends AbstractTeaListState {
   public void insupdTea(Message message, StateMachine stateMachine) {
     Tea tea = new Tea();
     stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA, tea);
-    stateMachine.setState(getStateManager().getState(CreateTeaState.class));
+    stateMachine.setState(CreateTeaState.class);
     MessageTools.sendMessage(getPageManager().getPage(CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 

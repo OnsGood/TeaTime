@@ -32,7 +32,7 @@ public class CreateTeaState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(MainPageState.class));
+    stateMachine.setState(MainPageState.class);
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
@@ -45,7 +45,7 @@ public class CreateTeaState extends AbstractState {
 
     if (validateResult.isAllGood()) {
       teaService.save(tea);
-      stateMachine.setState(getStateManager().getState(MainPageState.class));
+      stateMachine.setState(MainPageState.class);
 
       MessageTools.sendMessage(getPageManager().getPage(teaExist ? EditTeaSuccesPage.class : CreateTeaSuccesPage.class)
           .getPageMessage(message, stateMachine), stateMachine.getPollingBot());
@@ -60,19 +60,19 @@ public class CreateTeaState extends AbstractState {
 
   @Override
   public void setTitle(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(CreateTeaInputNameState.class));
+    stateMachine.setState(CreateTeaInputNameState.class);
     MessageTools.sendMessage(getPageManager().getPage(InputParamPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void setDescr(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(CreateTeaInputDescrState.class));
+    stateMachine.setState(CreateTeaInputDescrState.class);
     MessageTools.sendMessage(getPageManager().getPage(InputParamPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void setType(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(CreateTeaInputTypeState.class));
+    stateMachine.setState(CreateTeaInputTypeState.class);
     MessageTools.sendMessage(getPageManager().getPage(TeaChooseTeaTypeListPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 

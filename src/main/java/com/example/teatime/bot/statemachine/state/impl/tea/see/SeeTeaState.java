@@ -29,13 +29,13 @@ public class SeeTeaState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(MainPageState.class));
+    stateMachine.setState(MainPageState.class);
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void catchTeaId(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(BoilingListFromTeaState.class));
+    stateMachine.setState(BoilingListFromTeaState.class);
     MessageTools.sendMessage(getPageManager().getPage(BoilingListFromTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
@@ -43,7 +43,7 @@ public class SeeTeaState extends AbstractState {
   public void catchIdEdit(Message message, StateMachine stateMachine) {
     Tea tea = teaService.getTeaById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA, tea);
-    stateMachine.setState(getStateManager().getState(CreateTeaState.class));
+    stateMachine.setState(CreateTeaState.class);
     MessageTools.sendMessage(getPageManager().getPage(EditTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
@@ -51,7 +51,7 @@ public class SeeTeaState extends AbstractState {
   public void catchIdDelete(Message message, StateMachine stateMachine) {
     Tea tea = teaService.getTeaById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA, tea);
-    stateMachine.setState(getStateManager().getState(DeleteTeaState.class));
+    stateMachine.setState(DeleteTeaState.class);
   }
 
   @Override

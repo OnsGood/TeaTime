@@ -57,7 +57,7 @@ public class StateMachineImpl implements StateMachine {
 
   @PostConstruct
   public void postConstruct() {
-    state = stateManager.getDefaultState();
+    state = stateManager.getState(stateManager.getDefaultStateClass());
     setIdentifiers();
   }
 
@@ -72,9 +72,10 @@ public class StateMachineImpl implements StateMachine {
   }
 
   @Override
-  public void setState(State state) {
-    log.info("change state from " + this.state + " to " + state);
-    this.state = state;
+  public void setState(Class<? extends State> stateClass) {
+    State stateToSwitch = stateManager.getState(stateClass);
+    log.info("change state from " + this.state + " to " + stateToSwitch);
+    this.state = stateToSwitch;
   }
 
   @Override

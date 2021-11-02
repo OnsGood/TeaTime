@@ -1,13 +1,14 @@
 package com.example.teatime.bot.statemachine;
 
-import com.example.teatime.bot.statemachine.state.api.State;
-import org.apache.log4j.Logger;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.StringJoiner;
+
+import org.apache.log4j.Logger;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
+import com.example.teatime.bot.statemachine.state.api.State;
 
 /**
  * Хранит историю общения с пользователем.
@@ -51,7 +52,7 @@ public final class DialogHistory {
       }
     }
     Optional.ofNullable(stateResponse)
-        .ifPresent(s -> s.revert(stateMachine));
+      .ifPresent(s -> s.revert(stateMachine));
   }
 
   /**
@@ -60,16 +61,16 @@ public final class DialogHistory {
   private record StateResponse(State state, Message message) {
     void revert(StateMachine stateMachine) {
       log.info("reverting bot to state '" + state + "' with message '" + message.getText() + "'");
-      stateMachine.setState(state);
+      stateMachine.setState(state.getClass());
       stateMachine.resolveMessage(message);
     }
 
     @Override
     public String toString() {
       return new StringJoiner(", ", StateResponse.class.getSimpleName() + "[", "]")
-          .add("state=" + state)
-          .add("message=" + message.getText())
-          .toString();
+        .add("state=" + state)
+        .add("message=" + message.getText())
+        .toString();
     }
   }
 }

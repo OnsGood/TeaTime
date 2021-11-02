@@ -21,13 +21,13 @@ public class MainPageState extends AbstractState {
 
   @Override
   public void listTeaTypes(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(TeaTypeListState.class));
+    stateMachine.setState(TeaTypeListState.class);
     MessageTools.sendMessage(getPageManager().getPage(TeaTypeListPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void listTeaFromName(Message message, StateMachine stateMachine) {
-    stateMachine.setState(getStateManager().getState(TeaListFromNameState.class));
+    stateMachine.setState(TeaListFromNameState.class);
     MessageTools.sendMessage(getPageManager().getPage(InputTeaNamePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
