@@ -13,7 +13,6 @@ import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 public class BoilingListFromTeaState extends AbstractState {
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     stateMachine.setState(getStateManager().getState(MainPageState.class));
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }

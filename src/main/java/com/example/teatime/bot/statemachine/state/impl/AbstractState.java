@@ -1,16 +1,21 @@
 package com.example.teatime.bot.statemachine.state.impl;
 
+import java.util.Collections;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.WrongStatePage;
 import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
 import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
  * Базовое состояние, обычно бросает ошибки
@@ -117,10 +122,10 @@ public abstract class AbstractState implements State {
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
-  protected final void logState(Message message, Class<? extends State> stateClass) {
-    log.info("page showed from " + stateClass.getSimpleName() + ". Message - " + message.getText());
+  @Override
+  public Set<DataKeys> getSupportedData() {
+    return Collections.emptySet();
   }
-
 
   @Override
   public String toString() {

@@ -14,7 +14,6 @@ public class TeaListFromTeaTypeState extends AbstractTeaListState {
 
   @Override
   public void insupdTea(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     Tea tea = new Tea();
     stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA, tea);
     stateMachine.setState(getStateManager().getState(CreateTeaState.class));

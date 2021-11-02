@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.state.impl.teatype.insubd;
 
+import java.util.Set;
+
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -16,7 +18,6 @@ public class InputTeaTypeDescrState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     stateMachine.setState(getStateManager().getState(MainPageState.class));
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
@@ -32,6 +33,12 @@ public class InputTeaTypeDescrState extends AbstractState {
     teaType.setDescription(message.getText());
     MessageTools.sendMessage(getPageManager().getPage(CreateTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
+
+  @Override
+  public Set<DataKeys> getSupportedData() {
+    return Set.of(DataKeys.MODIFIED_TEA_TYPE);
+  }
+
 
   @Override
   public String toString() {

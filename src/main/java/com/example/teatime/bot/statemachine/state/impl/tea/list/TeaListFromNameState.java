@@ -14,13 +14,11 @@ public class TeaListFromNameState extends AbstractTeaListState {
 
   @Override
   public void unknownMessage(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     MessageTools.sendMessage(getPageManager().getPage(TeaListFromNamePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void listTeaFromName(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     MessageTools.sendMessage(getPageManager().getPage(InputTeaNamePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 

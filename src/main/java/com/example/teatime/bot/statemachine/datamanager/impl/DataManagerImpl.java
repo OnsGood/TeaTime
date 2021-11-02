@@ -1,13 +1,15 @@
 package com.example.teatime.bot.statemachine.datamanager.impl;
 
-import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
-import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
 
 public class DataManagerImpl implements DataManager {
   private static final Logger logger = LogManager.getLogger(DataManagerImpl.class);
@@ -36,5 +38,19 @@ public class DataManagerImpl implements DataManager {
       return objectClass.cast(object);
     }
     throw new NullPointerException("Object not found");
+  }
+
+  public void removeByKeyWithLogging(DataKeys dataKey) {
+    logger.info("removing data with key " + dataKey);
+    objectMap.remove(dataKey);
+  }
+
+  @Override
+  public void updateData(Set<DataKeys> allowedDataKeys) {
+    if (!allowedDataKeys.isEmpty()) {
+      objectMap.keySet().stream()
+        .filter(key -> !allowedDataKeys.contains(key))
+        .forEach(this::removeByKeyWithLogging);
+    }
   }
 }

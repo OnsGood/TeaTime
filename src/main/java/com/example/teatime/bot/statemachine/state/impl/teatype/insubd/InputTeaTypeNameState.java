@@ -1,5 +1,10 @@
 package com.example.teatime.bot.statemachine.state.impl.teatype.insubd;
 
+import java.util.Set;
+
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -8,15 +13,12 @@ import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.CreateTeaTypePage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class InputTeaTypeNameState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     stateMachine.setState(getStateManager().getState(MainPageState.class));
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
@@ -32,6 +34,12 @@ public class InputTeaTypeNameState extends AbstractState {
     teaType.setTitle(message.getText());
     MessageTools.sendMessage(getPageManager().getPage(CreateTeaTypePage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
+
+  @Override
+  public Set<DataKeys> getSupportedData() {
+    return Set.of(DataKeys.MODIFIED_TEA_TYPE);
+  }
+
 
   @Override
   public String toString() {

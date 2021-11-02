@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.state.impl.tea.insubd;
 
+import java.util.Set;
+
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -25,7 +27,6 @@ public class CreateTeaInputDescrState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     stateMachine.setState(getStateManager().getState(MainPageState.class));
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
@@ -44,6 +45,11 @@ public class CreateTeaInputDescrState extends AbstractState {
     tea.setDescription(message.getText());
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class));
     MessageTools.sendMessage(getPageManager().getPage(teaExist ? EditTeaPage.class : CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+  }
+
+  @Override
+  public Set<DataKeys> getSupportedData() {
+    return Set.of(DataKeys.MODIFIED_TEA);
   }
 
   @Override

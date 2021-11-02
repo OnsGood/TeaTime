@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.state.impl.tea.delete;
 
+import java.util.Set;
+
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
@@ -20,11 +22,15 @@ public class DeleteTeaState extends AbstractState {
 
   @Override
   public void unknownMessage(Message message, StateMachine machine) {
-    logState(message, this.getClass());
     Tea tea = machine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class);
     if (tea.getTitle().equals(message.getText())) {
       teaService.delete(tea);
     }
+  }
+
+  @Override
+  public Set<DataKeys> getSupportedData() {
+    return Set.of(DataKeys.MODIFIED_TEA);
   }
 
   @Override

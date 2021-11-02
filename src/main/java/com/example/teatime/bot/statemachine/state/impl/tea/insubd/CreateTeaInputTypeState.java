@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.state.impl.tea.insubd;
 
+import java.util.Set;
+
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.MessageTools;
@@ -35,14 +37,12 @@ public class CreateTeaInputTypeState extends AbstractState {
 
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     stateMachine.setState(getStateManager().getState(MainPageState.class));
     MessageTools.sendMessage(getPageManager().getPage(MainPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
   }
 
   @Override
   public void insupdTea(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     stateMachine.setState(getStateManager().getState(CreateTeaState.class));
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class));
     MessageTools.sendMessage(getPageManager().getPage(teaExist ? EditTeaPage.class : CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
@@ -50,13 +50,17 @@ public class CreateTeaInputTypeState extends AbstractState {
 
   @Override
   public void catchTeaTypeId(Message message, StateMachine stateMachine) {
-    logState(message, this.getClass());
     stateMachine.setState(getStateManager().getState(CreateTeaState.class));
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class);
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
     tea.setTeaType(teaType);
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class));
     MessageTools.sendMessage(getPageManager().getPage(teaExist ? EditTeaPage.class : CreateTeaPage.class).getPageMessage(message, stateMachine), stateMachine.getPollingBot());
+  }
+
+  @Override
+  public Set<DataKeys> getSupportedData() {
+    return Set.of(DataKeys.MODIFIED_TEA);
   }
 
 

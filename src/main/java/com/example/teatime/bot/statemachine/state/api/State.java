@@ -1,9 +1,11 @@
 package com.example.teatime.bot.statemachine.state.api;
 
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.datamanager.api.DataSupportable;
 import com.example.teatime.bot.statemachine.transition.KeyTransitionMark;
 import com.example.teatime.bot.statemachine.transition.LinkTransitionMark;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import static com.example.teatime.bot.statemachine.transition.KeyTransitions.*;
 import static com.example.teatime.bot.statemachine.transition.LinkTransitions.*;
@@ -17,7 +19,7 @@ import static com.example.teatime.bot.statemachine.transition.LinkTransitions.*;
  * @see KeyTransitionMark
  * @see LinkTransitionMark
  */
-public interface State {
+public interface State extends DataSupportable {
 
   /**
    * Пришла команда на список всех типов чаев

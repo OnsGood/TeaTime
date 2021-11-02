@@ -1,11 +1,7 @@
 package com.example.teatime.bot.statemachine;
 
-import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
-import com.example.teatime.bot.statemachine.datamanager.impl.DataManagerImpl;
-import com.example.teatime.bot.statemachine.identifier.MessageIdentifier;
-import com.example.teatime.bot.statemachine.state.api.State;
-import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
-import com.example.teatime.bot.statemachine.transition.InjectStateIdentifiersByMarkedMethods;
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -14,12 +10,17 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import javax.annotation.PostConstruct;
+import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
+import com.example.teatime.bot.statemachine.datamanager.impl.DataManagerImpl;
+import com.example.teatime.bot.statemachine.identifier.MessageIdentifier;
+import com.example.teatime.bot.statemachine.state.api.State;
+import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
+import com.example.teatime.bot.statemachine.transition.InjectStateIdentifiersByMarkedMethods;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class TeaTimeStateMachine implements StateMachine {
-  private static final Logger log = Logger.getLogger(TeaTimeStateMachine.class);
+public class StateMachineImpl implements StateMachine {
+  private static final Logger log = Logger.getLogger(StateMachineImpl.class);
 
   private TelegramLongPollingBot pollingBot;
   private StateManager stateManager;
@@ -38,8 +39,8 @@ public class TeaTimeStateMachine implements StateMachine {
     this.stateManager = stateManager;
   }
 
-  public TeaTimeStateMachine() {
-    log.info("started new TeaTimeStateMachine");
+  public StateMachineImpl() {
+    log.info("started new StateMachine");
     dataManager = new DataManagerImpl();
     dialogHistory = new DialogHistory(15);
   }
@@ -49,9 +50,9 @@ public class TeaTimeStateMachine implements StateMachine {
    */
   private void setIdentifiers() {
     messageIdentifier
-        .addIdentifier(
-            message -> true,
-            message -> state.unknownMessage(message, this));
+      .addIdentifier(
+        message -> true,
+        message -> state.unknownMessage(message, this));
   }
 
   @PostConstruct
@@ -85,6 +86,7 @@ public class TeaTimeStateMachine implements StateMachine {
   public void resolveMessage(Message message) {
     log.info("message resolved by state " + state.getClass().getSimpleName());
     try {
+      dataManager.updateData(state.getSupportedData());
       dialogHistory.newHistory(state, message);
       messageIdentifier.identifyMessage(message);
     } catch (Exception e) {
