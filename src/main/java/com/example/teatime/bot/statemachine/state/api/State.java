@@ -41,16 +41,16 @@ public interface State extends DataSupportable {
 
 
   /**
-   * Пришел id типа чая
+   * Пришел id с намеком на переход
    */
-  @LinkTransitionMark(linkTransition = TEA_TYPE)
-  void catchTeaTypeId(Message message, StateMachine stateMachine);
+  @LinkTransitionMark(linkTransition = GO)
+  void catchIdGo(Message message, StateMachine stateMachine);
 
   /**
-   * Пришел id чая
+   * Пришел id с намеком на еще один переход
    */
-  @LinkTransitionMark(linkTransition = TEA)
-  void catchTeaId(Message message, StateMachine stateMachine);
+  @LinkTransitionMark(linkTransition = GO1)
+  void catchIdGo1(Message message, StateMachine stateMachine);
 
   /**
    * Пришел id, с намеком на редактирование
@@ -72,10 +72,10 @@ public interface State extends DataSupportable {
 
 
   /**
-   * Пришла команда на создание/изменение чая
+   * Пришла команда на создание/изменение объекта
    */
-  @KeyTransitionMark(keyTransition = {CREATE_TEA, SAVE})
-  void insupdTea(Message message, StateMachine stateMachine);
+  @KeyTransitionMark(keyTransition = {CREATE_TEA, CREATE_TEA_TYPE, CREATE_BOILING, SAVE})
+  void insupd(Message message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод названия
@@ -95,12 +95,11 @@ public interface State extends DataSupportable {
   @KeyTransitionMark(keyTransition = {SET_TYPE, CHANGE_TYPE})
   void setType(Message message, StateMachine stateMachine);
 
-
   /**
-   * Пришла команда на создание типа чая
+   * Пришла команда на ввод чая
    */
-  @KeyTransitionMark(keyTransition = {CREATE_TEA_TYPE, SAVE})
-  void createTeaType(Message message, StateMachine stateMachine);
+  @KeyTransitionMark(keyTransition = {SET_TEA, CHANGE_TEA})
+  void setTea(Message message, StateMachine stateMachine);
 
   /**
    * Обработать неизвестную команду

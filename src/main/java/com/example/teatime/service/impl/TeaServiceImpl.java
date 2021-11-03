@@ -58,7 +58,7 @@ public class TeaServiceImpl implements TeaService {
   public Tea getTeaById(Long id) {
     logger.info("list teas by id - " + id);
     return teaRepository.findById(id)
-        .orElseThrow(() -> new IllegalStateException("Tea with id - '" + id + "' не найден"));
+        .orElseThrow(() -> new IllegalStateException("Tea with id - '" + id + "' not found"));
   }
 
   @Override

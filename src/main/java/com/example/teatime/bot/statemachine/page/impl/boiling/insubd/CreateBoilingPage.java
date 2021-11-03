@@ -1,27 +1,27 @@
-package com.example.teatime.bot.statemachine.page.impl.tea.insubd;
+package com.example.teatime.bot.statemachine.page.impl.boiling.insubd;
 
+import java.util.Objects;
+
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
+import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.Tea;
-import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.util.Objects;
-
-import static java.util.Optional.ofNullable;
+import static java.util.Optional.*;
 
 @Component
-public class CreateTeaPage implements Page {
+public class CreateBoilingPage implements Page {
   private static final String[][] keyboard = new String[][]{
       {KeyTransitions.SAVE.getTitle()},
       {KeyTransitions.SET_TITLE.getTitle()},
       {KeyTransitions.SET_DESCR.getTitle()},
-      {KeyTransitions.SET_TYPE.getTitle()},
       {KeyTransitions.BACK.getTitle()},
       {KeyTransitions.MAIN_PAGE.getTitle()},
   };
@@ -31,23 +31,23 @@ public class CreateTeaPage implements Page {
     SendMessage sendMessage = MessageTools.makeSendMessage(receivedMessage);
     MessageTools.setKeyboard(keyboard, sendMessage);
 
-    Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
+    Boiling boiling = stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
 
-    String text = "Создание нового чая." + "\n"
-        + "Для создания необходимо заполнить все поля, и повторно нажать на клавишу '" + KeyTransitions.CREATE_TEA.getTitle() + "'.\n"
+    String text = "Создание нового способа заварки." + "\n"
+        + "Для создания необходимо заполнить все поля, и нажать на клавишу '" + KeyTransitions.SAVE.getTitle() + "'.\n"
         + "Для заполнения поля, найдите соответствующую клавишу на клавиатуре и нажмите ее. " + "\n" + "\n"
-        + "Новый чай: " + "\n";
+        + "Новый способ заварки: " + "\n";
 
 
-    if (Objects.nonNull(tea)) {
-      String teaTypeTitle = ofNullable(tea.getTeaType())
-          .map(TeaType::getTitle)
+    if (Objects.nonNull(boiling)) {
+      String teaTitle = ofNullable(boiling.getTea())
+          .map(Tea::getTitle)
           .orElse("");
 
       text = text +
-          "Название - " + ofNullable(tea.getTitle()).orElse("") + "\n" +
-          "Описание - " + ofNullable(tea.getDescription()).orElse("") + "\n" +
-          "Вид - " + teaTypeTitle + "\n";
+          "Название - " + ofNullable(boiling.getTitle()).orElse("") + "\n" +
+          "Описание - " + ofNullable(boiling.getDescription()).orElse("") + "\n" +
+          "Чай - " + teaTitle + "\n";
     }
 
     sendMessage.setText(text);

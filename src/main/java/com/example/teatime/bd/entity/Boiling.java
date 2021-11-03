@@ -20,7 +20,7 @@ public class Boiling {
   @OneToMany(targetEntity = BoilingElement.class)
   private List<BoilingElement> boilingElementList;
 
-  protected Boiling() {
+  public Boiling() {
   }
 
   public Long getId() {

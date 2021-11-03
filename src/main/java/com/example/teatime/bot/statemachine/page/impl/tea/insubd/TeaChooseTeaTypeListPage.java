@@ -53,6 +53,6 @@ public class TeaChooseTeaTypeListPage implements Page {
   private String formStringFromTeaType(TeaType teaType) {
     return teaType.getTitle() + "\n" +
       "Описание - " + teaType.getDescription() + "\n" +
-      "Выбрать: " + LinkTransitions.TEA_TYPE.getPrefix() + teaType.getId() + "\n";
+      "Выбрать: " + LinkTransitions.GO.getPrefix() + teaType.getId() + "\n";
   }
 }

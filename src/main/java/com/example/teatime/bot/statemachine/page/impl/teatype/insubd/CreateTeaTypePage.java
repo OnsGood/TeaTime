@@ -29,7 +29,7 @@ public class CreateTeaTypePage implements Page {
     SendMessage sendMessage = MessageTools.makeSendMessage(receivedMessage);
     MessageTools.setKeyboard(keyboard, sendMessage);
 
-    TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA_TYPE, TeaType.class);
+    TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
 
     String text = "Создание нового вида чая." + "\n"
         + "Для создания необходимо заполнить все поля, и повторно нажать на клавишу '" + KeyTransitions.CREATE_TEA_TYPE.getTitle() + "'.\n"

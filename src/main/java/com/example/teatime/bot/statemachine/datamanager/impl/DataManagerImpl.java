@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -48,9 +49,10 @@ public class DataManagerImpl implements DataManager {
   @Override
   public void updateData(Set<DataKeys> allowedDataKeys) {
     if (!allowedDataKeys.isEmpty()) {
-      objectMap.keySet().stream()
+      Set<DataKeys> notAllowedKeys = objectMap.keySet().stream()
         .filter(key -> !allowedDataKeys.contains(key))
-        .forEach(this::removeByKeyWithLogging);
+        .collect(Collectors.toSet());
+      notAllowedKeys.forEach(this::removeByKeyWithLogging);
     }
   }
 }

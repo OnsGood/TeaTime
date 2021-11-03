@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.TeaType;
-import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
@@ -20,7 +19,7 @@ import com.example.teatime.bot.statemachine.state.impl.teatype.see.SeeTeaTypeSta
 public class TeaTypeListState extends AbstractState {
 
   @Override
-  public void catchTeaTypeId(Message message, StateMachine stateMachine) {
+  public void catchIdGo(Message message, StateMachine stateMachine) {
     stateMachine.setState(SeeTeaTypeState.class);
     getPageManager().sendPageMessage(SeeTeaTypePage.class, message, stateMachine);
   }
@@ -32,9 +31,9 @@ public class TeaTypeListState extends AbstractState {
   }
 
   @Override
-  public void createTeaType(Message message, StateMachine stateMachine) {
+  public void insupd(Message message, StateMachine stateMachine) {
     TeaType teaType = new TeaType();
-    stateMachine.getDataManager().setObject(DataKeys.MODIFIED_TEA_TYPE, teaType);
+    stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(CreateTeaTypeState.class);
     getPageManager().sendPageMessage(CreateTeaTypePage.class, message, stateMachine);
   }

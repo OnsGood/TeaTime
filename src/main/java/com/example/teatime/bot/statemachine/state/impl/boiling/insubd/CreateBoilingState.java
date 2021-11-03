@@ -1,4 +1,4 @@
-package com.example.teatime.bot.statemachine.state.impl.tea.insubd;
+package com.example.teatime.bot.statemachine.state.impl.boiling.insubd;
 
 import java.util.Set;
 
@@ -6,27 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.InputParamPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.tea.TeaValidationBadPage;
-import com.example.teatime.bot.statemachine.page.impl.tea.insubd.CreateTeaSuccesPage;
-import com.example.teatime.bot.statemachine.page.impl.tea.insubd.EditTeaSuccesPage;
-import com.example.teatime.bot.statemachine.page.impl.tea.insubd.TeaChooseTeaTypeListPage;
+import com.example.teatime.bot.statemachine.page.impl.boiling.BoilingValidationBadPage;
+import com.example.teatime.bot.statemachine.page.impl.boiling.insubd.CreateBoilingSuccesPage;
+import com.example.teatime.bot.statemachine.page.impl.boiling.insubd.EditBoilingSuccesPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
-import com.example.teatime.service.api.TeaService;
+import com.example.teatime.service.api.BoilingService;
 import com.example.teatime.service.api.ValidateResult;
 
+import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.*;
+
 @Component
-public class CreateTeaState extends AbstractState {
-  private TeaService teaService;
+public class CreateBoilingState extends AbstractState {
+  private BoilingService boilingService;
 
   @Autowired
-  public void setTeaService(TeaService teaService) {
-    this.teaService = teaService;
+  public void setBoilingService(BoilingService boilingService) {
+    this.boilingService = boilingService;
   }
 
   @Override
@@ -37,43 +38,39 @@ public class CreateTeaState extends AbstractState {
 
   @Override
   public void insupd(Message message, StateMachine stateMachine) {
-    Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
-    boolean teaExist = teaService.exist(tea);
-    tea.setActive(true);
-    ValidateResult validateResult = teaService.validateTeaWithMessage(tea);
+    Boiling boiling = stateMachine.getDataManager().getObject(BOILING, Boiling.class);
+    boiling.setActive(true);
+
+    ValidateResult validateResult = boilingService.validateWithMessage(boiling);
 
     if (validateResult.isAllGood()) {
-      teaService.save(tea);
+      boolean boilingExist = boilingService.exist(boiling);
+
+      boilingService.save(boiling);
       stateMachine.setState(MainPageState.class);
 
-      getPageManager().sendPageMessage(teaExist ? EditTeaSuccesPage.class : CreateTeaSuccesPage.class, message, stateMachine);
+      getPageManager().sendPageMessage(boilingExist ? EditBoilingSuccesPage.class : CreateBoilingSuccesPage.class, message, stateMachine);
       getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
     } else {
-      getPageManager().sendPageMessage(TeaValidationBadPage.class, message, stateMachine);
+      getPageManager().sendPageMessage(BoilingValidationBadPage.class, message, stateMachine);
     }
   }
 
   @Override
   public void setTitle(Message message, StateMachine stateMachine) {
-    stateMachine.setState(CreateTeaInputNameState.class);
+    stateMachine.setState(CreateBoilingInputNameState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
   public void setDescr(Message message, StateMachine stateMachine) {
-    stateMachine.setState(CreateTeaInputDescrState.class);
+    stateMachine.setState(CreateBoilingInputDescrState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
-  public void setType(Message message, StateMachine stateMachine) {
-    stateMachine.setState(CreateTeaInputTypeState.class);
-    getPageManager().sendPageMessage(TeaChooseTeaTypeListPage.class, message, stateMachine);
-  }
-
-  @Override
   public Set<DataKeys> getSupportedData() {
-    return Set.of(DataKeys.TEA);
+    return Set.of(BOILING, TEA);
   }
 
   @Override

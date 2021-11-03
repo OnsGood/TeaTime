@@ -18,7 +18,7 @@ public abstract class AbstractTeaListState extends AbstractState {
 
 
   @Override
-  public void catchTeaId(Message message, StateMachine stateMachine) {
+  public void catchIdGo(Message message, StateMachine stateMachine) {
     stateMachine.setState(SeeTeaState.class);
     getPageManager().sendPageMessage(SeeTeaPage.class, message, stateMachine);
   }

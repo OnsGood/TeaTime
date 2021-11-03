@@ -7,12 +7,10 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.TeaType;
-import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.InputParamPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
-import com.example.teatime.bot.statemachine.page.impl.boiling.list.BoilingListFromTeaPage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.CreateTeaTypeSuccesPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
@@ -35,8 +33,8 @@ public class CreateTeaTypeState extends AbstractState {
   }
 
   @Override
-  public void createTeaType(Message message, StateMachine stateMachine) {
-    TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.MODIFIED_TEA_TYPE, TeaType.class);
+  public void insupd(Message message, StateMachine stateMachine) {
+    TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
     teaType.setActive(true);
     teaTypeService.save(teaType);
     stateMachine.setState(MainPageState.class);
@@ -58,7 +56,7 @@ public class CreateTeaTypeState extends AbstractState {
 
   @Override
   public Set<DataKeys> getSupportedData() {
-    return Set.of(DataKeys.MODIFIED_TEA_TYPE);
+    return Set.of(DataKeys.TEA_TYPE);
   }
 
   @Override

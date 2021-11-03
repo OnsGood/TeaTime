@@ -22,7 +22,7 @@ public class DeleteTeaState extends AbstractState {
 
   @Override
   public void unknownMessage(Message message, StateMachine machine) {
-    Tea tea = machine.getDataManager().getObject(DataKeys.MODIFIED_TEA, Tea.class);
+    Tea tea = machine.getDataManager().getObject(DataKeys.TEA, Tea.class);
     if (tea.getTitle().equals(message.getText())) {
       teaService.delete(tea);
     }
@@ -30,7 +30,7 @@ public class DeleteTeaState extends AbstractState {
 
   @Override
   public Set<DataKeys> getSupportedData() {
-    return Set.of(DataKeys.MODIFIED_TEA);
+    return Set.of(DataKeys.TEA);
   }
 
   @Override

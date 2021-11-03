@@ -17,10 +17,12 @@ public enum KeyTransitions implements Transition {
   SET_TITLE("Ввести название"),
   SET_DESCR("Ввести описание"),
   SET_TYPE("Выбрать вид"),
+  SET_TEA("Выбрать чай"),
 
   CHANGE_TITLE("Сменить название"),
   CHANGE_DESCR("Сменить описание"),
   CHANGE_TYPE("Сменить вид"),
+  CHANGE_TEA("Сменить чай"),
 
 
   TEA_TYPE_LIST("Виды чая");

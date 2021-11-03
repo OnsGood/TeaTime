@@ -65,12 +65,12 @@ public abstract class AbstractState implements State {
   }
 
   @Override
-  public void catchTeaTypeId(Message message, StateMachine stateMachine) {
+  public void catchIdGo(Message message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void catchTeaId(Message message, StateMachine stateMachine) {
+  public void catchIdGo1(Message message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
@@ -90,7 +90,7 @@ public abstract class AbstractState implements State {
   }
 
   @Override
-  public void insupdTea(Message message, StateMachine stateMachine) {
+  public void insupd(Message message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
@@ -110,7 +110,7 @@ public abstract class AbstractState implements State {
   }
 
   @Override
-  public void createTeaType(Message message, StateMachine stateMachine) {
+  public void setTea(Message message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 

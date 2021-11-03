@@ -26,7 +26,7 @@ public class TeatimeApplication {
     dataSource.setDriverClassName("org.postgresql.Driver");
     dataSource.setUsername("postgres");
     dataSource.setPassword("postgres");
-    dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
+    dataSource.setUrl("jdbc:postgresql://localhost:5433/postgres");
     return dataSource;
   }
 

@@ -35,6 +35,6 @@ public class TeaListFromNamePage extends AbstractTeaListPage {
   protected String formStringFromTea(Tea tea) {
     return tea.getTitle() + "\n" +
         "Вид - " + tea.getTeaType().getTitle() + "\n" +
-        "Перейти - " + LinkTransitions.TEA.getPrefix() + tea.getId() + "\n";
+        "Перейти - " + LinkTransitions.GO.getPrefix() + tea.getId() + "\n";
   }
 }

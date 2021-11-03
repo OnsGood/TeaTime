@@ -7,8 +7,8 @@ import com.example.teatime.bot.statemachine.MessageException;
  * @apiNote внутренняя ссылка всегда соответствует форме: /someText_id
  */
 public enum LinkTransitions implements Transition {
-  TEA_TYPE("teaType", "Вид чая"),
-  TEA("tea", "Чай"),
+  GO("go", "Переход"),
+  GO1("go1", "Еще один переход"),
 
   EDIT("edit", "Редактировать"),
   DELETE("delete", "Удалить");
