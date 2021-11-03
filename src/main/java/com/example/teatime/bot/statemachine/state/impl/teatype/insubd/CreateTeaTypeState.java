@@ -11,10 +11,13 @@ import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.InputParamPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.TeaTypeValidationBadPage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.CreateTeaTypeSuccesPage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.EditTeaTypeSuccesPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.service.api.TeaTypeService;
+import com.example.teatime.service.api.ValidateResult;
 
 @Component
 public class CreateTeaTypeState extends AbstractState {
@@ -36,10 +39,19 @@ public class CreateTeaTypeState extends AbstractState {
   public void insupd(Message message, StateMachine stateMachine) {
     TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
     teaType.setActive(true);
-    teaTypeService.save(teaType);
-    stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(CreateTeaTypeSuccesPage.class, message, stateMachine);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+
+    ValidateResult validateResult = teaTypeService.validateWithMessage(teaType);
+    boolean teaExist = teaTypeService.exist(teaType);
+
+    if (validateResult.isAllGood()) {
+      teaTypeService.save(teaType);
+      stateMachine.setState(MainPageState.class);
+
+      getPageManager().sendPageMessage(teaExist ? EditTeaTypeSuccesPage.class : CreateTeaTypeSuccesPage.class, message, stateMachine);
+      getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    } else {
+      getPageManager().sendPageMessage(TeaTypeValidationBadPage.class, message, stateMachine);
+    }
   }
 
   @Override

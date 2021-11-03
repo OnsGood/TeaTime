@@ -61,7 +61,7 @@ public class BoilingServiceImpl implements BoilingService {
 
   @Override
   public ValidateResult validateWithMessage(Boiling boiling) {
-    logger.info("validate boiling - " + boiling);
+    logger.info("validate boiling - " + boiling.getId());
     String message = "";
 
     if (isNull(boiling.getTitle())) {

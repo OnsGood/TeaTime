@@ -32,7 +32,7 @@ public class CreateTeaTypePage implements Page {
     TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
 
     String text = "Создание нового вида чая." + "\n"
-        + "Для создания необходимо заполнить все поля, и повторно нажать на клавишу '" + KeyTransitions.CREATE_TEA_TYPE.getTitle() + "'.\n"
+        + "Для создания необходимо заполнить все поля, и нажать на клавишу '" + KeyTransitions.SAVE.getTitle() + "'.\n"
         + "Для заполнения поля, найдите соответствующую клавишу на клавиатуре и нажмите ее. " + "\n" + "\n"
         + "Новый вид чая: " + "\n";
 

@@ -8,4 +8,9 @@ public interface TeaTypeService {
   Iterable<TeaType> listTeaType();
 
   TeaType getTeaTypeById(Long id);
+
+  ValidateResult validateWithMessage(TeaType teaType);
+
+  boolean exist(TeaType teaType);
+
 }

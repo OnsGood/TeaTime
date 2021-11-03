@@ -10,9 +10,11 @@ import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
+import com.example.teatime.bot.statemachine.page.impl.DeleteWithNameInputPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.insubd.EditBoilingPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
+import com.example.teatime.bot.statemachine.state.impl.boiling.delete.DeleteBoilingState;
 import com.example.teatime.bot.statemachine.state.impl.boiling.insubd.CreateBoilingState;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingService;
@@ -49,6 +51,8 @@ public class SeeBoilingState extends AbstractState {
   public void catchIdDelete(Message message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);
+    stateMachine.setState(DeleteBoilingState.class);
+    getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
   }
 
   @Override
