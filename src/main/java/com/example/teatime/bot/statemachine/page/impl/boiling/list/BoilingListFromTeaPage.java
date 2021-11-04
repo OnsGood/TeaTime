@@ -1,10 +1,5 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.list;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;
@@ -12,13 +7,19 @@ import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingService;
 import com.example.teatime.service.api.TeaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
-import static com.example.teatime.bot.statemachine.MessageTools.*;
+import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
+import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
 
 @Component
 public class BoilingListFromTeaPage implements Page {
   private static final String[][] keyboard = new String[][]{
     {KeyTransitions.CREATE_BOILING.getTitle()},
+    {KeyTransitions.BACK.getTitle()},
     {KeyTransitions.MAIN_PAGE.getTitle()},
   };
 

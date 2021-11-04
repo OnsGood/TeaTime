@@ -1,18 +1,17 @@
 package com.example.teatime.service.impl;
 
-import java.util.Optional;
-
+import com.example.teatime.bd.entity.TeaType;
+import com.example.teatime.bd.repository.api.TeaTypeRepository;
+import com.example.teatime.service.api.TeaTypeService;
+import com.example.teatime.service.api.ValidateResult;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.teatime.bd.entity.TeaType;
-import com.example.teatime.bd.repository.api.TeaTypeRepository;
-import com.example.teatime.service.api.TeaTypeService;
-import com.example.teatime.service.api.ValidateResult;
+import java.util.Optional;
 
-import static java.util.Objects.*;
+import static java.util.Objects.isNull;
 
 @Service
 public class TeaTypeServiceImpl implements TeaTypeService {
@@ -73,5 +72,11 @@ public class TeaTypeServiceImpl implements TeaTypeService {
       .map(TeaType::getId)
       .map(id -> teaTypeRepository.existsById(id))
       .orElse(false);
+  }
+
+  @Override
+  public void delete(TeaType teaType) {
+    logger.info("delte teaType " + teaType.getId());
+    teaTypeRepository.delete(teaType);
   }
 }

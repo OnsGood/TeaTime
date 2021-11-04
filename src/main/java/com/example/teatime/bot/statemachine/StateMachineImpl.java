@@ -1,7 +1,14 @@
 package com.example.teatime.bot.statemachine;
 
-import javax.annotation.PostConstruct;
-
+import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
+import com.example.teatime.bot.statemachine.datamanager.impl.DataManagerImpl;
+import com.example.teatime.bot.statemachine.identifier.MessageIdentifier;
+import com.example.teatime.bot.statemachine.page.impl.ErrorPage;
+import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
+import com.example.teatime.bot.statemachine.state.api.State;
+import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
+import com.example.teatime.bot.statemachine.transition.InjectStateIdentifiersByMarkedMethods;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -10,12 +17,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
-import com.example.teatime.bot.statemachine.datamanager.impl.DataManagerImpl;
-import com.example.teatime.bot.statemachine.identifier.MessageIdentifier;
-import com.example.teatime.bot.statemachine.state.api.State;
-import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
-import com.example.teatime.bot.statemachine.transition.InjectStateIdentifiersByMarkedMethods;
+import javax.annotation.PostConstruct;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -24,6 +26,7 @@ public class StateMachineImpl implements StateMachine {
 
   private TelegramLongPollingBot pollingBot;
   private StateManager stateManager;
+  private PageManager pageManager;
   private State state;
   private MessageIdentifier messageIdentifier;
   private final DataManager dataManager;
@@ -37,6 +40,11 @@ public class StateMachineImpl implements StateMachine {
   @Autowired
   public void setStateManager(StateManager stateManager) {
     this.stateManager = stateManager;
+  }
+
+  @Autowired
+  public void setPageManager(PageManager pageManager) {
+    this.pageManager = pageManager;
   }
 
   public StateMachineImpl() {
@@ -91,7 +99,11 @@ public class StateMachineImpl implements StateMachine {
       dialogHistory.newHistory(state, message);
       messageIdentifier.identifyMessage(message);
     } catch (Exception e) {
-      log.error("Ошибка обработки сообщения", e);
+      dataManager.setObject(DataKeys.ERROR, e);
+      log.error("resolving message error. turn to main page", e);
+      setState(stateManager.getDefaultStateClass());
+      pageManager.sendPageMessage(ErrorPage.class, message, this);
+      state.mainPage(message, this);
     }
   }
 

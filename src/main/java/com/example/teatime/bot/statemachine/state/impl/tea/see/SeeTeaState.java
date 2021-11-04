@@ -3,9 +3,9 @@ package com.example.teatime.bot.statemachine.state.impl.tea.see;
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.page.impl.DeleteWithNameInputPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.list.BoilingListFromTeaPage;
-import com.example.teatime.bot.statemachine.page.impl.tea.delete.DeleteTeaConfirmPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.EditTeaPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
@@ -54,7 +54,7 @@ public class SeeTeaState extends AbstractState {
     Tea tea = teaService.getTeaById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.TEA, tea);
     stateMachine.setState(DeleteTeaState.class);
-    getPageManager().sendPageMessage(DeleteTeaConfirmPage.class, message, stateMachine);
+    getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
   }
 
   @Override

@@ -1,5 +1,7 @@
 package com.example.teatime;
 
+import com.example.teatime.configuration.AppConfig;
+import org.aeonbits.owner.ConfigFactory;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -23,10 +25,11 @@ public class TeatimeApplication {
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName("org.postgresql.Driver");
-    dataSource.setUsername("postgres");
-    dataSource.setPassword("postgres");
-    dataSource.setUrl("jdbc:postgresql://localhost:5433/postgres");
+    AppConfig cs = ConfigFactory.create(AppConfig.class);
+    dataSource.setDriverClassName(cs.bdDriver());
+    dataSource.setUsername(cs.bdUsername());
+    dataSource.setPassword(cs.bdPass());
+    dataSource.setUrl(cs.bdUrl());
     return dataSource;
   }
 

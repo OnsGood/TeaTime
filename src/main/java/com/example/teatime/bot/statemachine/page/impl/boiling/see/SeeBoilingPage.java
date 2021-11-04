@@ -1,18 +1,18 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.see;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
-import static com.example.teatime.bot.statemachine.MessageTools.*;
+import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
+import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
 
 @Component
 public class SeeBoilingPage implements Page {
@@ -43,7 +43,9 @@ public class SeeBoilingPage implements Page {
       .append(boiling.getDescription()).append("\n")
       .append("\n")
       .append("Перейти к заваркам - ").append(LinkTransitions.GO.makeLink(boilingId)).append("\n")
+      .append("\n")
       .append("Редактировать - ").append(LinkTransitions.EDIT.makeLink(boilingId)).append("\n")
+      .append("\n")
       .append("Удалить - ").append(LinkTransitions.DELETE.makeLink(boilingId)).append("\n");
 
 
