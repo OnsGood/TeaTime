@@ -1,14 +1,11 @@
 package com.example.teatime.bot.statemachine.state.impl.tea.see;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.list.BoilingListFromTeaPage;
+import com.example.teatime.bot.statemachine.page.impl.tea.delete.DeleteTeaConfirmPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.EditTeaPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
@@ -17,6 +14,9 @@ import com.example.teatime.bot.statemachine.state.impl.tea.delete.DeleteTeaState
 import com.example.teatime.bot.statemachine.state.impl.tea.insubd.CreateTeaState;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.TeaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class SeeTeaState extends AbstractState {
@@ -54,6 +54,7 @@ public class SeeTeaState extends AbstractState {
     Tea tea = teaService.getTeaById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.TEA, tea);
     stateMachine.setState(DeleteTeaState.class);
+    getPageManager().sendPageMessage(DeleteTeaConfirmPage.class, message, stateMachine);
   }
 
   @Override

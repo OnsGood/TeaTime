@@ -43,7 +43,9 @@ public class SeeTeaPage implements Page {
       .append(tea.getDescription()).append("\n")
       .append("\n")
       .append("Перейти к способам заварки - ").append(LinkTransitions.GO.makeLink(teaId)).append("\n")
+      .append("\n")
       .append("Редактировать - ").append(LinkTransitions.EDIT.makeLink(teaId)).append("\n")
+      .append("\n")
       .append("Удалить - ").append(LinkTransitions.DELETE.makeLink(teaId)).append("\n");
 
 

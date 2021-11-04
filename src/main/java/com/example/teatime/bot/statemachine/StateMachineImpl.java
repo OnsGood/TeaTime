@@ -42,7 +42,7 @@ public class StateMachineImpl implements StateMachine {
   public StateMachineImpl() {
     log.info("started new StateMachine");
     dataManager = new DataManagerImpl();
-    dialogHistory = new DialogHistory(15);
+    dialogHistory = new DialogHistory(30);
   }
 
   /**
