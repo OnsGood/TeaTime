@@ -1,6 +1,7 @@
 package com.example.teatime.bot.statemachine.state.impl.tea.list;
 
 import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.CreateTeaPage;
@@ -8,15 +9,27 @@ import com.example.teatime.bot.statemachine.state.impl.tea.insubd.CreateTeaState
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+import java.util.Set;
+
+import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.TEA;
+import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.TEA_TYPE;
+
 @Component
 public class TeaListFromTeaTypeState extends AbstractTeaListState {
 
   @Override
   public void insupd(Message message, StateMachine stateMachine) {
     Tea tea = new Tea();
-    stateMachine.getDataManager().setObject(DataKeys.TEA, tea);
+    TeaType parentTeaType = stateMachine.getDataManager().getObject(TEA_TYPE, TeaType.class);
+    tea.setTeaType(parentTeaType);
+    stateMachine.getDataManager().setObject(TEA, tea);
     stateMachine.setState(CreateTeaState.class);
     getPageManager().sendPageMessage(CreateTeaPage.class, message, stateMachine);
+  }
+
+  @Override
+  public Set<DataKeys> getSupportedData() {
+    return Set.of(TEA, TEA_TYPE);
   }
 
   @Override

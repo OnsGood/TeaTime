@@ -1,27 +1,36 @@
 package com.example.teatime.bot.statemachine.state.impl.boiling.list;
 
-import java.util.Objects;
-import java.util.Set;
-
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.insubd.CreateBoilingPage;
-import com.example.teatime.bot.statemachine.page.impl.boiling.see.SeeBoilingPage;
+import com.example.teatime.bot.statemachine.page.impl.boiling.see.SeeBoilingFromIdPage;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.bot.statemachine.state.impl.boiling.insubd.CreateBoilingState;
 import com.example.teatime.bot.statemachine.state.impl.boiling.see.SeeBoilingState;
+import com.example.teatime.bot.statemachine.transition.LinkTransitions;
+import com.example.teatime.service.api.BoilingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
-import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.*;
+import java.util.Objects;
+import java.util.Set;
+
+import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.TEA;
 
 @Component
 public class BoilingListFromTeaState extends AbstractState {
+  private BoilingService boilingService;
+
+  @Autowired
+  public void setBoilingService(BoilingService boilingService) {
+    this.boilingService = boilingService;
+  }
+
   @Override
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
@@ -42,8 +51,10 @@ public class BoilingListFromTeaState extends AbstractState {
 
   @Override
   public void catchIdGo(Message message, StateMachine stateMachine) {
+    Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
+    stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);
     stateMachine.setState(SeeBoilingState.class);
-    getPageManager().sendPageMessage(SeeBoilingPage.class, message, stateMachine);
+    getPageManager().sendPageMessage(SeeBoilingFromIdPage.class, message, stateMachine);
   }
 
   @Override

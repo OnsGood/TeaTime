@@ -15,9 +15,13 @@ public class BoilingElement {
   @Column(nullable = false)
   private Long temperature;
   @Column(nullable = false)
+  private Long mass;
+  @Column(nullable = false)
   private Long number;
+  @ManyToOne(targetEntity = Boiling.class)
+  private Boiling boiling;
 
-  protected BoilingElement() {
+  public BoilingElement() {
   }
 
   public Long getId() {
@@ -58,5 +62,21 @@ public class BoilingElement {
 
   public void setNumber(Long number) {
     this.number = number;
+  }
+
+  public Boiling getBoiling() {
+    return boiling;
+  }
+
+  public void setBoiling(Boiling boiling) {
+    this.boiling = boiling;
+  }
+
+  public Long getMass() {
+    return mass;
+  }
+
+  public void setMass(Long mass) {
+    this.mass = mass;
   }
 }

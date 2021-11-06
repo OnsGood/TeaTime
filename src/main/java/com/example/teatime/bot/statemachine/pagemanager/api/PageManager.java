@@ -13,5 +13,18 @@ import com.example.teatime.bot.statemachine.page.api.Page;
 public interface PageManager {
   Page getPage(Class<? extends Page> pageClass);
 
+  /**
+   * Фасад для отправки сообщений от страниц. <br>
+   * В этом методе мы:
+   * <ul>
+   *   <li>находим страницу по классу</li>
+   *   <li>генерируем сообщение страницы</li>
+   *   <li>отправляем сообщение пользователю</li>
+   * </ul>
+   *
+   * @param pageClass класс сообщения
+   * @param receivedMessage сообщение, пришедшее пользователю
+   * @param stateMachine машина состояний из которой отправляем сообщение
+   */
   void sendPageMessage(Class<? extends Page> pageClass, Message receivedMessage, StateMachine stateMachine);
 }

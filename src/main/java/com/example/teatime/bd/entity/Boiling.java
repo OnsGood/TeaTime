@@ -1,7 +1,6 @@
 package com.example.teatime.bd.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(schema = "teatime", name = "boiling")
@@ -17,8 +16,6 @@ public class Boiling {
   @ManyToOne(targetEntity = Tea.class)
   @JoinColumn(name = "tea", nullable = true)
   private Tea tea;
-  @OneToMany(targetEntity = BoilingElement.class)
-  private List<BoilingElement> boilingElementList;
 
   public Boiling() {
   }
@@ -61,13 +58,5 @@ public class Boiling {
 
   public void setTea(Tea tea) {
     this.tea = tea;
-  }
-
-  public List<BoilingElement> getBoilingElementList() {
-    return boilingElementList;
-  }
-
-  public void setBoilingElementList(List<BoilingElement> boilingElementList) {
-    this.boilingElementList = boilingElementList;
   }
 }

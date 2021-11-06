@@ -1,11 +1,10 @@
 package com.example.teatime.bot.statemachine.state.api;
 
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataSupportable;
 import com.example.teatime.bot.statemachine.transition.KeyTransitionMark;
 import com.example.teatime.bot.statemachine.transition.LinkTransitionMark;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 import static com.example.teatime.bot.statemachine.transition.KeyTransitions.*;
 import static com.example.teatime.bot.statemachine.transition.LinkTransitions.*;
@@ -74,7 +73,9 @@ public interface State extends DataSupportable {
   /**
    * Пришла команда на создание/изменение объекта
    */
-  @KeyTransitionMark(keyTransition = {CREATE_TEA, CREATE_TEA_TYPE, CREATE_BOILING, SAVE})
+  @KeyTransitionMark(keyTransition = {
+    CREATE_TEA, CREATE_TEA_TYPE, CREATE_BOILING, CREATE_BOILING_ELEMENT, SAVE
+  })
   void insupd(Message message, StateMachine stateMachine);
 
   /**
@@ -100,6 +101,31 @@ public interface State extends DataSupportable {
    */
   @KeyTransitionMark(keyTransition = {SET_TEA, CHANGE_TEA})
   void setTea(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на ввод времени
+   */
+  @KeyTransitionMark(keyTransition = {SET_TIME})
+  void setTime(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на ввод температуры
+   */
+  @KeyTransitionMark(keyTransition = {SET_TEMP})
+  void setTemp(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на ввод массы
+   */
+  @KeyTransitionMark(keyTransition = {SET_MASS})
+  void setMass(Message message, StateMachine stateMachine);
+
+  /**
+   * Пришла команда на удаление последнего элемента в последовательности
+   */
+  @KeyTransitionMark(keyTransition = {DELETE_LAST_BOILING_ELEMENT})
+  void deleteLast(Message message, StateMachine stateMachine);
+
 
   /**
    * Обработать неизвестную команду

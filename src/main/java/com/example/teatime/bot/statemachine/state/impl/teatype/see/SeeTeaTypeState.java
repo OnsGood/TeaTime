@@ -35,6 +35,8 @@ public class SeeTeaTypeState extends AbstractState {
 
   @Override
   public void catchIdGo(Message message, StateMachine stateMachine) {
+    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
+    stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(TeaListFromTeaTypeState.class);
     getPageManager().sendPageMessage(TeaListFromTeaTypePage.class, message, stateMachine);
   }
