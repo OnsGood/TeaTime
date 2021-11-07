@@ -3,10 +3,12 @@ package com.example.teatime.bot.statemachine.state.impl.teatype.see;
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.DeleteWithNameInputPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.list.TeaListFromTeaTypePage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.EditTeaTypePage;
+import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.bot.statemachine.state.impl.tea.list.TeaListFromTeaTypeState;
@@ -18,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-@Component
-public class SeeTeaTypeState extends AbstractState {
+@Component("SeeTeaTypeState")
+public class SeeTeaTypeState extends AbstractState implements State {
   private TeaTypeService teaTypeService;
 
   @Autowired
@@ -28,12 +30,14 @@ public class SeeTeaTypeState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
+  @Historical
   public void catchIdGo(Message message, StateMachine stateMachine) {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
@@ -42,6 +46,7 @@ public class SeeTeaTypeState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void catchIdEdit(Message message, StateMachine stateMachine) {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);

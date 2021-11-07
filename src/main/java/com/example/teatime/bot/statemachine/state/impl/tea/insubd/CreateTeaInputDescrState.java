@@ -5,9 +5,11 @@ import java.util.Set;
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.CreateTeaPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.insubd.EditTeaPage;
+import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.service.api.TeaService;
@@ -15,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-@Component
-public class CreateTeaInputDescrState extends AbstractState {
+@Component("CreateTeaInputDescrState")
+public class CreateTeaInputDescrState extends AbstractState implements State {
   private TeaService teaService;
 
   @Autowired
@@ -25,6 +27,7 @@ public class CreateTeaInputDescrState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);

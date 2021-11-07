@@ -3,6 +3,7 @@ package com.example.teatime.bot.statemachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
 import com.example.teatime.bot.statemachine.datamanager.impl.DataManagerImpl;
+import com.example.teatime.bot.statemachine.history.DialogHistory;
 import com.example.teatime.bot.statemachine.identifier.MessageIdentifier;
 import com.example.teatime.bot.statemachine.page.impl.ErrorPage;
 import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
@@ -96,7 +97,6 @@ public class StateMachineImpl implements StateMachine {
     log.info("message resolved by state " + state.getClass().getSimpleName());
     try {
       dataManager.updateData(state.getSupportedData());
-      dialogHistory.newHistory(state, message);
       messageIdentifier.identifyMessage(message);
     } catch (Exception e) {
       dataManager.setObject(DataKeys.ERROR, e);
@@ -109,16 +109,22 @@ public class StateMachineImpl implements StateMachine {
 
   @Override
   public void resolvePrevMessage() {
-    // откатываем 3 записи назад:
-    // 1 - запись текущего перехода назад
-    // 2 - запись прошлого перехода
-    // 3 - запись перехода, на который хотим откатиться
-    dialogHistory.goTo(this, 3);
+    dialogHistory.goToPrevState(this);
+  }
+
+  @Override
+  public DialogHistory getDialogHistory() {
+    return dialogHistory;
   }
 
   @Override
   public DataManager getDataManager() {
     return dataManager;
+  }
+
+  @Override
+  public StateManager getStateManager() {
+    return stateManager;
   }
 
 }

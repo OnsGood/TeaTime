@@ -1,28 +1,19 @@
 package com.example.teatime.bot.statemachine.state.impl;
 
 import com.example.teatime.bot.statemachine.StateMachine;
-import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.WrongStatePage;
 import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
 import com.example.teatime.bot.statemachine.state.api.State;
-import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
-
-import java.util.Collections;
-import java.util.Set;
 
 /**
  * Базовое состояние, обычно бросает ошибки
  */
-@Component
 public abstract class AbstractState implements State {
   private static final Logger log = Logger.getLogger(AbstractState.class);
-
-  private StateManager stateManager;
   private PageManager pageManager;
 
   @Autowired
@@ -32,15 +23,6 @@ public abstract class AbstractState implements State {
 
   protected final PageManager getPageManager() {
     return pageManager;
-  }
-
-  @Autowired
-  public final void setStateManager(StateManager stateManager) {
-    this.stateManager = stateManager;
-  }
-
-  protected final StateManager getStateManager() {
-    return stateManager;
   }
 
   @Override
@@ -54,8 +36,8 @@ public abstract class AbstractState implements State {
   }
 
   @Override
-  public void unknownMessage(Message message, StateMachine machine) {
-    sendNotAllowedCommandInStateErrorMessage(message, machine);
+  public void unknownMessage(Message message, StateMachine stateMachine) {
+    sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
@@ -135,14 +117,9 @@ public abstract class AbstractState implements State {
 
   private void sendNotAllowedCommandInStateErrorMessage(Message message, StateMachine stateMachine) {
     log.error("message can not resolved from abstract state. Message - " + message.getText());
-    stateMachine.setState(stateManager.getDefaultStateClass());
+    stateMachine.setState(stateMachine.getStateManager().getDefaultStateClass());
     getPageManager().sendPageMessage(WrongStatePage.class, message, stateMachine);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
-  }
-
-  @Override
-  public Set<DataKeys> getSupportedData() {
-    return Collections.emptySet();
   }
 
   @Override

@@ -4,9 +4,11 @@ import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.insubd.CreateBoilingPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.see.SeeBoilingFromIdPage;
+import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.bot.statemachine.state.impl.boiling.insubd.CreateBoilingState;
@@ -22,8 +24,8 @@ import java.util.Set;
 
 import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.TEA;
 
-@Component
-public class BoilingListFromTeaState extends AbstractState {
+@Component("BoilingListFromTeaState")
+public class BoilingListFromTeaState extends AbstractState implements State {
   private BoilingService boilingService;
 
   @Autowired
@@ -32,12 +34,14 @@ public class BoilingListFromTeaState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
+  @Historical
   public void insupd(Message message, StateMachine stateMachine) {
     Boiling boiling = new Boiling();
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);
@@ -50,6 +54,7 @@ public class BoilingListFromTeaState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void catchIdGo(Message message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);

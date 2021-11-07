@@ -2,6 +2,8 @@ package com.example.teatime.bot.statemachine.state.impl.tea.insubd;
 
 import java.util.Set;
 
+import com.example.teatime.bot.statemachine.history.Historical;
+import com.example.teatime.bot.statemachine.state.api.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -20,8 +22,8 @@ import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.service.api.TeaService;
 import com.example.teatime.service.api.ValidateResult;
 
-@Component
-public class CreateTeaState extends AbstractState {
+@Component("CreateTeaState")
+public class CreateTeaState extends AbstractState implements State {
   private TeaService teaService;
 
   @Autowired
@@ -30,6 +32,7 @@ public class CreateTeaState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);

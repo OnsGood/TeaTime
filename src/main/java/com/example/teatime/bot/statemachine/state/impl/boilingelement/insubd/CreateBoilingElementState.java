@@ -3,11 +3,13 @@ package com.example.teatime.bot.statemachine.state.impl.boilingelement.insubd;
 import com.example.teatime.bd.entity.BoilingElement;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.InputParamPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.see.SeeBoilingFromDataManagerPage;
 import com.example.teatime.bot.statemachine.page.impl.boilingelement.BoilingElementValidationBadPage;
 import com.example.teatime.bot.statemachine.page.impl.boilingelement.insubd.CreateBoilingElementSuccesPage;
+import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.bot.statemachine.state.impl.boiling.see.SeeBoilingState;
@@ -22,8 +24,8 @@ import java.util.Set;
 import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.BOILING;
 import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.BOILING_ELEMENT;
 
-@Component
-public class CreateBoilingElementState extends AbstractState {
+@Component("CreateBoilingElementState")
+public class CreateBoilingElementState extends AbstractState implements State {
   private BoilingElementService boilingElementService;
 
   @Autowired
@@ -32,6 +34,7 @@ public class CreateBoilingElementState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);

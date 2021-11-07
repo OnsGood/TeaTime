@@ -1,7 +1,9 @@
 package com.example.teatime.bot.statemachine;
 
 import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
+import com.example.teatime.bot.statemachine.history.DialogHistory;
 import com.example.teatime.bot.statemachine.state.api.State;
+import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
@@ -43,7 +45,17 @@ public interface StateMachine {
   void resolvePrevMessage();
 
   /**
+   * Вернуть историю машины
+   */
+  DialogHistory getDialogHistory();
+
+  /**
    * Возвращает менеджер данных машины
    */
   DataManager getDataManager();
+
+  /**
+   * Возвращает менеджер состояний машины
+   */
+  StateManager getStateManager();
 }

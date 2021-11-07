@@ -4,11 +4,13 @@ import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.BoilingElement;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.DeleteWithConfirmPage;
 import com.example.teatime.bot.statemachine.page.impl.DeleteWithNameInputPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.insubd.EditBoilingPage;
 import com.example.teatime.bot.statemachine.page.impl.boilingelement.insubd.CreateBoilingElementPage;
+import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.bot.statemachine.state.impl.boiling.delete.DeleteBoilingState;
@@ -28,8 +30,8 @@ import java.util.Set;
 import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.BOILING;
 import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.BOILING_ELEMENT;
 
-@Component
-public class SeeBoilingState extends AbstractState {
+@Component("SeeBoilingState")
+public class SeeBoilingState extends AbstractState implements State {
   private BoilingService boilingService;
   private BoilingElementService boilingElementService;
 
@@ -44,6 +46,7 @@ public class SeeBoilingState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void mainPage(Message message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
@@ -69,6 +72,7 @@ public class SeeBoilingState extends AbstractState {
   }
 
   @Override
+  @Historical
   public void catchIdEdit(Message message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(BOILING, boiling);
