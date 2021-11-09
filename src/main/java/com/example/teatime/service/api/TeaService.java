@@ -14,7 +14,11 @@ public interface TeaService {
 
   Iterable<Tea> listTeaByTeaType(TeaType teaType);
 
+  long countTeaByTeaType(TeaType teaType);
+
   Tea getTeaById(Long id);
+
+  boolean isAllowedToDelete(Tea tea);
 
   ValidateResult validateTeaWithMessage(Tea tea);
 }

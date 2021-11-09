@@ -10,4 +10,5 @@ public interface BoilingElementRepository extends CrudRepository<BoilingElement,
 
   BoilingElement findFirstByBoilingOrderByNumberDesc(Boiling boiling);
 
+  long countByBoiling(Boiling boiling);
 }

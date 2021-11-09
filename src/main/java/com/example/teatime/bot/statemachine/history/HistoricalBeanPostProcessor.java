@@ -1,23 +1,29 @@
 package com.example.teatime.bot.statemachine.history;
 
-import com.example.teatime.bot.statemachine.StateMachine;
-import com.example.teatime.bot.statemachine.state.api.State;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.*;
+import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.state.api.State;
 
-import static java.util.Objects.nonNull;
+import static java.util.Objects.*;
 
 @Component
 public class HistoricalBeanPostProcessor implements BeanPostProcessor {
   private final Map<String, Data> map = new HashMap<>();
+  private final Set<Method> stateMethods = Set.of(State.class.getDeclaredMethods());
 
   @Override
   public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -41,26 +47,23 @@ public class HistoricalBeanPostProcessor implements BeanPostProcessor {
       return Proxy.newProxyInstance(data.beanClass().getClassLoader(), data.beanClass().getInterfaces(), new InvocationHandler() {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-          if (Objects.nonNull(args)) {
+          if (stateMethods.contains(method)) {
             StateMachine machine = (StateMachine) Arrays.stream(args)
               .filter(StateMachine.class::isInstance)
               .findAny()
-              .orElse(null);
+              .orElseThrow(() -> new HistoricalPostProcessException("Не найдена машина состояний"));
 
             Message message = (Message) Arrays.stream(args)
               .filter(Message.class::isInstance)
               .findAny()
-              .orElse(null);
+              .orElseThrow(() -> new HistoricalPostProcessException("Не найдено сообщение"));
 
-            if (Objects.nonNull(machine) && Objects.nonNull(message)) {
-              machine.getDialogHistory().newUntrackedHistory((State) bean, message);
+            machine.getDialogHistory().newUntrackedHistory((State) bean, message);
 
-              if (data.isMethodAnnotated(method.getName())) {
-                machine.getDialogHistory().newHistory((State) bean, message);
-              }
+            if (data.isMethodAnnotated(method.getName())) {
+              machine.getDialogHistory().newHistory((State) bean, message);
             }
           }
-
           return ReflectionUtils.invokeMethod(method, bean, args);
         }
       });
@@ -77,5 +80,15 @@ public class HistoricalBeanPostProcessor implements BeanPostProcessor {
       methods.add(method);
     }
 
+  }
+
+  private class HistoricalPostProcessException extends RuntimeException {
+    public HistoricalPostProcessException(String message) {
+      super(message);
+    }
+
+    public HistoricalPostProcessException(String message, Throwable cause) {
+      super(message, cause);
+    }
   }
 }

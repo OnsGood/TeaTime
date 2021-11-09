@@ -1,11 +1,16 @@
 package com.example.teatime.bot.statemachine.history;
 
-import com.example.teatime.bot.statemachine.StateMachine;
-import com.example.teatime.bot.statemachine.state.api.State;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.StringJoiner;
+
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.util.*;
+import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.state.api.State;
 
 /**
  * Хранит историю общения с пользователем.
@@ -24,15 +29,20 @@ public final class DialogHistory {
   }
 
   /**
-   * Новая запись истории, которая помечена как отслеживаемая
+   * Новая запись истории, которая помечена как отслеживаемая.  <br>
+   * Доступно только для использования внутри пакета. <br>
    *
    * @param state   состояние бота
    * @param message новое пришедшее сообщение
    */
-  public void newHistory(State state, Message message) {
+  void newHistory(State state, Message message) {
     StateResponse stateResponse = new StateResponse(state, message);
-    log.info("add new history " + stateResponse);
-    trackedHistory.addFirst(stateResponse);
+    if(!stateResponse.equals(trackedHistory.peekFirst())) {
+      log.info("add new history " + stateResponse);
+      trackedHistory.addFirst(stateResponse);
+    } else {
+      log.info("try to add duplicated history. rollback. " + stateResponse);
+    }
     if (trackedHistory.size() > historyLength) {
       StateResponse deletedResponse = trackedHistory.removeLast();
       log.info("old history '" + deletedResponse + "' out of range. deleted");
@@ -40,12 +50,13 @@ public final class DialogHistory {
   }
 
   /**
-   * Новая запись перехода между состояниями
+   * Новая запись перехода между состояниями. <br>
+   * Доступно только для использования внутри пакета. <br>
    *
    * @param state   состояние бота
    * @param message новое пришедшее сообщение
    */
-  public void newUntrackedHistory(State state, Message message) {
+  void newUntrackedHistory(State state, Message message) {
     StateResponse stateResponse = new StateResponse(state, message);
     untrackedHistory.addFirst(stateResponse);
     if (untrackedHistory.size() > 3) {
@@ -66,6 +77,23 @@ public final class DialogHistory {
       if (!trackedHistory.isEmpty() && stateResponse.equals(untrackedHistory.get(1))) {
         stateResponse = trackedHistory.removeFirst();
       }
+    }
+
+    Optional.ofNullable(stateResponse)
+      .ifPresent(s -> s.revert(stateMachine));
+  }
+
+  /**
+   * Перевести бот в текущее состояние. <br>
+   *  Другими словами он повторит прошлую команду пользователя, записанную в историю <br>
+   *
+   * @param stateMachine машина состояний
+   */
+  public void goToCurrentState(StateMachine stateMachine) {
+    StateResponse stateResponse = null;
+
+    if (!trackedHistory.isEmpty()) {
+      stateResponse = trackedHistory.peekFirst();
     }
 
     Optional.ofNullable(stateResponse)

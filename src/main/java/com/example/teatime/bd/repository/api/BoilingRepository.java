@@ -8,4 +8,6 @@ import com.example.teatime.bd.entity.Tea;
 public interface BoilingRepository extends CrudRepository<Boiling, Long> {
 
   Iterable<Boiling> findByTea(Tea tea);
+
+  long countByTea(Tea tea);
 }

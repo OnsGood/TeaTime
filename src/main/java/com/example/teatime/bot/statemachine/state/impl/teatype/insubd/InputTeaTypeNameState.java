@@ -2,8 +2,6 @@ package com.example.teatime.bot.statemachine.state.impl.teatype.insubd;
 
 import java.util.Set;
 
-import com.example.teatime.bot.statemachine.history.Historical;
-import com.example.teatime.bot.statemachine.state.api.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -11,12 +9,13 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
+import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.CreateTeaTypePage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.EditTeaTypePage;
+import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
-import com.example.teatime.bot.statemachine.state.impl.tea.insubd.CreateTeaState;
 import com.example.teatime.service.api.TeaTypeService;
 
 @Component("InputTeaTypeNameState")
@@ -39,7 +38,7 @@ public class InputTeaTypeNameState extends AbstractState implements State {
 
   @Override
   public void insupd(Message message, StateMachine stateMachine) {
-    stateMachine.setState(CreateTeaState.class);
+    stateMachine.setState(CreateTeaTypeState.class);
     boolean exist = teaTypeService.exist(stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class));
     getPageManager().sendPageMessage(exist ? EditTeaTypePage.class : CreateTeaTypePage.class, message, stateMachine);
   }
@@ -50,7 +49,6 @@ public class InputTeaTypeNameState extends AbstractState implements State {
     stateMachine.setState(CreateTeaTypeState.class);
     TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
     teaType.setTitle(message.getText());
-    getPageManager().sendPageMessage(CreateTeaTypePage.class, message, stateMachine);
     boolean exist = teaTypeService.exist(stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class));
     getPageManager().sendPageMessage(exist ? EditTeaTypePage.class : CreateTeaTypePage.class, message, stateMachine);
   }

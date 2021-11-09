@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bd.repository.api.BoilingRepository;
+import com.example.teatime.service.api.BoilingElementService;
 import com.example.teatime.service.api.BoilingService;
 import com.example.teatime.service.api.ValidateResult;
 
@@ -19,6 +20,12 @@ import static java.util.Objects.*;
 public class BoilingServiceImpl implements BoilingService {
   private static final Logger logger = LogManager.getLogger(BoilingServiceImpl.class);
   private BoilingRepository boilingRepository;
+  private BoilingElementService boilingElementService;
+
+  @Autowired
+  public void setBoilingElementService(BoilingElementService boilingElementService) {
+    this.boilingElementService = boilingElementService;
+  }
 
   @Autowired
   public void setBoilingRepository(BoilingRepository boilingRepository) {
@@ -82,5 +89,17 @@ public class BoilingServiceImpl implements BoilingService {
     }
 
     return ValidateResult.getGood();
+  }
+
+  @Override
+  public long countByTea(Tea tea) {
+    logger.info("count boilings by tea - " + tea.getId());
+    return boilingRepository.countByTea(tea);
+  }
+
+  @Override
+  public boolean isAllowedToDelete(Boiling boiling) {
+    logger.info("check boiling allowed to delete " + boiling.getId());
+    return boilingElementService.countByBoiling(boiling) == 0;
   }
 }

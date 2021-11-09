@@ -12,4 +12,6 @@ public interface TeaRepository extends CrudRepository<Tea, Long> {
 
   Iterable<Tea> findByTeaType(TeaType teaType);
 
+  long countByTeaType(TeaType teaType);
+
 }

@@ -15,4 +15,8 @@ public interface BoilingService {
   Boiling getBoilingById(Long id);
 
   ValidateResult validateWithMessage(Boiling boiling);
+
+  long countByTea(Tea tea);
+
+  boolean isAllowedToDelete(Boiling boiling);
 }

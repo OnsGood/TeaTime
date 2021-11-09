@@ -14,4 +14,6 @@ public interface TeaTypeService {
   boolean exist(TeaType teaType);
 
   void delete(TeaType teaType);
+
+  boolean isAllowedToDelete(TeaType teaType);
 }

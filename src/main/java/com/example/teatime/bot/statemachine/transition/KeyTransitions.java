@@ -5,6 +5,7 @@ package com.example.teatime.bot.statemachine.transition;
  */
 public enum KeyTransitions implements Transition {
   MAIN_PAGE("Главное меню"),
+  START("/start"),
   BACK("Назад"),
 
   TEA_NAME_SEARCH("Поиск чая по названию"),

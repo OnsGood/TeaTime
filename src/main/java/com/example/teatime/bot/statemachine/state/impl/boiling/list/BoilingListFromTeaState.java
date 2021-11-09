@@ -41,7 +41,6 @@ public class BoilingListFromTeaState extends AbstractState implements State {
   }
 
   @Override
-  @Historical
   public void insupd(Message message, StateMachine stateMachine) {
     Boiling boiling = new Boiling();
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);

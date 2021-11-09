@@ -1,5 +1,9 @@
 package com.example.teatime.bot.statemachine.state.impl.teatype.see;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
@@ -7,6 +11,7 @@ import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.DeleteWithNameInputPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.tea.list.TeaListFromTeaTypePage;
+import com.example.teatime.bot.statemachine.page.impl.teatype.delete.DeleteTeaTypeHasCichlidsPage;
 import com.example.teatime.bot.statemachine.page.impl.teatype.insubd.EditTeaTypePage;
 import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
@@ -16,9 +21,6 @@ import com.example.teatime.bot.statemachine.state.impl.teatype.delete.DeleteTeaT
 import com.example.teatime.bot.statemachine.state.impl.teatype.insubd.CreateTeaTypeState;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.TeaTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component("SeeTeaTypeState")
 public class SeeTeaTypeState extends AbstractState implements State {
@@ -57,9 +59,14 @@ public class SeeTeaTypeState extends AbstractState implements State {
   @Override
   public void catchIdDelete(Message message, StateMachine stateMachine) {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
-    stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
-    stateMachine.setState(DeleteTeaTypeState.class);
-    getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
+    if (teaTypeService.isAllowedToDelete(teaType)) {
+      stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
+      stateMachine.setState(DeleteTeaTypeState.class);
+      getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
+    } else {
+      getPageManager().sendPageMessage(DeleteTeaTypeHasCichlidsPage.class, message, stateMachine);
+      stateMachine.getDialogHistory().goToCurrentState(stateMachine);
+    }
   }
 
   @Override

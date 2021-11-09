@@ -47,10 +47,9 @@ public class CreateTeaState extends AbstractState implements State {
 
     if (validateResult.isAllGood()) {
       teaService.save(tea);
-      stateMachine.setState(MainPageState.class);
 
       getPageManager().sendPageMessage(teaExist ? EditTeaSuccesPage.class : CreateTeaSuccesPage.class, message, stateMachine);
-      getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+      stateMachine.getDialogHistory().goToCurrentState(stateMachine);
     } else {
       getPageManager().sendPageMessage(TeaValidationBadPage.class, message, stateMachine);
     }

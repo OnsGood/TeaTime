@@ -1,5 +1,6 @@
 package com.example.teatime.bot.statemachine.datamanager.api;
 
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -10,5 +11,7 @@ public interface DataSupportable {
   /**
    * @return set ключей данных, с которыми умеет работать объект
    */
-  Set<DataKeys> getSupportedData();
+  default Set<DataKeys> getSupportedData() {
+    return Collections.emptySet();
+  }
 }

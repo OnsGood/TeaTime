@@ -2,7 +2,7 @@ package com.example.teatime.configuration;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources({"file:~/teatime/AppConfig.properties" })
+@Config.Sources({"file:~/teatime/AppConfig.properties", "file:~/tea-time/AppConfig.properties" })
 public interface AppConfig extends Config {
   @Key("bot.name")
   String botName();

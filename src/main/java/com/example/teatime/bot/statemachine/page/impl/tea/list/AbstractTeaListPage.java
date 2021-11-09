@@ -28,7 +28,7 @@ public abstract class AbstractTeaListPage implements Page {
         .append("\n")
       );
     } else {
-      builder.append("Совпадения не найдены");
+      builder.append("Список чаев пуст. Заполните его.");
     }
 
     sendMessage.setText(builder.toString());

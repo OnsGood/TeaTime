@@ -1,5 +1,12 @@
 package com.example.teatime.bot.statemachine.state.impl.boiling.see;
 
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.BoilingElement;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -8,6 +15,7 @@ import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.page.impl.DeleteWithConfirmPage;
 import com.example.teatime.bot.statemachine.page.impl.DeleteWithNameInputPage;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
+import com.example.teatime.bot.statemachine.page.impl.boiling.delete.DeleteBoilingHasCichlidsPage;
 import com.example.teatime.bot.statemachine.page.impl.boiling.insubd.EditBoilingPage;
 import com.example.teatime.bot.statemachine.page.impl.boilingelement.insubd.CreateBoilingElementPage;
 import com.example.teatime.bot.statemachine.state.api.State;
@@ -20,15 +28,8 @@ import com.example.teatime.bot.statemachine.state.impl.boilingelement.insubd.Cre
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingElementService;
 import com.example.teatime.service.api.BoilingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.util.Optional;
-import java.util.Set;
-
-import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.BOILING;
-import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.BOILING_ELEMENT;
+import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.*;
 
 @Component("SeeBoilingState")
 public class SeeBoilingState extends AbstractState implements State {
@@ -83,9 +84,15 @@ public class SeeBoilingState extends AbstractState implements State {
   @Override
   public void catchIdDelete(Message message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
-    stateMachine.getDataManager().setObject(BOILING, boiling);
-    stateMachine.setState(DeleteBoilingState.class);
-    getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
+    if (boilingService.isAllowedToDelete(boiling)) {
+      stateMachine.getDataManager().setObject(BOILING, boiling);
+      stateMachine.setState(DeleteBoilingState.class);
+      getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
+    } else {
+      getPageManager().sendPageMessage(DeleteBoilingHasCichlidsPage.class, message, stateMachine);
+      stateMachine.getDialogHistory().goToCurrentState(stateMachine);
+    }
+
   }
 
   @Override

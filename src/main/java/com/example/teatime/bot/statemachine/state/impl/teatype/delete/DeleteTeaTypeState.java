@@ -1,5 +1,11 @@
 package com.example.teatime.bot.statemachine.state.impl.teatype.delete;
 
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
@@ -11,11 +17,6 @@ import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.state.impl.AbstractState;
 import com.example.teatime.bot.statemachine.state.impl.MainPageState;
 import com.example.teatime.service.api.TeaTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
-import java.util.Set;
 
 @Component("DeleteTeaTypeState")
 public class DeleteTeaTypeState extends AbstractState implements State {
@@ -39,10 +40,11 @@ public class DeleteTeaTypeState extends AbstractState implements State {
     if (teaType.getTitle().equals(message.getText())) {
       teaTypeService.delete(teaType);
       getPageManager().sendPageMessage(DeleteSuccessPage.class, message, stateMachine);
+      mainPage(message, stateMachine);
     } else {
       getPageManager().sendPageMessage(DeleteUnsuccessfulPage.class, message, stateMachine);
+      stateMachine.getDialogHistory().goToCurrentState(stateMachine);
     }
-    mainPage(message, stateMachine);
   }
 
   @Override

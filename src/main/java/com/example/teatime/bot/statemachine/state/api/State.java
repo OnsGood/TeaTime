@@ -1,14 +1,11 @@
 package com.example.teatime.bot.statemachine.state.api;
 
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import com.example.teatime.bot.statemachine.StateMachine;
-import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.datamanager.api.DataSupportable;
 import com.example.teatime.bot.statemachine.transition.KeyTransitionMark;
 import com.example.teatime.bot.statemachine.transition.LinkTransitionMark;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
-import java.util.Collections;
-import java.util.Set;
 
 import static com.example.teatime.bot.statemachine.transition.KeyTransitions.*;
 import static com.example.teatime.bot.statemachine.transition.LinkTransitions.*;
@@ -33,7 +30,7 @@ public interface State extends DataSupportable {
   /**
    * Пришла команда на главную страницу
    */
-  @KeyTransitionMark(keyTransition = MAIN_PAGE)
+  @KeyTransitionMark(keyTransition = {MAIN_PAGE, START})
   void mainPage(Message message, StateMachine stateMachine);
 
   /**
@@ -129,12 +126,6 @@ public interface State extends DataSupportable {
    */
   @KeyTransitionMark(keyTransition = {DELETE_LAST_BOILING_ELEMENT})
   void deleteLast(Message message, StateMachine stateMachine);
-
-  @Override
-  default Set<DataKeys> getSupportedData() {
-    return Collections.emptySet();
-  }
-
 
   /**
    * Обработать неизвестную команду

@@ -56,7 +56,7 @@ public class BoilingListFromTeaPage implements Page {
         .append("\n")
       );
     } else {
-      builder.append("Совпадения не найдены");
+      builder.append("Способы заварки для этого чая не найдены. Создайте их.");
     }
 
     sendMessage.setText(builder.toString());

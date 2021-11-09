@@ -20,7 +20,6 @@ import static com.example.teatime.bot.statemachine.datamanager.api.DataKeys.TEA_
 public class TeaListFromTeaTypeState extends AbstractTeaListState implements State {
 
   @Override
-  @Historical
   public void insupd(Message message, StateMachine stateMachine) {
     Tea tea = new Tea();
     TeaType parentTeaType = stateMachine.getDataManager().getObject(TEA_TYPE, TeaType.class);

@@ -91,4 +91,10 @@ public class BoilingElementServiceImpl implements BoilingElementService {
     return ValidateResult.getGood();
   }
 
+  @Override
+  public long countByBoiling(Boiling boiling) {
+    logger.info("count boiling elements by boiling - " + boiling.getId());
+    return boilingElementRepository.countByBoiling(boiling);
+  }
+
 }
