@@ -73,7 +73,6 @@ public class SeeBoilingState extends AbstractState implements State {
   }
 
   @Override
-  @Historical
   public void catchIdEdit(Message message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(BOILING, boiling);

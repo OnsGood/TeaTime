@@ -48,7 +48,6 @@ public class SeeTeaTypeState extends AbstractState implements State {
   }
 
   @Override
-  @Historical
   public void catchIdEdit(Message message, StateMachine stateMachine) {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);

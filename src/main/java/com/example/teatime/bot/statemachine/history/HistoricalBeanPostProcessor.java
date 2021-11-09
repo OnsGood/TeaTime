@@ -82,7 +82,7 @@ public class HistoricalBeanPostProcessor implements BeanPostProcessor {
 
   }
 
-  private class HistoricalPostProcessException extends RuntimeException {
+  private static class HistoricalPostProcessException extends RuntimeException {
     public HistoricalPostProcessException(String message) {
       super(message);
     }

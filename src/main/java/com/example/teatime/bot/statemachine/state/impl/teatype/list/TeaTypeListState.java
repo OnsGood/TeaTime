@@ -35,7 +35,6 @@ public class TeaTypeListState extends AbstractState implements State {
   }
 
   @Override
-  @Historical
   public void insupd(Message message, StateMachine stateMachine) {
     TeaType teaType = new TeaType();
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
