@@ -104,6 +104,7 @@ public class StateMachineImpl implements StateMachine {
       setState(stateManager.getDefaultStateClass());
       pageManager.sendPageMessage(ErrorPage.class, message, this);
       state.mainPage(message, this);
+      dialogHistory.eraseHistory();
     }
   }
 

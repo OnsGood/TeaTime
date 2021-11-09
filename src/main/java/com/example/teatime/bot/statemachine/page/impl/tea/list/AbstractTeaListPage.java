@@ -28,7 +28,7 @@ public abstract class AbstractTeaListPage implements Page {
         .append("\n")
       );
     } else {
-      builder.append("Список чаев пуст. Заполните его.");
+      builder.append(emptyListMessage());
     }
 
     sendMessage.setText(builder.toString());
@@ -40,4 +40,6 @@ public abstract class AbstractTeaListPage implements Page {
   protected abstract String[][] getKeyboard();
 
   protected abstract String formStringFromTea(Tea tea);
+
+  protected abstract String emptyListMessage();
 }

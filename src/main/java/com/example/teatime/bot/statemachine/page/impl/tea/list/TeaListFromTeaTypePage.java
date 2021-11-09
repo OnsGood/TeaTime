@@ -43,4 +43,9 @@ public class TeaListFromTeaTypePage extends AbstractTeaListPage {
     return tea.getTitle() + "\n" +
         "Перейти - " + LinkTransitions.GO.getPrefix() + tea.getId() + "\n";
   }
+
+  @Override
+  protected String emptyListMessage() {
+    return "Список чаев пуст. Заполните его.";
+  }
 }

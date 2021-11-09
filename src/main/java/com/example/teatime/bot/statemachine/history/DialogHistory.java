@@ -100,6 +100,10 @@ public final class DialogHistory {
       .ifPresent(s -> s.revert(stateMachine));
   }
 
+  public void eraseHistory() {
+    trackedHistory.clear();
+  }
+
   /**
    * Элемент истории. Умеет переводить бот в свое состояние
    */

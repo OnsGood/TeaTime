@@ -37,4 +37,9 @@ public class TeaListFromNamePage extends AbstractTeaListPage {
         "Вид - " + tea.getTeaType().getTitle() + "\n" +
         "Перейти - " + LinkTransitions.GO.getPrefix() + tea.getId() + "\n";
   }
+
+  @Override
+  protected String emptyListMessage() {
+    return "Ничего не найдено";
+  }
 }
