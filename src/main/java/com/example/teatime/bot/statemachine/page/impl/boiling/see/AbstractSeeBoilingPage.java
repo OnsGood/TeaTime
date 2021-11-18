@@ -1,19 +1,19 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.see;
 
+import java.util.Iterator;
+
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.BoilingElement;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingElementService;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.util.Iterator;
-
-import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
-import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
+import static com.example.teatime.bot.statemachine.MessageTools.*;
 
 public abstract class AbstractSeeBoilingPage implements Page {
   private static final String[][] keyboard = new String[][]{
@@ -30,7 +30,7 @@ public abstract class AbstractSeeBoilingPage implements Page {
   }
 
   @Override
-  public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
+  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     setKeyboard(keyboard, sendMessage);
     StringBuilder builder = new StringBuilder();
@@ -84,7 +84,7 @@ public abstract class AbstractSeeBoilingPage implements Page {
     return stringBuilder.toString();
   }
 
-  protected abstract Boiling getBoiling(Message receivedMessage, StateMachine stateMachine);
+  protected abstract Boiling getBoiling(MessageDto receivedMessage, StateMachine stateMachine);
 
 
 }

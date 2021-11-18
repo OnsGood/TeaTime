@@ -2,8 +2,8 @@ package com.example.teatime.bot.statemachine.page.impl.tea.delete;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;
 
@@ -13,7 +13,7 @@ import static com.example.teatime.bot.statemachine.MessageTools.*;
 public class DeleteTeaHasCichlidsPage implements Page {
 
   @Override
-  public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
+  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     sendMessage.setText("Данный чай содержит несколько заварок. Удалите их перед удалением чая!");
     return sendMessage;

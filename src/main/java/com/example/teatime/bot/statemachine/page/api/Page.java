@@ -1,8 +1,9 @@
 package com.example.teatime.bot.statemachine.page.api;
 
-import com.example.teatime.bot.statemachine.StateMachine;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
+
+import com.example.teatime.bot.life.MessageDto;
+import com.example.teatime.bot.statemachine.StateMachine;
 
 /**
  * Отвечает за отрисовку страниц.
@@ -14,6 +15,6 @@ public interface Page {
    * @param stateMachine    машина состояний, которая ответственна за обработку сообщения
    * @return сообщение, которое нужно отправить
    */
-  SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine);
+  SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine);
 
 }

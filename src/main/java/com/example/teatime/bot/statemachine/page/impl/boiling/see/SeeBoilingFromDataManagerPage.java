@@ -1,12 +1,12 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.see;
 
 import com.example.teatime.bd.entity.Boiling;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.service.api.BoilingElementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class SeeBoilingFromDataManagerPage extends AbstractSeeBoilingPage {
@@ -16,7 +16,7 @@ public class SeeBoilingFromDataManagerPage extends AbstractSeeBoilingPage {
   }
 
   @Override
-  protected Boiling getBoiling(Message receivedMessage, StateMachine stateMachine) {
+  protected Boiling getBoiling(MessageDto receivedMessage, StateMachine stateMachine) {
     return stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
   }
 }

@@ -13,8 +13,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.state.api.State;
 
@@ -53,8 +53,8 @@ public class HistoricalBeanPostProcessor implements BeanPostProcessor {
               .findAny()
               .orElseThrow(() -> new HistoricalPostProcessException("Не найдена машина состояний"));
 
-            Message message = (Message) Arrays.stream(args)
-              .filter(Message.class::isInstance)
+            MessageDto message = (MessageDto) Arrays.stream(args)
+              .filter(MessageDto.class::isInstance)
               .findAny()
               .orElseThrow(() -> new HistoricalPostProcessException("Не найдено сообщение"));
 

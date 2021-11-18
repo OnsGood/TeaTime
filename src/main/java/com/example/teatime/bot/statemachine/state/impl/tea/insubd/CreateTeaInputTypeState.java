@@ -2,11 +2,11 @@ package com.example.teatime.bot.statemachine.state.impl.tea.insubd;
 
 import java.util.Set;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.state.api.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bd.entity.TeaType;
@@ -39,20 +39,20 @@ public class CreateTeaInputTypeState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateTeaState.class);
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class));
     getPageManager().sendPageMessage(teaExist ? EditTeaPage.class : CreateTeaPage.class, message, stateMachine);
   }
 
   @Override
-  public void catchIdGo(Message message, StateMachine stateMachine) {
+  public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateTeaState.class);
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));

@@ -1,13 +1,14 @@
 package com.example.teatime.bot.statemachine.state.impl;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.WrongStatePage;
 import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
 import com.example.teatime.bot.statemachine.state.api.State;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
  * Базовое состояние, обычно бросает ошибки
@@ -26,96 +27,96 @@ public abstract class AbstractState implements State {
   }
 
   @Override
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void back(Message message, StateMachine stateMachine) {
+  public void back(MessageDto message, StateMachine stateMachine) {
     stateMachine.resolvePrevMessage();
   }
 
   @Override
-  public void unknownMessage(Message message, StateMachine stateMachine) {
+  public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void listTeaTypes(Message message, StateMachine stateMachine) {
+  public void listTeaTypes(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void catchIdGo(Message message, StateMachine stateMachine) {
+  public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void catchIdGo1(Message message, StateMachine stateMachine) {
+  public void catchIdGo1(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void catchIdDelete(Message message, StateMachine stateMachine) {
+  public void catchIdDelete(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void catchIdEdit(Message message, StateMachine stateMachine) {
+  public void catchIdEdit(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void listTeaFromName(Message message, StateMachine stateMachine) {
+  public void listTeaFromName(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void setTitle(Message message, StateMachine stateMachine) {
+  public void setTitle(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void setDescr(Message message, StateMachine stateMachine) {
+  public void setDescr(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void setType(Message message, StateMachine stateMachine) {
+  public void setType(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void setTea(Message message, StateMachine stateMachine) {
+  public void setTea(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void setTime(Message message, StateMachine stateMachine) {
+  public void setTime(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void setTemp(Message message, StateMachine stateMachine) {
+  public void setTemp(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void setMass(Message message, StateMachine stateMachine) {
+  public void setMass(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
   @Override
-  public void deleteLast(Message message, StateMachine stateMachine) {
+  public void deleteLast(MessageDto message, StateMachine stateMachine) {
     sendNotAllowedCommandInStateErrorMessage(message, stateMachine);
   }
 
-  private void sendNotAllowedCommandInStateErrorMessage(Message message, StateMachine stateMachine) {
+  private void sendNotAllowedCommandInStateErrorMessage(MessageDto message, StateMachine stateMachine) {
     log.error("message can not resolved from abstract state. Message - " + message.getText());
     stateMachine.setState(stateMachine.getStateManager().getDefaultStateClass());
     getPageManager().sendPageMessage(WrongStatePage.class, message, stateMachine);

@@ -7,11 +7,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import com.example.teatime.bot.life.MessageDto;
 
 /**
  * Утилитный класс для шаблонных действий с сообщениями
@@ -28,7 +29,7 @@ public final class MessageTools {
    * @param message пришедшее сообщение
    * @return новое исходящее сообщение
    */
-  public static SendMessage makeSendMessage(Message message) {
+  public static SendMessage makeSendMessage(MessageDto message) {
     SendMessage sendMessage = new SendMessage();
     sendMessage.setChatId(message.getChatId().toString());
     return sendMessage;

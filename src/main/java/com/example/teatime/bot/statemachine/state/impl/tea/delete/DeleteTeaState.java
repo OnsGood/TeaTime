@@ -4,9 +4,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.history.Historical;
@@ -29,13 +29,13 @@ public class DeleteTeaState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void unknownMessage(Message message, StateMachine stateMachine) {
+  public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
     if (tea.getTitle().equals(message.getText())) {
       teaService.delete(tea);

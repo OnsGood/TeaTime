@@ -2,11 +2,11 @@ package com.example.teatime.bot.statemachine.state.impl.boiling.insubd;
 
 import java.util.Set;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.state.api.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -29,20 +29,20 @@ public class CreateBoilingInputDescrState extends AbstractState implements State
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingState.class);
     boolean exist = boilingService.exist(stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class));
     getPageManager().sendPageMessage(exist ? EditBoilingPage.class : CreateBoilingPage.class, message, stateMachine);
   }
 
   @Override
-  public void unknownMessage(Message message, StateMachine stateMachine) {
+  public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingState.class);
     Boiling boiling = stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
     boiling.setDescription(message.getText());

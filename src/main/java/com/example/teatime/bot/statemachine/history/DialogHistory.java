@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.StringJoiner;
 
 import org.apache.log4j.Logger;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.state.api.State;
 
@@ -35,7 +35,7 @@ public final class DialogHistory {
    * @param state   состояние бота
    * @param message новое пришедшее сообщение
    */
-  void newHistory(State state, Message message) {
+  void newHistory(State state, MessageDto message) {
     StateResponse stateResponse = new StateResponse(state, message);
     if(!stateResponse.equals(trackedHistory.peekFirst())) {
       log.info("add new history " + stateResponse);
@@ -56,7 +56,7 @@ public final class DialogHistory {
    * @param state   состояние бота
    * @param message новое пришедшее сообщение
    */
-  void newUntrackedHistory(State state, Message message) {
+  void newUntrackedHistory(State state, MessageDto message) {
     StateResponse stateResponse = new StateResponse(state, message);
     untrackedHistory.addFirst(stateResponse);
     if (untrackedHistory.size() > 3) {
@@ -107,7 +107,7 @@ public final class DialogHistory {
   /**
    * Элемент истории. Умеет переводить бот в свое состояние
    */
-  private record StateResponse(State state, Message message) {
+  private record StateResponse(State state, MessageDto message) {
     void revert(StateMachine stateMachine) {
       log.info("reverting bot to state '" + state + "' with message '" + message.getText() + "'");
       stateMachine.setState(state.getClass());

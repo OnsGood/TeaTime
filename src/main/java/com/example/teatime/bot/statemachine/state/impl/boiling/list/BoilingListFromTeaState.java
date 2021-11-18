@@ -2,6 +2,7 @@ package com.example.teatime.bot.statemachine.state.impl.boiling.list;
 
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.history.Historical;
@@ -17,7 +18,6 @@ import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.util.Objects;
 import java.util.Set;
@@ -35,13 +35,13 @@ public class BoilingListFromTeaState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = new Boiling();
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);
     if (Objects.isNull(boiling.getTea())) {
@@ -54,7 +54,7 @@ public class BoilingListFromTeaState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void catchIdGo(Message message, StateMachine stateMachine) {
+  public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);
     stateMachine.setState(SeeBoilingState.class);

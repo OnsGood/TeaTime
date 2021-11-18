@@ -4,10 +4,10 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.MessageTools;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
@@ -27,7 +27,7 @@ public class CreateBoilingPage implements Page {
   };
 
   @Override
-  public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
+  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = MessageTools.makeSendMessage(receivedMessage);
     MessageTools.setKeyboard(keyboard, sendMessage);
 

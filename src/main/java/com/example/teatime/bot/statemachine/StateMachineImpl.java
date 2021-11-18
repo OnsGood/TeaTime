@@ -1,5 +1,6 @@
 package com.example.teatime.bot.statemachine;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
 import com.example.teatime.bot.statemachine.datamanager.impl.DataManagerImpl;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import javax.annotation.PostConstruct;
 
@@ -93,7 +93,7 @@ public class StateMachineImpl implements StateMachine {
   }
 
   @Override
-  public void resolveMessage(Message message) {
+  public void resolveMessage(MessageDto message) {
     log.info("message resolved by state " + state.getClass().getSimpleName());
     try {
       dataManager.updateData(state.getSupportedData());

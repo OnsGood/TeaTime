@@ -1,13 +1,13 @@
 package com.example.teatime.bot.statemachine.page.impl.tea.insubd;
 
 import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
 import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
@@ -24,7 +24,7 @@ public class EditTeaPage implements Page {
   };
 
   @Override
-  public SendMessage getPageMessage(Message receivedMessage, StateMachine stateMachine) {
+  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     setKeyboard(keyboard, sendMessage);
     StringBuilder builder = new StringBuilder();

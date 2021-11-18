@@ -2,11 +2,11 @@ package com.example.teatime.bot.statemachine.state.impl.teatype.insubd;
 
 import java.util.Set;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.state.api.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -33,13 +33,13 @@ public class CreateTeaTypeState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
     teaType.setActive(true);
 
@@ -58,13 +58,13 @@ public class CreateTeaTypeState extends AbstractState implements State {
   }
 
   @Override
-  public void setTitle(Message message, StateMachine stateMachine) {
+  public void setTitle(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(InputTeaTypeNameState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
-  public void setDescr(Message message, StateMachine stateMachine) {
+  public void setDescr(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(InputTeaTypeDescrState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }

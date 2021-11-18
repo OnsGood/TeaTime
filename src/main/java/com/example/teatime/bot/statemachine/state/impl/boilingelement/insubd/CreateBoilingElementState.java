@@ -1,6 +1,7 @@
 package com.example.teatime.bot.statemachine.state.impl.boilingelement.insubd;
 
 import com.example.teatime.bd.entity.BoilingElement;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.history.Historical;
@@ -17,7 +18,6 @@ import com.example.teatime.service.api.BoilingElementService;
 import com.example.teatime.service.api.ValidateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.util.Set;
 
@@ -35,13 +35,13 @@ public class CreateBoilingElementState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     BoilingElement boilingElement = stateMachine.getDataManager().getObject(BOILING_ELEMENT, BoilingElement.class);
     boilingElement.setActive(true);
 
@@ -59,19 +59,19 @@ public class CreateBoilingElementState extends AbstractState implements State {
   }
 
   @Override
-  public void setTime(Message message, StateMachine stateMachine) {
+  public void setTime(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingElementInputTimeState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
-  public void setTemp(Message message, StateMachine stateMachine) {
+  public void setTemp(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingElementInputTempState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
-  public void setMass(Message message, StateMachine stateMachine) {
+  public void setMass(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingElementInputMassState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }

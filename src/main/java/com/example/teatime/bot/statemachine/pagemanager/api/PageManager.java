@@ -1,7 +1,6 @@
 package com.example.teatime.bot.statemachine.pagemanager.api;
 
-import org.telegram.telegrambots.meta.api.objects.Message;
-
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;
 
@@ -21,10 +20,10 @@ public interface PageManager {
    *   <li>генерируем сообщение страницы</li>
    *   <li>отправляем сообщение пользователю</li>
    * </ul>
+   *  @param pageClass класс сообщения
    *
-   * @param pageClass класс сообщения
    * @param receivedMessage сообщение, пришедшее пользователю
-   * @param stateMachine машина состояний из которой отправляем сообщение
+   * @param stateMachine    машина состояний из которой отправляем сообщение
    */
-  void sendPageMessage(Class<? extends Page> pageClass, Message receivedMessage, StateMachine stateMachine);
+  void sendPageMessage(Class<? extends Page> pageClass, MessageDto receivedMessage, StateMachine stateMachine);
 }

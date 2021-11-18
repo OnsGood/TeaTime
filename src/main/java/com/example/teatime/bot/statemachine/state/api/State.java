@@ -1,7 +1,6 @@
 package com.example.teatime.bot.statemachine.state.api;
 
-import org.telegram.telegrambots.meta.api.objects.Message;
-
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataSupportable;
 import com.example.teatime.bot.statemachine.transition.KeyTransitionMark;
@@ -25,50 +24,50 @@ public interface State extends DataSupportable {
    * Пришла команда на список всех типов чаев
    */
   @KeyTransitionMark(keyTransition = TEA_TYPE_LIST)
-  void listTeaTypes(Message message, StateMachine stateMachine);
+  void listTeaTypes(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на главную страницу
    */
   @KeyTransitionMark(keyTransition = {MAIN_PAGE, START})
-  void mainPage(Message message, StateMachine stateMachine);
+  void mainPage(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда назад
    */
   @KeyTransitionMark(keyTransition = BACK)
-  void back(Message message, StateMachine stateMachine);
+  void back(MessageDto message, StateMachine stateMachine);
 
 
   /**
    * Пришел id с намеком на переход
    */
   @LinkTransitionMark(linkTransition = GO)
-  void catchIdGo(Message message, StateMachine stateMachine);
+  void catchIdGo(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришел id с намеком на еще один переход
    */
   @LinkTransitionMark(linkTransition = GO1)
-  void catchIdGo1(Message message, StateMachine stateMachine);
+  void catchIdGo1(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришел id, с намеком на редактирование
    */
   @LinkTransitionMark(linkTransition = EDIT)
-  void catchIdEdit(Message message, StateMachine stateMachine);
+  void catchIdEdit(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришел id, с намеком на удаление
    */
   @LinkTransitionMark(linkTransition = DELETE)
-  void catchIdDelete(Message message, StateMachine stateMachine);
+  void catchIdDelete(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на поиск чая по имени
    */
   @KeyTransitionMark(keyTransition = TEA_NAME_SEARCH)
-  void listTeaFromName(Message message, StateMachine stateMachine);
+  void listTeaFromName(MessageDto message, StateMachine stateMachine);
 
 
   /**
@@ -77,58 +76,58 @@ public interface State extends DataSupportable {
   @KeyTransitionMark(keyTransition = {
     CREATE_TEA, CREATE_TEA_TYPE, CREATE_BOILING, CREATE_BOILING_ELEMENT, SAVE
   })
-  void insupd(Message message, StateMachine stateMachine);
+  void insupd(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод названия
    */
   @KeyTransitionMark(keyTransition = {SET_TITLE, CHANGE_TITLE})
-  void setTitle(Message message, StateMachine stateMachine);
+  void setTitle(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод описания
    */
   @KeyTransitionMark(keyTransition = {SET_DESCR, CHANGE_DESCR})
-  void setDescr(Message message, StateMachine stateMachine);
+  void setDescr(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод типа чая
    */
   @KeyTransitionMark(keyTransition = {SET_TYPE, CHANGE_TYPE})
-  void setType(Message message, StateMachine stateMachine);
+  void setType(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод чая
    */
   @KeyTransitionMark(keyTransition = {SET_TEA, CHANGE_TEA})
-  void setTea(Message message, StateMachine stateMachine);
+  void setTea(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод времени
    */
   @KeyTransitionMark(keyTransition = {SET_TIME})
-  void setTime(Message message, StateMachine stateMachine);
+  void setTime(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод температуры
    */
   @KeyTransitionMark(keyTransition = {SET_TEMP})
-  void setTemp(Message message, StateMachine stateMachine);
+  void setTemp(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на ввод массы
    */
   @KeyTransitionMark(keyTransition = {SET_MASS})
-  void setMass(Message message, StateMachine stateMachine);
+  void setMass(MessageDto message, StateMachine stateMachine);
 
   /**
    * Пришла команда на удаление последнего элемента в последовательности
    */
   @KeyTransitionMark(keyTransition = {DELETE_LAST_BOILING_ELEMENT})
-  void deleteLast(Message message, StateMachine stateMachine);
+  void deleteLast(MessageDto message, StateMachine stateMachine);
 
   /**
    * Обработать неизвестную команду
    */
-  void unknownMessage(Message message, StateMachine stateMachine);
+  void unknownMessage(MessageDto message, StateMachine stateMachine);
 }

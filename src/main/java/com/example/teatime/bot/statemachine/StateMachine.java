@@ -1,15 +1,15 @@
 package com.example.teatime.bot.statemachine;
 
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.datamanager.api.DataManager;
 import com.example.teatime.bot.statemachine.history.DialogHistory;
 import com.example.teatime.bot.statemachine.state.api.State;
 import com.example.teatime.bot.statemachine.statemanager.api.StateManager;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
  * Машина состояний, которая принимает новое сообщение и делегирует его обработку одному из своих состояний.
- *
  */
 public interface StateMachine {
   /**
@@ -35,9 +35,10 @@ public interface StateMachine {
   /**
    * Обработать сообщение. <br>
    * Основной метод машины состояний. <br>
+   *
    * @param message сообщение для обработки
    */
-  void resolveMessage(Message message);
+  void resolveMessage(MessageDto message);
 
   /**
    * Обработать предыдущую команду пользователя

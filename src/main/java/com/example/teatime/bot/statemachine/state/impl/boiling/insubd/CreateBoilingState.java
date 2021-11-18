@@ -4,9 +4,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Boiling;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.history.Historical;
@@ -34,13 +34,13 @@ public class CreateBoilingState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = stateMachine.getDataManager().getObject(BOILING, Boiling.class);
     boiling.setActive(true);
 
@@ -59,13 +59,13 @@ public class CreateBoilingState extends AbstractState implements State {
   }
 
   @Override
-  public void setTitle(Message message, StateMachine stateMachine) {
+  public void setTitle(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingInputNameState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
-  public void setDescr(Message message, StateMachine stateMachine) {
+  public void setDescr(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingInputDescrState.class);
     getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
   }

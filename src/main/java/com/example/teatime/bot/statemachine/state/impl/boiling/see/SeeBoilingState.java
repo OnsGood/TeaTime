@@ -5,10 +5,10 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.BoilingElement;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.history.Historical;
@@ -48,13 +48,13 @@ public class SeeBoilingState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = stateMachine.getDataManager().getObject(BOILING, Boiling.class);
     BoilingElement boilingElement = new BoilingElement();
     boilingElement.setBoiling(boiling);
@@ -73,7 +73,7 @@ public class SeeBoilingState extends AbstractState implements State {
   }
 
   @Override
-  public void catchIdEdit(Message message, StateMachine stateMachine) {
+  public void catchIdEdit(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(BOILING, boiling);
     stateMachine.setState(CreateBoilingState.class);
@@ -81,7 +81,7 @@ public class SeeBoilingState extends AbstractState implements State {
   }
 
   @Override
-  public void catchIdDelete(Message message, StateMachine stateMachine) {
+  public void catchIdDelete(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
     if (boilingService.isAllowedToDelete(boiling)) {
       stateMachine.getDataManager().setObject(BOILING, boiling);
@@ -95,7 +95,7 @@ public class SeeBoilingState extends AbstractState implements State {
   }
 
   @Override
-  public void deleteLast(Message message, StateMachine stateMachine) {
+  public void deleteLast(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(DeleteBoilingElementState.class);
     getPageManager().sendPageMessage(DeleteWithConfirmPage.class, message, stateMachine);
   }

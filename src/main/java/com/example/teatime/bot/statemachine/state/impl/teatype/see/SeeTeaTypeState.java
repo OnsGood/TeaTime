@@ -2,9 +2,9 @@ package com.example.teatime.bot.statemachine.state.impl.teatype.see;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.TeaType;
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
 import com.example.teatime.bot.statemachine.history.Historical;
@@ -33,14 +33,14 @@ public class SeeTeaTypeState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   @Historical
-  public void catchIdGo(Message message, StateMachine stateMachine) {
+  public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(TeaListFromTeaTypeState.class);
@@ -48,7 +48,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
   }
 
   @Override
-  public void catchIdEdit(Message message, StateMachine stateMachine) {
+  public void catchIdEdit(MessageDto message, StateMachine stateMachine) {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(CreateTeaTypeState.class);
@@ -56,7 +56,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
   }
 
   @Override
-  public void catchIdDelete(Message message, StateMachine stateMachine) {
+  public void catchIdDelete(MessageDto message, StateMachine stateMachine) {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
     if (teaTypeService.isAllowedToDelete(teaType)) {
       stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);

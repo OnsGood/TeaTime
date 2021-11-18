@@ -1,9 +1,9 @@
 package com.example.teatime.bot.statemachine.state.impl.teatype.list;
 
+import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.history.Historical;
 import com.example.teatime.bot.statemachine.state.api.State;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -22,20 +22,20 @@ public class TeaTypeListState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void catchIdGo(Message message, StateMachine stateMachine) {
+  public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(SeeTeaTypeState.class);
     getPageManager().sendPageMessage(SeeTeaTypePage.class, message, stateMachine);
   }
 
   @Override
   @Historical
-  public void mainPage(Message message, StateMachine stateMachine) {
+  public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
     getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
-  public void insupd(Message message, StateMachine stateMachine) {
+  public void insupd(MessageDto message, StateMachine stateMachine) {
     TeaType teaType = new TeaType();
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(CreateTeaTypeState.class);
@@ -44,7 +44,7 @@ public class TeaTypeListState extends AbstractState implements State {
 
   @Override
   @Historical
-  public void listTeaTypes(Message message, StateMachine stateMachine) {
+  public void listTeaTypes(MessageDto message, StateMachine stateMachine) {
     getPageManager().sendPageMessage(TeaTypeListPage.class, message, stateMachine);
   }
 
