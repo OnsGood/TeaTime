@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl;
 
+import java.util.List;
+
 import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.datamanager.api.DataKeys;
@@ -12,7 +14,7 @@ import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
 @Component
 public class ErrorPage implements Page {
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     String exceptionText = stateMachine.getDataManager().getObject(DataKeys.ERROR, Exception.class)
       .getLocalizedMessage();
@@ -23,6 +25,6 @@ public class ErrorPage implements Page {
         exceptionText + "\n" +
         "Возврат в главное меню."
     );
-    return sendMessage;
+    return List.of(sendMessage);
   }
 }

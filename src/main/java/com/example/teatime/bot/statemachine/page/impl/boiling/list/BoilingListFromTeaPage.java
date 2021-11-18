@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.list;
 
+import java.util.List;
+
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -37,7 +39,7 @@ public class BoilingListFromTeaPage implements Page {
   }
 
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     setKeyboard(keyboard, sendMessage);
     StringBuilder builder = new StringBuilder();
@@ -60,7 +62,7 @@ public class BoilingListFromTeaPage implements Page {
     }
 
     sendMessage.setText(builder.toString());
-    return sendMessage;
+    return List.of(sendMessage);
   }
 
   private String formStringFromBoiling(Boiling boiling) {

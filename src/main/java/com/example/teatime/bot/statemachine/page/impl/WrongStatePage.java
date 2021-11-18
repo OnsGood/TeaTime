@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl;
 
+import java.util.List;
+
 import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;
@@ -11,9 +13,9 @@ import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
 @Component
 public class WrongStatePage implements Page {
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     sendMessage.setText("В текущем состоянии диалога выполнение этой команды недоступно");
-    return sendMessage;
+    return List.of(sendMessage);
   }
 }

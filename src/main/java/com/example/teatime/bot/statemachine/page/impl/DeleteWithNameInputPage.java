@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
@@ -14,10 +16,10 @@ import static com.example.teatime.bot.statemachine.MessageTools.*;
 public class DeleteWithNameInputPage implements Page {
 
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     MessageTools.removeSpecialKeyboard(sendMessage);
     sendMessage.setText("Введите имя удаляемой сущности для подтверждения своих намерений:");
-    return sendMessage;
+    return List.of(sendMessage);
   }
 }

@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.delete;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
@@ -13,9 +15,9 @@ import static com.example.teatime.bot.statemachine.MessageTools.*;
 public class DeleteBoilingHasCichlidsPage implements Page {
 
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     sendMessage.setText("Данный способ заварки содержит несколько заварок. Удалите их перед удалением способа заварки!");
-    return sendMessage;
+    return List.of(sendMessage);
   }
 }

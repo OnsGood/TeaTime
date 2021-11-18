@@ -1,5 +1,6 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.insubd;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class CreateBoilingPage implements Page {
   };
 
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = MessageTools.makeSendMessage(receivedMessage);
     MessageTools.setKeyboard(keyboard, sendMessage);
 
@@ -51,6 +52,6 @@ public class CreateBoilingPage implements Page {
     }
 
     sendMessage.setText(text);
-    return sendMessage;
+    return List.of(sendMessage);
   }
 }

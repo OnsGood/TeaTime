@@ -1,15 +1,18 @@
 package com.example.teatime.bot.statemachine.pagemanager.impl;
 
-import com.example.teatime.bot.life.MessageDto;
-import com.example.teatime.bot.statemachine.MessageTools;
-import com.example.teatime.bot.statemachine.StateMachine;
-import com.example.teatime.bot.statemachine.page.api.Page;
-import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
+import java.util.Arrays;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
+import com.example.teatime.bot.life.MessageDto;
+import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.page.api.Page;
+import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
+
+import static com.example.teatime.bot.statemachine.MessageTools.*;
 
 @Component
 public class PageManagerImpl implements PageManager {
@@ -31,6 +34,8 @@ public class PageManagerImpl implements PageManager {
 
   @Override
   public void sendPageMessage(Class<? extends Page> pageClass, MessageDto receivedMessage, StateMachine stateMachine) {
-    MessageTools.sendMessage(getPage(pageClass).getPageMessage(receivedMessage, stateMachine), stateMachine.getBot());
+    getPage(pageClass).getPageMessage(receivedMessage, stateMachine).stream()
+      .filter(Objects::nonNull)
+      .forEach(m -> sendMessage(m, stateMachine.getBot()));
   }
 }

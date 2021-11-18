@@ -1,5 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl.tea.insubd;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -24,7 +26,7 @@ public class TeaChooseTeaTypeListPage implements Page {
   }
 
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     MessageTools.removeSpecialKeyboard(sendMessage);
 
@@ -47,7 +49,7 @@ public class TeaChooseTeaTypeListPage implements Page {
 
     sendMessage.setText(builder.toString());
 
-    return sendMessage;
+    return List.of(sendMessage);
   }
 
   private String formStringFromTeaType(TeaType teaType) {

@@ -1,6 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.see;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
@@ -30,7 +31,7 @@ public abstract class AbstractSeeBoilingPage implements Page {
   }
 
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     setKeyboard(keyboard, sendMessage);
     StringBuilder builder = new StringBuilder();
@@ -52,7 +53,7 @@ public abstract class AbstractSeeBoilingPage implements Page {
 
 
     sendMessage.setText(builder.toString());
-    return sendMessage;
+    return List.of(sendMessage);
   }
 
   private String getBoilingElements(Boiling boiling) {

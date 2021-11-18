@@ -10,6 +10,7 @@ import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
+import java.util.List;
 import java.util.Objects;
 
 import static java.util.Optional.ofNullable;
@@ -26,7 +27,7 @@ public class CreateBoilingElementPage implements Page {
   };
 
   @Override
-  public SendMessage getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
+  public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = MessageTools.makeSendMessage(receivedMessage);
     MessageTools.setKeyboard(keyboard, sendMessage);
 
@@ -46,6 +47,6 @@ public class CreateBoilingElementPage implements Page {
     }
 
     sendMessage.setText(text);
-    return sendMessage;
+    return List.of(sendMessage);
   }
 }
