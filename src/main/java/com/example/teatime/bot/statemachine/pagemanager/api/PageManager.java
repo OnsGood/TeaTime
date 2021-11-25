@@ -26,4 +26,9 @@ public interface PageManager {
    * @param stateMachine    машина состояний из которой отправляем сообщение
    */
   void sendPageMessage(Class<? extends Page> pageClass, MessageDto receivedMessage, StateMachine stateMachine);
+
+  /**
+   * Фасад для отправки ответов на колбэк страниц
+   */
+  void sendCallbackResponse(MessageDto receivedMessage, StateMachine stateMachine);
 }

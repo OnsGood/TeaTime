@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.life.MessageDto;
@@ -56,6 +57,15 @@ public class TeaTypeListPage implements Page {
     sendMessage.setText(builder.toString());
 
     return List.of(sendMessage);
+  }
+
+  @Override
+  public EditMessageText getCallbackResponse(MessageDto callbackMessage, StateMachine stateMachine) {
+    EditMessageText sendMessage = makeCallbackMessage(callbackMessage);
+
+    sendMessage.setText(callbackMessage.getText());
+
+    return sendMessage;
   }
 
   private String formStringFromTeaType(TeaType teaType) {

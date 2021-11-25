@@ -96,8 +96,12 @@ public class StateMachineImpl implements StateMachine {
   public void resolveMessage(MessageDto message) {
     log.info("message resolved by state " + state.getClass().getSimpleName());
     try {
-      dataManager.updateData(state.getSupportedData());
-      messageIdentifier.identifyMessage(message);
+      if(message.isCallback()) {
+        pageManager.sendCallbackResponse(message, this);
+      } else {
+        dataManager.updateData(state.getSupportedData());
+        messageIdentifier.identifyMessage(message);
+      }
     } catch (Exception e) {
       dataManager.setObject(DataKeys.ERROR, e);
       log.error("resolving message error. turn to main page", e);

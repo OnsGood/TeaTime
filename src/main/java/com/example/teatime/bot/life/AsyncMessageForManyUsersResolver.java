@@ -56,11 +56,15 @@ public class AsyncMessageForManyUsersResolver implements MessageResolver {
       messageBuilder
         .setChatId(update.getCallbackQuery().getMessage().getChatId())
         .setText(update.getCallbackQuery().getData())
+        .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
+        .setIsCallback(true)
         .setUserId(update.getCallbackQuery().getFrom().getId());
     } else if (Objects.nonNull(update.getMessage())) {
       messageBuilder
         .setChatId(update.getMessage().getChatId())
         .setText(update.getMessage().getText())
+        .setMessageId(update.getMessage().getMessageId())
+        .setIsCallback(false)
         .setUserId(update.getMessage().getFrom().getId());
     } else {
       throw new TelegramMessageResolvingException("Незнакомый тип сообщения");

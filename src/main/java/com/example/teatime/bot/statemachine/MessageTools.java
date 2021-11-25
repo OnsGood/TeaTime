@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -26,12 +28,20 @@ public final class MessageTools {
 
   /**
    * Создает объект исходящего сообщения, и заполняет его необходимыми данными
+   *
    * @param message пришедшее сообщение
    * @return новое исходящее сообщение
    */
   public static SendMessage makeSendMessage(MessageDto message) {
     SendMessage sendMessage = new SendMessage();
     sendMessage.setChatId(message.getChatId().toString());
+    return sendMessage;
+  }
+
+  public static EditMessageText makeCallbackMessage(MessageDto message) {
+    EditMessageText sendMessage = new EditMessageText();
+    sendMessage.setChatId(message.getChatId().toString());
+    sendMessage.setMessageId(message.messageId());
     return sendMessage;
   }
 
@@ -62,7 +72,7 @@ public final class MessageTools {
   /**
    * Отправляет сообщение
    */
-  public static void sendMessage(SendMessage sendMessage, TelegramLongPollingBot botToSend) {
+  public static void sendMessage(BotApiMethod<?> sendMessage, TelegramLongPollingBot botToSend) {
     try {
       botToSend.execute(sendMessage);
     } catch (TelegramApiException e) {
