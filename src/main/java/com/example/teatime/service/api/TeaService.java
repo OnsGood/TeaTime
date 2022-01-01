@@ -20,5 +20,5 @@ public interface TeaService {
 
   boolean isAllowedToDelete(Tea tea);
 
-  ValidateResult validateTeaWithMessage(Tea tea);
+  ValidateResult validateTeaWithMessage(Tea tea, boolean isUserModerator);
 }

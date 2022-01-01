@@ -9,7 +9,7 @@ public interface TeaTypeService {
 
   TeaType getTeaTypeById(Long id);
 
-  ValidateResult validateWithMessage(TeaType teaType);
+  ValidateResult validateWithMessage(TeaType teaType, boolean isUserModerator);
 
   boolean exist(TeaType teaType);
 

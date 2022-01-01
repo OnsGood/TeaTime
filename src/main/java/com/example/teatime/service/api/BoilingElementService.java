@@ -18,7 +18,7 @@ public interface BoilingElementService {
 
   BoilingElement getElementById(Long id);
 
-  ValidateResult validateWithMessage(BoilingElement boilingElement);
+  ValidateResult validateWithMessage(BoilingElement boilingElement, boolean isUserModerator);
 
   long countByBoiling(Boiling boiling);
 }

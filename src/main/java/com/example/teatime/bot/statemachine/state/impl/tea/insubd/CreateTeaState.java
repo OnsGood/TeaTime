@@ -43,7 +43,7 @@ public class CreateTeaState extends AbstractState implements State {
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
     boolean teaExist = teaService.exist(tea);
     tea.setActive(true);
-    ValidateResult validateResult = teaService.validateTeaWithMessage(tea);
+    ValidateResult validateResult = teaService.validateTeaWithMessage(tea, stateMachine.isUserModerator());
 
     if (validateResult.isAllGood()) {
       teaService.save(tea);

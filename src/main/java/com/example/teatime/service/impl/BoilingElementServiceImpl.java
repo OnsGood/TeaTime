@@ -67,7 +67,7 @@ public class BoilingElementServiceImpl implements BoilingElementService {
   }
 
   @Override
-  public ValidateResult validateWithMessage(BoilingElement boilingElement) {
+  public ValidateResult validateWithMessage(BoilingElement boilingElement, boolean isUserModerator) {
     logger.info("validate boiling element - " + boilingElement.getId());
     String message = "";
 
@@ -82,6 +82,9 @@ public class BoilingElementServiceImpl implements BoilingElementService {
     }
     if (isNull(boilingElement.getActive())) {
       message += "Объект не активирован. ";
+    }
+    if (!isUserModerator) {
+      message += "Вы не обладаете нужными правами. ";
     }
 
     if (!message.equals("")) {

@@ -44,7 +44,7 @@ public class CreateBoilingState extends AbstractState implements State {
     Boiling boiling = stateMachine.getDataManager().getObject(BOILING, Boiling.class);
     boiling.setActive(true);
 
-    ValidateResult validateResult = boilingService.validateWithMessage(boiling);
+    ValidateResult validateResult = boilingService.validateWithMessage(boiling, stateMachine.isUserModerator());
 
     if (validateResult.isAllGood()) {
       boolean boilingExist = boilingService.exist(boiling);

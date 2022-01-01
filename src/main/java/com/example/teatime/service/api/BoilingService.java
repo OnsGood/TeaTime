@@ -14,7 +14,7 @@ public interface BoilingService {
 
   Boiling getBoilingById(Long id);
 
-  ValidateResult validateWithMessage(Boiling boiling);
+  ValidateResult validateWithMessage(Boiling boiling, boolean isUserModerator);
 
   long countByTea(Tea tea);
 

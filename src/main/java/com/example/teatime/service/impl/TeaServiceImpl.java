@@ -82,7 +82,7 @@ public class TeaServiceImpl implements TeaService {
   }
 
   @Override
-  public ValidateResult validateTeaWithMessage(Tea tea) {
+  public ValidateResult validateTeaWithMessage(Tea tea, boolean isUserModerator) {
     String message = "";
 
     if (isNull(tea.getTeaType())) {
@@ -96,6 +96,9 @@ public class TeaServiceImpl implements TeaService {
     }
     if (isNull(tea.getActive())) {
       message += "Объект не активирован. ";
+    }
+    if (!isUserModerator) {
+      message += "Вы не обладаете нужными правами. ";
     }
 
     if (!message.equals("")) {
