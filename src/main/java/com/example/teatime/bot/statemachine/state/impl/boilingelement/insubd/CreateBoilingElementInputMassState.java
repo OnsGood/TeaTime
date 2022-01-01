@@ -39,7 +39,7 @@ public class CreateBoilingElementInputMassState extends AbstractState implements
     BoilingElement boilingElement = stateMachine.getDataManager().getObject(BOILING_ELEMENT, BoilingElement.class);
 
     try {
-      boilingElement.setMass(Long.parseLong(message.getText()));
+      boilingElement.setMass(Long.parseLong(message.text()));
     } catch (Exception e) {
       throw new MessageException("Ошибка преобразования сообщения в число грамм");
     }

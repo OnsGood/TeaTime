@@ -1,6 +1,7 @@
 package com.example.teatime.bot.statemachine.page.impl.tea.list;
 
 import com.example.teatime.bd.entity.Tea;
+import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.TeaService;
@@ -30,18 +31,25 @@ public class TeaListFromTeaTypePage extends AbstractTeaListPage {
   }
 
   @Override
-  protected String[][] getKeyboard() {
-    return new String[][]{
+  protected String[][] getKeyboard(StateMachine stateMachine) {
+    if (stateMachine.isUserModerator()) {
+      return new String[][]{
         {KeyTransitions.CREATE_TEA.getTitle()},
         {KeyTransitions.BACK.getTitle()},
         {KeyTransitions.MAIN_PAGE.getTitle()},
-    };
+      };
+    } else {
+      return new String[][]{
+        {KeyTransitions.BACK.getTitle()},
+        {KeyTransitions.MAIN_PAGE.getTitle()},
+      };
+    }
   }
 
   @Override
   protected String formStringFromTea(Tea tea) {
     return tea.getTitle() + "\n" +
-        "Перейти - " + LinkTransitions.GO.getPrefix() + tea.getId() + "\n";
+      "Перейти - " + LinkTransitions.GO.getPrefix() + tea.getId() + "\n";
   }
 
   @Override

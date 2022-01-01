@@ -39,7 +39,7 @@ public class CreateBoilingElementInputTempState extends AbstractState implements
     BoilingElement boiling = stateMachine.getDataManager().getObject(BOILING_ELEMENT, BoilingElement.class);
 
     try {
-      boiling.setTemperature(Long.parseLong(message.getText()));
+      boiling.setTemperature(Long.parseLong(message.text()));
     } catch (Exception e) {
       throw new MessageException("Ошибка преобразования сообщения в число градусов");
     }

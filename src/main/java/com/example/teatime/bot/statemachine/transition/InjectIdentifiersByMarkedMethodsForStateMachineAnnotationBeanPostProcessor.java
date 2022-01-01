@@ -9,13 +9,11 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 import static java.util.Objects.nonNull;
 
@@ -38,7 +36,7 @@ public class InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostPr
         MessageIdentifier messageIdentifier = new MessageIdentifier();
         for (Method markedStateMethod : State.class.getDeclaredMethods()) {
           getIdentifiersFromMethodTransitions(listTransitions(markedStateMethod), markedStateMethod, stateMachine)
-              .forEach(messageIdentifier::addIdentifier);
+            .forEach(messageIdentifier::addIdentifier);
         }
         log.info("init Identifiers from State");
         ReflectionUtils.invokeMethod(stateMachineMethod, stateMachine, messageIdentifier);
@@ -50,11 +48,11 @@ public class InjectIdentifiersByMarkedMethodsForStateMachineAnnotationBeanPostPr
 
   private List<MessageIdentifier.Identifier> getIdentifiersFromMethodTransitions(List<Transition> transitions, Method method, StateMachine stateMachine) {
     return transitions.stream()
-        .map(transition -> new MessageIdentifier.Identifier(
-            message -> transition.match(message.getText()),
-            message -> ReflectionUtils.invokeMethod(method, stateMachine.getState(), message, stateMachine)
-        ))
-        .toList();
+      .map(transition -> new MessageIdentifier.Identifier(
+        message -> transition.match(message.text()),
+        message -> ReflectionUtils.invokeMethod(method, stateMachine.getState(), message, stateMachine)
+      ))
+      .toList();
   }
 
   private List<Transition> listTransitions(Method method) {

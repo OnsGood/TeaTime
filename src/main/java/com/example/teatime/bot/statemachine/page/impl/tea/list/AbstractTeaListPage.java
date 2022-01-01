@@ -15,10 +15,10 @@ public abstract class AbstractTeaListPage implements Page {
   @Override
   public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
-    setKeyboard(getKeyboard(), sendMessage);
+    setKeyboard(getKeyboard(stateMachine), sendMessage);
     StringBuilder builder = new StringBuilder();
 
-    Iterable<Tea> teas = listTeas(receivedMessage.getText());
+    Iterable<Tea> teas = listTeas(receivedMessage.text());
 
     if (teas.iterator().hasNext()) {
       builder.append("Найдены чаи : ")
@@ -39,7 +39,7 @@ public abstract class AbstractTeaListPage implements Page {
 
   protected abstract Iterable<Tea> listTeas(String text);
 
-  protected abstract String[][] getKeyboard();
+  protected abstract String[][] getKeyboard(StateMachine stateMachine);
 
   protected abstract String formStringFromTea(Tea tea);
 

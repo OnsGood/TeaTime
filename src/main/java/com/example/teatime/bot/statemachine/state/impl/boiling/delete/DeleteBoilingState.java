@@ -37,7 +37,7 @@ public class DeleteBoilingState extends AbstractState implements State {
   @Override
   public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
-    if (boiling.getTitle().equals(message.getText())) {
+    if (boiling.getTitle().equals(message.text())) {
       boilingService.delete(boiling);
       getPageManager().sendPageMessage(DeleteSuccessPage.class, message, stateMachine);
       mainPage(message, stateMachine);

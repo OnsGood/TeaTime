@@ -59,4 +59,15 @@ public interface StateMachine {
    * Возвращает менеджер состояний машины
    */
   StateManager getStateManager();
+
+  /**
+   * Устанавливает роль пользователя машины.
+   * @param isModerator
+   */
+  void setUserRule(boolean isModerator);
+
+  /**
+   * Возвращает тру, если пользователь модератор
+   */
+  boolean isUserModerator();
 }

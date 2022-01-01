@@ -45,7 +45,7 @@ public class CreateBoilingInputNameState extends AbstractState implements State 
   public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingState.class);
     Boiling boiling = stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
-    boiling.setTitle(message.getText());
+    boiling.setTitle(message.text());
     boolean exist = boilingService.exist(stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class));
     getPageManager().sendPageMessage(exist ? EditBoilingPage.class : CreateBoilingPage.class, message, stateMachine);
   }

@@ -49,7 +49,7 @@ public class PageManagerImpl implements PageManager {
 
   @Override
   public void sendCallbackResponse(MessageDto receivedMessage, StateMachine stateMachine) {
-    CallbackDataDto callbackDataDto = CallbackDataDto.callbackDataToDto(receivedMessage.getText());
+    CallbackDataDto callbackDataDto = CallbackDataDto.callbackDataToDto(receivedMessage.text());
     sendMessage(getPage(callbackDataDto.getOriginalBeanName()).getCallbackResponse(receivedMessage, stateMachine), stateMachine.getBot());
   }
 }

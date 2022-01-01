@@ -55,7 +55,7 @@ public class BoilingListFromTeaState extends AbstractState implements State {
   @Override
   @Historical
   public void catchIdGo(MessageDto message, StateMachine stateMachine) {
-    Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
+    Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);
     stateMachine.setState(SeeBoilingState.class);
     getPageManager().sendPageMessage(SeeBoilingFromIdPage.class, message, stateMachine);

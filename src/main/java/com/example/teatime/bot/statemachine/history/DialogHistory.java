@@ -109,7 +109,7 @@ public final class DialogHistory {
    */
   private record StateResponse(State state, MessageDto message) {
     void revert(StateMachine stateMachine) {
-      log.info("reverting bot to state '" + state + "' with message '" + message.getText() + "'");
+      log.info("reverting bot to state '" + state + "' with message '" + message.text() + "'");
       stateMachine.setState(state.getClass());
       stateMachine.resolveMessage(message);
     }
@@ -118,7 +118,7 @@ public final class DialogHistory {
     public String toString() {
       return new StringJoiner(", ", StateResponse.class.getSimpleName() + "[", "]")
         .add("state=" + state)
-        .add("message=" + message.getText())
+        .add("message=" + message.text())
         .toString();
     }
 
@@ -127,12 +127,12 @@ public final class DialogHistory {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
       StateResponse that = (StateResponse) o;
-      return Objects.equals(state, that.state) && Objects.equals(message.getText(), that.message.getText());
+      return Objects.equals(state, that.state) && Objects.equals(message.text(), that.message.text());
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(state, message.getText());
+      return Objects.hash(state, message.text());
     }
   }
 }

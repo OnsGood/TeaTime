@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import com.example.teatime.service.api.ModeratorService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,12 @@ public class AsyncMessageForManyUsersResolver implements MessageResolver {
   private static final Logger log = Logger.getLogger(AsyncMessageForManyUsersResolver.class);
 
   private final Map<Long, AsyncQueueRunner> stateMachineMap;
-
+  @Autowired
+  private ModeratorService moderatorService;
   @Autowired
   private ObjectFactory<StateMachine> prototypeFactory;
+
+
 
   public AsyncMessageForManyUsersResolver() {
     stateMachineMap = new HashMap<>();
@@ -35,17 +39,18 @@ public class AsyncMessageForManyUsersResolver implements MessageResolver {
 
     MessageDto messageDto = buildMessageDto(update);
 
-    AsyncQueueRunner userMessageAsyncQueueRunner = Optional.ofNullable(stateMachineMap.get(messageDto.getUserId()))
+    AsyncQueueRunner userMessageAsyncQueueRunner = Optional.ofNullable(stateMachineMap.get(messageDto.userId()))
             .orElseGet(() -> {
-              log.info("new session has been started for user - " + messageDto.getUserId());
+              log.info("new session has been started for user - " + messageDto.userId());
               StateMachine stateMachine = prototypeFactory.getObject();
               stateMachine.setBot(pollingBot);
+              stateMachine.setUserRule(moderatorService.isUserModerator(messageDto.userId()));
               AsyncQueueRunner asyncQueueRunner = new AsyncQueueRunner(stateMachine);
-              stateMachineMap.put(messageDto.getUserId(), asyncQueueRunner);
+              stateMachineMap.put(messageDto.userId(), asyncQueueRunner);
               return asyncQueueRunner;
             });
 
-    log.info("preparing to resolve message for user - " + messageDto.getUserId());
+    log.info("preparing to resolve message for user - " + messageDto.userId());
 
     userMessageAsyncQueueRunner.addMessage(messageDto);
   }

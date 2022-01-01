@@ -1,9 +1,6 @@
 package com.example.teatime.bot.statemachine;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.example.teatime.bot.life.MessageDto;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -14,7 +11,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRem
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import com.example.teatime.bot.life.MessageDto;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Утилитный класс для шаблонных действий с сообщениями
@@ -34,13 +33,13 @@ public final class MessageTools {
    */
   public static SendMessage makeSendMessage(MessageDto message) {
     SendMessage sendMessage = new SendMessage();
-    sendMessage.setChatId(message.getChatId().toString());
+    sendMessage.setChatId(message.chatId().toString());
     return sendMessage;
   }
 
   public static EditMessageText makeCallbackMessage(MessageDto message) {
     EditMessageText sendMessage = new EditMessageText();
-    sendMessage.setChatId(message.getChatId().toString());
+    sendMessage.setChatId(message.chatId().toString());
     sendMessage.setMessageId(message.messageId());
     return sendMessage;
   }
@@ -58,6 +57,17 @@ public final class MessageTools {
     }
     keyboardMarkup.setKeyboard(keyboard);
     sendMessage.setReplyMarkup(keyboardMarkup);
+  }
+
+  /**
+   * Делает клавиатуру из массива строк, устанавливает ее в исходящее сообщение
+   */
+  public static void setKeyboard(String[][] usualKeys, String[][] moderatorKeys, SendMessage sendMessage, boolean isUserModerator) {
+    if (isUserModerator) {
+      setKeyboard(moderatorKeys, sendMessage);
+    } else {
+      setKeyboard(usualKeys, sendMessage);
+    }
   }
 
   /**

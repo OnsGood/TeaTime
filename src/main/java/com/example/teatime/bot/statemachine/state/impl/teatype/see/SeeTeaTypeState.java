@@ -41,7 +41,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
   @Override
   @Historical
   public void catchIdGo(MessageDto message, StateMachine stateMachine) {
-    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
+    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(TeaListFromTeaTypeState.class);
     getPageManager().sendPageMessage(TeaListFromTeaTypePage.class, message, stateMachine);
@@ -49,7 +49,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
 
   @Override
   public void catchIdEdit(MessageDto message, StateMachine stateMachine) {
-    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
+    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(CreateTeaTypeState.class);
     getPageManager().sendPageMessage(EditTeaTypePage.class, message, stateMachine);
@@ -57,7 +57,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
 
   @Override
   public void catchIdDelete(MessageDto message, StateMachine stateMachine) {
-    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
+    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.text()));
     if (teaTypeService.isAllowedToDelete(teaType)) {
       stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
       stateMachine.setState(DeleteTeaTypeState.class);

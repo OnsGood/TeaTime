@@ -39,7 +39,7 @@ public class DeleteBoilingElementState extends AbstractState implements State {
   @Override
   public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     Boiling boiling = stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
-    if ("Да".equals(message.getText())) {
+    if ("Да".equals(message.text())) {
       boilingElementService.findElementMaxNumberByBoiling(boiling)
         .ifPresentOrElse(
           be -> {

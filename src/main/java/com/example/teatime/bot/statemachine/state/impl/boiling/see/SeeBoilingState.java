@@ -74,7 +74,7 @@ public class SeeBoilingState extends AbstractState implements State {
 
   @Override
   public void catchIdEdit(MessageDto message, StateMachine stateMachine) {
-    Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
+    Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(BOILING, boiling);
     stateMachine.setState(CreateBoilingState.class);
     getPageManager().sendPageMessage(EditBoilingPage.class, message, stateMachine);
@@ -82,7 +82,7 @@ public class SeeBoilingState extends AbstractState implements State {
 
   @Override
   public void catchIdDelete(MessageDto message, StateMachine stateMachine) {
-    Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.getText()));
+    Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.text()));
     if (boilingService.isAllowedToDelete(boiling)) {
       stateMachine.getDataManager().setObject(BOILING, boiling);
       stateMachine.setState(DeleteBoilingState.class);

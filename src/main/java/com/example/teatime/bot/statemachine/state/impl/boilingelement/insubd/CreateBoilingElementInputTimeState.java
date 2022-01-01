@@ -39,7 +39,7 @@ public class CreateBoilingElementInputTimeState extends AbstractState implements
     BoilingElement boiling = stateMachine.getDataManager().getObject(BOILING_ELEMENT, BoilingElement.class);
 
     try {
-      boiling.setSeconds(Long.parseLong(message.getText()));
+      boiling.setSeconds(Long.parseLong(message.text()));
     } catch (Exception e) {
       throw new MessageException("Ошибка преобразования сообщения в число секунд");
     }

@@ -44,7 +44,7 @@ public class CreateTeaInputNameState extends AbstractState implements State {
   public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateTeaState.class);
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
-    tea.setTitle(message.getText());
+    tea.setTitle(message.text());
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class));
     getPageManager().sendPageMessage(teaExist ? EditTeaPage.class : CreateTeaPage.class, message, stateMachine);
   }

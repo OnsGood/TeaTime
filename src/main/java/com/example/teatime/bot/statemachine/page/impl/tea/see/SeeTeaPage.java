@@ -1,11 +1,5 @@
 package com.example.teatime.bot.statemachine.page.impl.tea.see;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -13,8 +7,14 @@ import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.TeaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-import static com.example.teatime.bot.statemachine.MessageTools.*;
+import java.util.List;
+
+import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
+import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
 
 @Component
 public class SeeTeaPage implements Page {
@@ -35,7 +35,7 @@ public class SeeTeaPage implements Page {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
     setKeyboard(keyboard, sendMessage);
     StringBuilder builder = new StringBuilder();
-    long teaId = LinkTransitions.getIdFromLink(receivedMessage.getText());
+    long teaId = LinkTransitions.getIdFromLink(receivedMessage.text());
 
     Tea tea = teaService.getTeaById(teaId);
 
@@ -44,12 +44,15 @@ public class SeeTeaPage implements Page {
       .append("\n")
       .append(tea.getDescription()).append("\n")
       .append("\n")
-      .append("Перейти к способам заварки - ").append(LinkTransitions.GO.makeLink(teaId)).append("\n")
-      .append("\n")
-      .append("Редактировать - ").append(LinkTransitions.EDIT.makeLink(teaId)).append("\n")
-      .append("\n")
-      .append("Удалить - ").append(LinkTransitions.DELETE.makeLink(teaId)).append("\n");
+      .append("Перейти к способам заварки - ").append(LinkTransitions.GO.makeLink(teaId)).append("\n");
 
+    if (stateMachine.isUserModerator()) {
+      builder
+        .append("\n")
+        .append("Редактировать - ").append(LinkTransitions.EDIT.makeLink(teaId)).append("\n")
+        .append("\n")
+        .append("Удалить - ").append(LinkTransitions.DELETE.makeLink(teaId)).append("\n");
+    }
 
     sendMessage.setText(builder.toString());
     return List.of(sendMessage);

@@ -32,6 +32,7 @@ public class StateMachineImpl implements StateMachine {
   private MessageIdentifier messageIdentifier;
   private final DataManager dataManager;
   private final DialogHistory dialogHistory;
+  private Boolean isUserModerator = null;
 
   @InjectStateIdentifiersByMarkedMethods
   public void setMessageIdentifier(MessageIdentifier messageIdentifier) {
@@ -130,6 +131,19 @@ public class StateMachineImpl implements StateMachine {
   @Override
   public StateManager getStateManager() {
     return stateManager;
+  }
+
+  @Override
+  public void setUserRule(boolean isModerator) {
+    if(isUserModerator != null) {
+      throw new IllegalStateException("Невозможно изменить роль в процессе работы приложения");
+    }
+    isUserModerator = isModerator;
+  }
+
+  @Override
+  public boolean isUserModerator() {
+    return isUserModerator;
   }
 
 }

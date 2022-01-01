@@ -1,12 +1,5 @@
 package com.example.teatime.bot.statemachine.page.impl.teatype.list;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
-
 import com.example.teatime.bd.entity.TeaType;
 import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
@@ -14,16 +7,28 @@ import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.TeaTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+
+import java.util.List;
 
 import static com.example.teatime.bot.statemachine.MessageTools.*;
 
 @Component
 public class TeaTypeListPage implements Page {
   private static final String[][] keyboard = new String[][]{
+    {KeyTransitions.BACK.getTitle()},
+    {KeyTransitions.MAIN_PAGE.getTitle()},
+  };
+
+  private static final String[][] moderKeyboard = new String[][]{
     {KeyTransitions.CREATE_TEA_TYPE.getTitle()},
     {KeyTransitions.BACK.getTitle()},
     {KeyTransitions.MAIN_PAGE.getTitle()},
   };
+
 
   private TeaTypeService teaTypeService;
 
@@ -35,7 +40,7 @@ public class TeaTypeListPage implements Page {
   @Override
   public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
-    setKeyboard(keyboard, sendMessage);
+    setKeyboard(keyboard, moderKeyboard, sendMessage, stateMachine.isUserModerator());
 
     StringBuilder builder = new StringBuilder();
 
@@ -63,7 +68,7 @@ public class TeaTypeListPage implements Page {
   public EditMessageText getCallbackResponse(MessageDto callbackMessage, StateMachine stateMachine) {
     EditMessageText sendMessage = makeCallbackMessage(callbackMessage);
 
-    sendMessage.setText(callbackMessage.getText());
+    sendMessage.setText(callbackMessage.text());
 
     return sendMessage;
   }

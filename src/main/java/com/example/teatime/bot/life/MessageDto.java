@@ -5,18 +5,6 @@ package com.example.teatime.bot.life;
  */
 public record MessageDto(Long userId, String text, Long chatId, Integer messageId, boolean isCallback) {
 
-  public Long getUserId() {
-    return userId;
-  }
-
-  public String getText() {
-    return text;
-  }
-
-  public Long getChatId() {
-    return chatId;
-  }
-
   public static final class Builder {
     private Long userId;
     private String text;

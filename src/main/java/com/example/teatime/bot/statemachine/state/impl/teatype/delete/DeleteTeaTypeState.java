@@ -37,7 +37,7 @@ public class DeleteTeaTypeState extends AbstractState implements State {
   @Override
   public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
-    if (teaType.getTitle().equals(message.getText())) {
+    if (teaType.getTitle().equals(message.text())) {
       teaTypeService.delete(teaType);
       getPageManager().sendPageMessage(DeleteSuccessPage.class, message, stateMachine);
       mainPage(message, stateMachine);

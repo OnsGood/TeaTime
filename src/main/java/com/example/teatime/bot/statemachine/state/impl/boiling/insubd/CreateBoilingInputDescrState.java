@@ -45,7 +45,7 @@ public class CreateBoilingInputDescrState extends AbstractState implements State
   public void unknownMessage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingState.class);
     Boiling boiling = stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
-    boiling.setDescription(message.getText());
+    boiling.setDescription(message.text());
     boolean teaExist = boilingService.exist(stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class));
     getPageManager().sendPageMessage(teaExist ? EditBoilingPage.class : CreateBoilingPage.class, message, stateMachine);
   }

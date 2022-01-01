@@ -55,7 +55,7 @@ public class CreateTeaInputTypeState extends AbstractState implements State {
   public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateTeaState.class);
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
-    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.getText()));
+    TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.text()));
     tea.setTeaType(teaType);
     boolean teaExist = teaService.exist(stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class));
     getPageManager().sendPageMessage(teaExist ? EditTeaPage.class : CreateTeaPage.class, message, stateMachine);

@@ -25,7 +25,7 @@ public class SeeBoilingFromIdPage extends AbstractSeeBoilingPage {
 
   @Override
   protected Boiling getBoiling(MessageDto receivedMessage, StateMachine stateMachine) {
-    long boilingId = LinkTransitions.getIdFromLink(receivedMessage.getText());
+    long boilingId = LinkTransitions.getIdFromLink(receivedMessage.text());
     return boilingService.getBoilingById(boilingId);
   }
 }

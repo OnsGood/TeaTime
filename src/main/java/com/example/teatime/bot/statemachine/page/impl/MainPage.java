@@ -18,7 +18,11 @@ public class MainPage implements Page {
   public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = MessageTools.makeSendMessage(receivedMessage);
     MessageTools.setKeyboard(new String[][]{{KeyTransitions.TEA_TYPE_LIST.getTitle()}, {KeyTransitions.TEA_NAME_SEARCH.getTitle()}}, sendMessage);
-    sendMessage.setText("Вы находитесь в главном меню бота. Тыкайте на клавиши, и получайте что вам надо");
+    String pageText = "Вы находитесь в главном меню бота. Тыкайте на клавиши, и получайте что вам надо.";
+    if(stateMachine.isUserModerator()) {
+      pageText = pageText + " Кстати, вы модератор.";
+    }
+    sendMessage.setText(pageText);
     return List.of(sendMessage);
   }
 }

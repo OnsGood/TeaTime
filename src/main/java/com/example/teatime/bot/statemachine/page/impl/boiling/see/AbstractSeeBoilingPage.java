@@ -1,10 +1,5 @@
 package com.example.teatime.bot.statemachine.page.impl.boiling.see;
 
-import java.util.Iterator;
-import java.util.List;
-
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-
 import com.example.teatime.bd.entity.Boiling;
 import com.example.teatime.bd.entity.BoilingElement;
 import com.example.teatime.bot.life.MessageDto;
@@ -13,11 +8,21 @@ import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
 import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingElementService;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-import static com.example.teatime.bot.statemachine.MessageTools.*;
+import java.util.Iterator;
+import java.util.List;
+
+import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
+import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
 
 public abstract class AbstractSeeBoilingPage implements Page {
   private static final String[][] keyboard = new String[][]{
+    {KeyTransitions.BACK.getTitle()},
+    {KeyTransitions.MAIN_PAGE.getTitle()},
+  };
+
+  private static final String[][] moderKeyboard = new String[][]{
     {KeyTransitions.CREATE_BOILING_ELEMENT.getTitle()},
     {KeyTransitions.DELETE_LAST_BOILING_ELEMENT.getTitle()},
     {KeyTransitions.BACK.getTitle()},
@@ -33,7 +38,7 @@ public abstract class AbstractSeeBoilingPage implements Page {
   @Override
   public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
     SendMessage sendMessage = makeSendMessage(receivedMessage);
-    setKeyboard(keyboard, sendMessage);
+    setKeyboard(keyboard, moderKeyboard, sendMessage, stateMachine.isUserModerator());
     StringBuilder builder = new StringBuilder();
 
     Boiling boiling = getBoiling(receivedMessage, stateMachine);
@@ -43,11 +48,17 @@ public abstract class AbstractSeeBoilingPage implements Page {
     builder
       .append("Способ заварки '").append(boiling.getTitle()).append("' ").append("для чая '").append(boiling.getTea().getTitle()).append("'").append("\n")
       .append("\n")
-      .append(boiling.getDescription()).append("\n")
-      .append("\n")
-      .append("Редактировать - ").append(LinkTransitions.EDIT.makeLink(boilingId)).append("\n")
-      .append("\n")
-      .append("Удалить - ").append(LinkTransitions.DELETE.makeLink(boilingId)).append("\n")
+      .append(boiling.getDescription()).append("\n");
+
+    if (stateMachine.isUserModerator()) {
+      builder
+        .append("\n")
+        .append("Редактировать - ").append(LinkTransitions.EDIT.makeLink(boilingId)).append("\n")
+        .append("\n")
+        .append("Удалить - ").append(LinkTransitions.DELETE.makeLink(boilingId)).append("\n");
+    }
+
+    builder
       .append("\n")
       .append(getBoilingElements(boiling));
 
