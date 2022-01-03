@@ -23,7 +23,7 @@ public abstract class AbstractState implements State {
   }
 
   protected final void sendPageMessage(Class<? extends Page> pageClass, MessageDto receivedMessage, StateMachine stateMachine) {
-    log.trace("message sent from page: {}" + pageClass.getSimpleName());
+    log.trace("message sent from page: " + pageClass.getSimpleName());
     pageManager.sendPageMessage(pageClass, receivedMessage, stateMachine);
   }
 

@@ -5,16 +5,16 @@ import com.example.teatime.bd.entity.BoilingElement;
 import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.page.api.Page;
+import com.example.teatime.bot.statemachine.page.pagebuilder.PageMessageBuilder;
+import com.example.teatime.bot.statemachine.page.pagebuilder.impl.Header;
+import com.example.teatime.bot.statemachine.page.pagebuilder.impl.SeeFacade;
+import com.example.teatime.bot.statemachine.page.pagebuilder.impl.Text;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
-import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.BoilingElementService;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.util.Iterator;
 import java.util.List;
-
-import static com.example.teatime.bot.statemachine.MessageTools.makeSendMessage;
-import static com.example.teatime.bot.statemachine.MessageTools.setKeyboard;
 
 public abstract class AbstractSeeBoilingPage implements Page {
   private static final String[][] keyboard = new String[][]{
@@ -37,34 +37,21 @@ public abstract class AbstractSeeBoilingPage implements Page {
 
   @Override
   public List<SendMessage> getPageMessage(MessageDto receivedMessage, StateMachine stateMachine) {
-    SendMessage sendMessage = makeSendMessage(receivedMessage);
-    setKeyboard(keyboard, moderKeyboard, sendMessage, stateMachine.isUserModerator());
-    StringBuilder builder = new StringBuilder();
-
     Boiling boiling = getBoiling(receivedMessage, stateMachine);
-
     long boilingId = boiling.getId();
 
-    builder
-      .append("Способ заварки '").append(boiling.getTitle()).append("' ").append("для чая '").append(boiling.getTea().getTitle()).append("'").append("\n")
-      .append("\n")
-      .append(boiling.getDescription()).append("\n");
-
-    if (stateMachine.isUserModerator()) {
-      builder
-        .append("\n")
-        .append("Редактировать - ").append(LinkTransitions.EDIT.makeLink(boilingId)).append("\n")
-        .append("\n")
-        .append("Удалить - ").append(LinkTransitions.DELETE.makeLink(boilingId)).append("\n");
-    }
-
-    builder
-      .append("\n")
-      .append(getBoilingElements(boiling));
-
-
-    sendMessage.setText(builder.toString());
-    return List.of(sendMessage);
+    return new PageMessageBuilder(receivedMessage)
+      .keyboard(stateMachine.isUserModerator() ? moderKeyboard : keyboard)
+      .part(new SeeFacade()
+        .setHeader(
+          new Header("Способ заварки '", boiling.getTitle(), "' для чая '", boiling.getTea().getTitle(), "'")
+        )
+        .setDescription(new Text(boiling.getDescription()))
+        .setId(boilingId)
+        .setShowEditAndDelete(stateMachine.isUserModerator())
+      )
+      .part(new Text(getBoilingElements(boiling)))
+      .buildMessageList();
   }
 
   private String getBoilingElements(Boiling boiling) {

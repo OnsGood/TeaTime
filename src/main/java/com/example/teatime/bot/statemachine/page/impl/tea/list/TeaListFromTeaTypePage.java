@@ -48,8 +48,7 @@ public class TeaListFromTeaTypePage extends AbstractTeaListPage {
 
   @Override
   protected String formStringFromTea(Tea tea) {
-    return tea.getTitle() + "\n" +
-      "Перейти - " + LinkTransitions.GO.getPrefix() + tea.getId() + "\n";
+    return tea.getTitle();
   }
 
   @Override

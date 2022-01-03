@@ -3,7 +3,6 @@ package com.example.teatime.bot.statemachine.page.impl.tea.list;
 import com.example.teatime.bd.entity.Tea;
 import com.example.teatime.bot.statemachine.StateMachine;
 import com.example.teatime.bot.statemachine.transition.KeyTransitions;
-import com.example.teatime.bot.statemachine.transition.LinkTransitions;
 import com.example.teatime.service.api.TeaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,8 +42,7 @@ public class TeaListFromNamePage extends AbstractTeaListPage {
   @Override
   protected String formStringFromTea(Tea tea) {
     return tea.getTitle() + "\n" +
-      "Вид - " + tea.getTeaType().getTitle() + "\n" +
-      "Перейти - " + LinkTransitions.GO.getPrefix() + tea.getId() + "\n";
+      "Вид - " + tea.getTeaType().getTitle();
   }
 
   @Override
