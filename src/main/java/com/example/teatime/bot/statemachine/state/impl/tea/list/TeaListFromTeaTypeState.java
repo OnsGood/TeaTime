@@ -26,7 +26,7 @@ public class TeaListFromTeaTypeState extends AbstractTeaListState implements Sta
     tea.setTeaType(parentTeaType);
     stateMachine.getDataManager().setObject(TEA, tea);
     stateMachine.setState(CreateTeaState.class);
-    getPageManager().sendPageMessage(CreateTeaPage.class, message, stateMachine);
+    sendPageMessage(CreateTeaPage.class, message, stateMachine);
   }
 
   @Override

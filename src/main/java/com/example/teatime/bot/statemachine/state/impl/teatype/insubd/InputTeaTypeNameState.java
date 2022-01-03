@@ -33,14 +33,14 @@ public class InputTeaTypeNameState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   public void insupd(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateTeaTypeState.class);
     boolean exist = teaTypeService.exist(stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class));
-    getPageManager().sendPageMessage(exist ? EditTeaTypePage.class : CreateTeaTypePage.class, message, stateMachine);
+    sendPageMessage(exist ? EditTeaTypePage.class : CreateTeaTypePage.class, message, stateMachine);
   }
 
 
@@ -50,7 +50,7 @@ public class InputTeaTypeNameState extends AbstractState implements State {
     TeaType teaType = stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class);
     teaType.setTitle(message.text());
     boolean exist = teaTypeService.exist(stateMachine.getDataManager().getObject(DataKeys.TEA_TYPE, TeaType.class));
-    getPageManager().sendPageMessage(exist ? EditTeaTypePage.class : CreateTeaTypePage.class, message, stateMachine);
+    sendPageMessage(exist ? EditTeaTypePage.class : CreateTeaTypePage.class, message, stateMachine);
   }
 
   @Override

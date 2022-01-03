@@ -33,7 +33,7 @@ public class DeleteBoilingElementState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -44,14 +44,14 @@ public class DeleteBoilingElementState extends AbstractState implements State {
         .ifPresentOrElse(
           be -> {
             boilingElementService.delete(be);
-            getPageManager().sendPageMessage(DeleteSuccessPage.class, message, stateMachine);
+            sendPageMessage(DeleteSuccessPage.class, message, stateMachine);
           },
-          () -> getPageManager().sendPageMessage(DeleteNoDeletePage.class, message, stateMachine)
+          () -> sendPageMessage(DeleteNoDeletePage.class, message, stateMachine)
         );
     } else {
-      getPageManager().sendPageMessage(DeleteUnsuccessfulPage.class, message, stateMachine);
+      sendPageMessage(DeleteUnsuccessfulPage.class, message, stateMachine);
     }
-    getPageManager().sendPageMessage(SeeBoilingFromDataManagerPage.class, message, stateMachine);
+    sendPageMessage(SeeBoilingFromDataManagerPage.class, message, stateMachine);
     stateMachine.setState(SeeBoilingState.class);
   }
 

@@ -17,20 +17,20 @@ public class MainPageState extends AbstractState implements State {
   @Override
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   @Historical
   public void listTeaTypes(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(TeaTypeListState.class);
-    getPageManager().sendPageMessage(TeaTypeListPage.class, message, stateMachine);
+    sendPageMessage(TeaTypeListPage.class, message, stateMachine);
   }
 
   @Override
   public void listTeaFromName(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(TeaListFromNameState.class);
-    getPageManager().sendPageMessage(InputTeaNamePage.class, message, stateMachine);
+    sendPageMessage(InputTeaNamePage.class, message, stateMachine);
   }
 
   @Override

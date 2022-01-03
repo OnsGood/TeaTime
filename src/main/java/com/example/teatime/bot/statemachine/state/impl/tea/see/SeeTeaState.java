@@ -35,7 +35,7 @@ public class SeeTeaState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -44,7 +44,7 @@ public class SeeTeaState extends AbstractState implements State {
     Tea tea = teaService.getTeaById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.TEA, tea);
     stateMachine.setState(BoilingListFromTeaState.class);
-    getPageManager().sendPageMessage(BoilingListFromTeaPage.class, message, stateMachine);
+    sendPageMessage(BoilingListFromTeaPage.class, message, stateMachine);
   }
 
   @Override
@@ -52,7 +52,7 @@ public class SeeTeaState extends AbstractState implements State {
     Tea tea = teaService.getTeaById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.TEA, tea);
     stateMachine.setState(CreateTeaState.class);
-    getPageManager().sendPageMessage(EditTeaPage.class, message, stateMachine);
+    sendPageMessage(EditTeaPage.class, message, stateMachine);
   }
 
   @Override
@@ -61,9 +61,9 @@ public class SeeTeaState extends AbstractState implements State {
     if (teaService.isAllowedToDelete(tea)) {
       stateMachine.getDataManager().setObject(DataKeys.TEA, tea);
       stateMachine.setState(DeleteTeaState.class);
-      getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
+      sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
     } else {
-      getPageManager().sendPageMessage(DeleteTeaHasCichlidsPage.class, message, stateMachine);
+      sendPageMessage(DeleteTeaHasCichlidsPage.class, message, stateMachine);
       stateMachine.getDialogHistory().goToCurrentState(stateMachine);
     }
   }

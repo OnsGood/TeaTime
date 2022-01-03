@@ -31,14 +31,14 @@ public class CreateBoilingInputNameState extends AbstractState implements State 
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   public void insupd(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingState.class);
     boolean teaExist = boilingService.exist(stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class));
-    getPageManager().sendPageMessage(teaExist ? EditBoilingPage.class : CreateBoilingPage.class, message, stateMachine);
+    sendPageMessage(teaExist ? EditBoilingPage.class : CreateBoilingPage.class, message, stateMachine);
   }
 
   @Override
@@ -47,7 +47,7 @@ public class CreateBoilingInputNameState extends AbstractState implements State 
     Boiling boiling = stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class);
     boiling.setTitle(message.text());
     boolean exist = boilingService.exist(stateMachine.getDataManager().getObject(DataKeys.BOILING, Boiling.class));
-    getPageManager().sendPageMessage(exist ? EditBoilingPage.class : CreateBoilingPage.class, message, stateMachine);
+    sendPageMessage(exist ? EditBoilingPage.class : CreateBoilingPage.class, message, stateMachine);
   }
 
   @Override

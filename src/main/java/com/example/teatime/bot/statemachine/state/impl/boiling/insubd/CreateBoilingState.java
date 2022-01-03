@@ -36,7 +36,7 @@ public class CreateBoilingState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -51,23 +51,23 @@ public class CreateBoilingState extends AbstractState implements State {
 
       boilingService.save(boiling);
 
-      getPageManager().sendPageMessage(boilingExist ? EditBoilingSuccesPage.class : CreateBoilingSuccesPage.class, message, stateMachine);
+      sendPageMessage(boilingExist ? EditBoilingSuccesPage.class : CreateBoilingSuccesPage.class, message, stateMachine);
       stateMachine.getDialogHistory().goToCurrentState(stateMachine);
     } else {
-      getPageManager().sendPageMessage(BoilingValidationBadPage.class, message, stateMachine);
+      sendPageMessage(BoilingValidationBadPage.class, message, stateMachine);
     }
   }
 
   @Override
   public void setTitle(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingInputNameState.class);
-    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
+    sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
   public void setDescr(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingInputDescrState.class);
-    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
+    sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override

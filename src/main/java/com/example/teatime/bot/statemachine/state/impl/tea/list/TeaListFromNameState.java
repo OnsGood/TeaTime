@@ -15,12 +15,12 @@ public class TeaListFromNameState extends AbstractTeaListState implements State 
   @Override
   @Historical
   public void unknownMessage(MessageDto message, StateMachine stateMachine) {
-    getPageManager().sendPageMessage(TeaListFromNamePage.class, message, stateMachine);
+    sendPageMessage(TeaListFromNamePage.class, message, stateMachine);
   }
 
   @Override
   public void listTeaFromName(MessageDto message, StateMachine stateMachine) {
-    getPageManager().sendPageMessage(InputTeaNamePage.class, message, stateMachine);
+    sendPageMessage(InputTeaNamePage.class, message, stateMachine);
   }
 
   @Override

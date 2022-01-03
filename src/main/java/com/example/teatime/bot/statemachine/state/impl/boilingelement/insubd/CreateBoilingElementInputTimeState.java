@@ -25,13 +25,13 @@ public class CreateBoilingElementInputTimeState extends AbstractState implements
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
   public void insupd(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingState.class);
-    getPageManager().sendPageMessage(CreateBoilingElementPage.class, message, stateMachine);
+    sendPageMessage(CreateBoilingElementPage.class, message, stateMachine);
   }
 
   @Override
@@ -45,7 +45,7 @@ public class CreateBoilingElementInputTimeState extends AbstractState implements
     }
 
     stateMachine.setState(CreateBoilingElementState.class);
-    getPageManager().sendPageMessage(CreateBoilingElementPage.class, message, stateMachine);
+    sendPageMessage(CreateBoilingElementPage.class, message, stateMachine);
   }
 
   @Override

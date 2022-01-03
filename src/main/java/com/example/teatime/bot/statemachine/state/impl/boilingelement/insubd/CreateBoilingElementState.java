@@ -37,7 +37,7 @@ public class CreateBoilingElementState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -51,29 +51,29 @@ public class CreateBoilingElementState extends AbstractState implements State {
       boilingElementService.save(boilingElement);
       stateMachine.setState(SeeBoilingState.class);
 
-      getPageManager().sendPageMessage(CreateBoilingElementSuccesPage.class, message, stateMachine);
-      getPageManager().sendPageMessage(SeeBoilingFromDataManagerPage.class, message, stateMachine);
+      sendPageMessage(CreateBoilingElementSuccesPage.class, message, stateMachine);
+      sendPageMessage(SeeBoilingFromDataManagerPage.class, message, stateMachine);
     } else {
-      getPageManager().sendPageMessage(BoilingElementValidationBadPage.class, message, stateMachine);
+      sendPageMessage(BoilingElementValidationBadPage.class, message, stateMachine);
     }
   }
 
   @Override
   public void setTime(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingElementInputTimeState.class);
-    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
+    sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
   public void setTemp(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingElementInputTempState.class);
-    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
+    sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
   public void setMass(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(CreateBoilingElementInputMassState.class);
-    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
+    sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override

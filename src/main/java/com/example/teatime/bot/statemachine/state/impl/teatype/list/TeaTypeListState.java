@@ -24,14 +24,14 @@ public class TeaTypeListState extends AbstractState implements State {
   @Historical
   public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(SeeTeaTypeState.class);
-    getPageManager().sendPageMessage(SeeTeaTypePage.class, message, stateMachine);
+    sendPageMessage(SeeTeaTypePage.class, message, stateMachine);
   }
 
   @Override
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -39,13 +39,13 @@ public class TeaTypeListState extends AbstractState implements State {
     TeaType teaType = new TeaType();
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(CreateTeaTypeState.class);
-    getPageManager().sendPageMessage(CreateTeaTypePage.class, message, stateMachine);
+    sendPageMessage(CreateTeaTypePage.class, message, stateMachine);
   }
 
   @Override
   @Historical
   public void listTeaTypes(MessageDto message, StateMachine stateMachine) {
-    getPageManager().sendPageMessage(TeaTypeListPage.class, message, stateMachine);
+    sendPageMessage(TeaTypeListPage.class, message, stateMachine);
   }
 
   @Override

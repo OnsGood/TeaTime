@@ -37,7 +37,7 @@ public class BoilingListFromTeaState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -49,7 +49,7 @@ public class BoilingListFromTeaState extends AbstractState implements State {
       boiling.setTea(parentTea);
     }
     stateMachine.setState(CreateBoilingState.class);
-    getPageManager().sendPageMessage(CreateBoilingPage.class, message, stateMachine);
+    sendPageMessage(CreateBoilingPage.class, message, stateMachine);
   }
 
   @Override
@@ -58,7 +58,7 @@ public class BoilingListFromTeaState extends AbstractState implements State {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.BOILING, boiling);
     stateMachine.setState(SeeBoilingState.class);
-    getPageManager().sendPageMessage(SeeBoilingFromIdPage.class, message, stateMachine);
+    sendPageMessage(SeeBoilingFromIdPage.class, message, stateMachine);
   }
 
   @Override

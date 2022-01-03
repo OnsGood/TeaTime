@@ -31,7 +31,7 @@ public class DeleteTeaState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -39,10 +39,10 @@ public class DeleteTeaState extends AbstractState implements State {
     Tea tea = stateMachine.getDataManager().getObject(DataKeys.TEA, Tea.class);
     if (tea.getTitle().equals(message.text())) {
       teaService.delete(tea);
-      getPageManager().sendPageMessage(DeleteSuccessPage.class, message, stateMachine);
+      sendPageMessage(DeleteSuccessPage.class, message, stateMachine);
       mainPage(message, stateMachine);
     } else {
-      getPageManager().sendPageMessage(DeleteUnsuccessfulPage.class, message, stateMachine);
+      sendPageMessage(DeleteUnsuccessfulPage.class, message, stateMachine);
       stateMachine.getDialogHistory().goToCurrentState(stateMachine);
     }
   }

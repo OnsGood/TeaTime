@@ -13,14 +13,14 @@ public abstract class AbstractTeaListState extends AbstractState implements Stat
   @Override
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
 
   @Override
   public void catchIdGo(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(SeeTeaState.class);
-    getPageManager().sendPageMessage(SeeTeaPage.class, message, stateMachine);
+    sendPageMessage(SeeTeaPage.class, message, stateMachine);
   }
 
 }

@@ -35,7 +35,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -44,7 +44,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(TeaListFromTeaTypeState.class);
-    getPageManager().sendPageMessage(TeaListFromTeaTypePage.class, message, stateMachine);
+    sendPageMessage(TeaListFromTeaTypePage.class, message, stateMachine);
   }
 
   @Override
@@ -52,7 +52,7 @@ public class SeeTeaTypeState extends AbstractState implements State {
     TeaType teaType = teaTypeService.getTeaTypeById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
     stateMachine.setState(CreateTeaTypeState.class);
-    getPageManager().sendPageMessage(EditTeaTypePage.class, message, stateMachine);
+    sendPageMessage(EditTeaTypePage.class, message, stateMachine);
   }
 
   @Override
@@ -61,9 +61,9 @@ public class SeeTeaTypeState extends AbstractState implements State {
     if (teaTypeService.isAllowedToDelete(teaType)) {
       stateMachine.getDataManager().setObject(DataKeys.TEA_TYPE, teaType);
       stateMachine.setState(DeleteTeaTypeState.class);
-      getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
+      sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
     } else {
-      getPageManager().sendPageMessage(DeleteTeaTypeHasCichlidsPage.class, message, stateMachine);
+      sendPageMessage(DeleteTeaTypeHasCichlidsPage.class, message, stateMachine);
       stateMachine.getDialogHistory().goToCurrentState(stateMachine);
     }
   }

@@ -50,7 +50,7 @@ public class SeeBoilingState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -69,7 +69,7 @@ public class SeeBoilingState extends AbstractState implements State {
 
     stateMachine.getDataManager().setObject(BOILING_ELEMENT, boilingElement);
     stateMachine.setState(CreateBoilingElementState.class);
-    getPageManager().sendPageMessage(CreateBoilingElementPage.class, message, stateMachine);
+    sendPageMessage(CreateBoilingElementPage.class, message, stateMachine);
   }
 
   @Override
@@ -77,7 +77,7 @@ public class SeeBoilingState extends AbstractState implements State {
     Boiling boiling = boilingService.getBoilingById(LinkTransitions.getIdFromLink(message.text()));
     stateMachine.getDataManager().setObject(BOILING, boiling);
     stateMachine.setState(CreateBoilingState.class);
-    getPageManager().sendPageMessage(EditBoilingPage.class, message, stateMachine);
+    sendPageMessage(EditBoilingPage.class, message, stateMachine);
   }
 
   @Override
@@ -86,9 +86,9 @@ public class SeeBoilingState extends AbstractState implements State {
     if (boilingService.isAllowedToDelete(boiling)) {
       stateMachine.getDataManager().setObject(BOILING, boiling);
       stateMachine.setState(DeleteBoilingState.class);
-      getPageManager().sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
+      sendPageMessage(DeleteWithNameInputPage.class, message, stateMachine);
     } else {
-      getPageManager().sendPageMessage(DeleteBoilingHasCichlidsPage.class, message, stateMachine);
+      sendPageMessage(DeleteBoilingHasCichlidsPage.class, message, stateMachine);
       stateMachine.getDialogHistory().goToCurrentState(stateMachine);
     }
 
@@ -97,7 +97,7 @@ public class SeeBoilingState extends AbstractState implements State {
   @Override
   public void deleteLast(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(DeleteBoilingElementState.class);
-    getPageManager().sendPageMessage(DeleteWithConfirmPage.class, message, stateMachine);
+    sendPageMessage(DeleteWithConfirmPage.class, message, stateMachine);
   }
 
   @Override

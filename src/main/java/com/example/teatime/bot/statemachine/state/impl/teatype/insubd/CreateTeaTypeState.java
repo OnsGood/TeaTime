@@ -35,7 +35,7 @@ public class CreateTeaTypeState extends AbstractState implements State {
   @Historical
   public void mainPage(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(MainPageState.class);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
@@ -50,23 +50,23 @@ public class CreateTeaTypeState extends AbstractState implements State {
       teaTypeService.save(teaType);
       stateMachine.setState(MainPageState.class);
 
-      getPageManager().sendPageMessage(teaExist ? EditTeaTypeSuccesPage.class : CreateTeaTypeSuccesPage.class, message, stateMachine);
-      getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+      sendPageMessage(teaExist ? EditTeaTypeSuccesPage.class : CreateTeaTypeSuccesPage.class, message, stateMachine);
+      sendPageMessage(MainPage.class, message, stateMachine);
     } else {
-      getPageManager().sendPageMessage(TeaTypeValidationBadPage.class, message, stateMachine);
+      sendPageMessage(TeaTypeValidationBadPage.class, message, stateMachine);
     }
   }
 
   @Override
   public void setTitle(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(InputTeaTypeNameState.class);
-    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
+    sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override
   public void setDescr(MessageDto message, StateMachine stateMachine) {
     stateMachine.setState(InputTeaTypeDescrState.class);
-    getPageManager().sendPageMessage(InputParamPage.class, message, stateMachine);
+    sendPageMessage(InputParamPage.class, message, stateMachine);
   }
 
   @Override

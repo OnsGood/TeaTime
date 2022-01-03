@@ -1,14 +1,14 @@
 package com.example.teatime.bot.statemachine.state.impl;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.example.teatime.bot.life.MessageDto;
 import com.example.teatime.bot.statemachine.StateMachine;
+import com.example.teatime.bot.statemachine.page.api.Page;
 import com.example.teatime.bot.statemachine.page.impl.MainPage;
 import com.example.teatime.bot.statemachine.page.impl.WrongStatePage;
 import com.example.teatime.bot.statemachine.pagemanager.api.PageManager;
 import com.example.teatime.bot.statemachine.state.api.State;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Базовое состояние, обычно бросает ошибки
@@ -22,8 +22,9 @@ public abstract class AbstractState implements State {
     this.pageManager = pageManager;
   }
 
-  protected final PageManager getPageManager() {
-    return pageManager;
+  protected final void sendPageMessage(Class<? extends Page> pageClass, MessageDto receivedMessage, StateMachine stateMachine) {
+    log.trace("message sent from page: {}" + pageClass.getSimpleName());
+    pageManager.sendPageMessage(pageClass, receivedMessage, stateMachine);
   }
 
   @Override
@@ -119,8 +120,8 @@ public abstract class AbstractState implements State {
   private void sendNotAllowedCommandInStateErrorMessage(MessageDto message, StateMachine stateMachine) {
     log.error("message can not resolved from abstract state. Message - " + message.text());
     stateMachine.setState(stateMachine.getStateManager().getDefaultStateClass());
-    getPageManager().sendPageMessage(WrongStatePage.class, message, stateMachine);
-    getPageManager().sendPageMessage(MainPage.class, message, stateMachine);
+    sendPageMessage(WrongStatePage.class, message, stateMachine);
+    sendPageMessage(MainPage.class, message, stateMachine);
   }
 
   @Override
